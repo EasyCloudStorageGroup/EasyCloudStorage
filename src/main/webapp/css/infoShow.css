@@ -1,0 +1,20 @@
+.mainBoard{
+    width:700px;
+    height:500px;
+    /*text-align: center;*/
+    border: 1px solid grey;
+    line-height: 60px;
+    display: flex;
+    background-color: white;
+}
+.leftPart{
+    width: 250px;
+    text-align: right;
+}
+.rightPart{
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border:1px solid gray;
+}

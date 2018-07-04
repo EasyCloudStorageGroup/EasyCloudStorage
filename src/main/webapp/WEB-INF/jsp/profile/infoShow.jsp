@@ -11,36 +11,12 @@
          isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 
-<html>
-<head>
-    <title>Title</title>
-    <style>
-        .mainBoard{
-            width:700px;
-            height:500px;
-            /*text-align: center;*/
-            border: 1px solid grey;
-            line-height: 60px;
-            display: flex;
-        }
-        .leftPart{
-            width: 300px;
-            align-items: flex-end;
-            display: flex;
-        }
-        .rightPart{
-            width: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-        }
-    </style>
-</head>
-<body>
+<%@ include file="../shared/sharedHeader.jsp"%>
+<link href="/EasyCloudStorage/css/infoShow.css" type="text/css" rel="stylesheet"/>
+
 <div class="mainBoard">
     <div class="leftPart">
-        <p>hhh</p>
+        <h4>✪ 账号信息</h4>
     </div>
     <div class="rightPart">
         <span>昵称：</span>
