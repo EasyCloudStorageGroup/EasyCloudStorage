@@ -12,13 +12,7 @@
          isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-    <c:forEach items="${tests}" var="test">
-        <h3>${test.name}</h3>
-    </c:forEach>
+<%@ include file="../shared/sharedHeader.jsp"%>
+
 </body>
 </html>
