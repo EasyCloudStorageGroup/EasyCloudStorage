@@ -32,6 +32,7 @@ public class UserController  {
     public ModelAndView login(@RequestParam("accountId")String accountId, @RequestParam("password")String password) {
         List<User> userList = userService.list();
         ModelAndView mv = new ModelAndView();
+        int flag = 0;
         //避免输入为空
         if("".equals(accountId) || "".equals(password)){
             mv.setViewName("checkout/login");
@@ -43,14 +44,17 @@ public class UserController  {
             //将数据库中的user集合放在userlist中
             for(User user:userList){
                 if(accountId.equals(user.getAccountId()) && password.equals(user.getPassword())){
-                    mv.setViewName("checkout/welcome");
+                  flag++;
                 }
-                else {
-                    //登录失败
-                    mv.setViewName("checkout/login");
-                    String error = "用户名或密码错误";
-                    mv.addObject("error2",error);
-                }
+            }
+            if(flag != 0){
+                mv.setViewName("checkout/welcome");
+            }
+           else {
+                //登录错误
+                String error = "账号或密码错误";
+                mv.addObject("error2",error);
+                mv.setViewName("checkout/login");
             }
             return mv;
         }
