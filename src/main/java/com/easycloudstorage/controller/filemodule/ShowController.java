@@ -8,6 +8,8 @@ import com.easycloudstorage.service.filemodule.ShowService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,11 +32,11 @@ public class ShowController {
 
         List<Directory> directoryList=new ArrayList<Directory>();//当前目录下的子目录，即根目录下的第一层目录
 
-        directoryList=showService.showDirectory(rootDirectory,showService.directoryList());
+        directoryList=showService.showDirectory(rootDirectory.getDirId(),showService.directoryList());
 
         List<NormalFile> normalFileList=new ArrayList<NormalFile>();//当前目录下的文件,即根目录下的文件
 
-        normalFileList=showService.showNormalFile(rootDirectory,showService.normalFileList());
+        normalFileList=showService.showNormalFile(rootDirectory.getDirId(),showService.normalFileList());
 
         ModelAndView mv = new ModelAndView();
 
@@ -48,4 +50,27 @@ public class ShowController {
 
         return mv;
     }
+
+
+    @RequestMapping("homePage")
+    public String show(String dirId,Model model){
+
+        List<Directory> directoryList=new ArrayList<Directory>();//当前目录下的子目录
+
+        directoryList=showService.showDirectory(dirId,showService.directoryList());
+
+        List<NormalFile> normalFileList=new ArrayList<NormalFile>();//当前目录下的文件
+
+        normalFileList=showService.showNormalFile(dirId,showService.normalFileList());
+
+        model.addAttribute("directoryList",directoryList);
+
+        model.addAttribute("normalFileList",normalFileList);
+
+        model.addAttribute("rootDirectoryId",dirId);
+
+        return "test/showPage";
+
+    };
+
 }

@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -42,14 +44,13 @@ public class ShowService {
 /*
 * 该方法找到当前目录下的所有子目录
 * */
-    public List<Directory> showDirectory(Directory currentDir, List<Directory> directoryList){
+    public List<Directory> showDirectory(String currentDirId, List<Directory> directoryList){
         Directory tem=new Directory();
         List<Directory> result=new ArrayList<Directory>();
         for(int i=0;i<directoryList.size();i++) {
             tem = directoryList.get(i);
             System.out.println(tem.getDirId());
-            if (tem.getParentDirId()!=null && tem.getOwnerId().equals(currentDir.getOwnerId()))
-                if(tem.getParentDirId().equals(currentDir.getDirId()))
+            if (tem.getParentDirId()!=null&&tem.getParentDirId().equals(currentDirId))
                 result.add(tem);
         }
         return result;
@@ -58,17 +59,38 @@ public class ShowService {
 /*
 * 该方法找到当前目录下的所有非目录文件
 * */
-    public List<NormalFile> showNormalFile(Directory currentDir, List<NormalFile> normalFileList){
+    public List<NormalFile> showNormalFile(String currentDirId, List<NormalFile> normalFileList){
        NormalFile tem=new NormalFile();
         List<NormalFile> result=new ArrayList<NormalFile>();
         for(int i=0;i<normalFileList.size();i++) {
             tem = normalFileList.get(i);
-            if (tem.getParentDirId()!=null && tem.getOwnerId().equals(currentDir.getOwnerId()))
-                if(tem.getParentDirId().equals(currentDir.getDirId()))
-                    result.add(tem);
+            if (tem.getParentDirId()!=null&&tem.getParentDirId().equals(currentDirId))
+                result.add(tem);
         }
         return result;
 
     }
+/* public  JSONArray DirListToJson(List<Directory> directoryList) {
+        JSONArray jsonArray = new JSONArray();
+        if (directoryList() != null && usersList.size() > 0 ) {
+
+
+            for (Directory directory : directoryList) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("dirId", directory.getDirId());
+                jsonObject.put("name", directory.getName());
+                jsonObject.put("lastMovedTime", directory.getLastMovedTime());
+                jsonObject.put(" realPath", directory.getRealPath());
+                jsonObject.put("parentDirId", directory.getParentDirId());
+                jsonObject.put("ownerId", directory.getOwnerId());
+
+
+                jsonArray.add(jsonObject);
+            }
+        }
+
+        return jsonArray;
+    }
+*/
 
 }

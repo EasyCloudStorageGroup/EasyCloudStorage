@@ -17,15 +17,36 @@
     <title>文件列表展示</title>
 </head>
 <body>
-<c:out value="当前目录"></c:out>
-<h3>${rootDirectory.name}</h3>
-<c:forEach items="${directoryList}" var="Directory">
-    <c:out value="子目录"></c:out>
-    <h3>${Directory.name}</h3>
-</c:forEach>
-<c:forEach items="${normalFileList}" var="normalFile">
-    <c:out value="文件"></c:out>
-    <h3>${normalFile.name}</h3>
-</c:forEach>
+<table width="80%" align="center">
+    <tr>
+        <td>编号</td>
+        <td>名字</td>
+        <td>最后一次修改时间</td>
+        <td>路径</td>
+    </tr>
+    <c:forEach items="${directoryList }" var="Directory">
+
+        <tr>
+            <td><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" id=${Directory.dirId} > ${Directory.dirId }</a></td>
+            <td>${Directory.name}</td>
+            <td>${Directory.lastMovedTime}</td>
+            <td>${Directory.realPath}</td>
+        </tr>
+    </c:forEach>
+    <c:forEach items="${normalFileList}" var="NormalFile">
+        <tr>
+            <td>${NormalFile.fileId }</td>
+            <td>${NormalFile.name}</td>
+            <td>${NormalFile.lastMovedTime}</td>
+            <td>${NormalFile.realPath}</td>
+        </tr>
+    </c:forEach>
+</table>
+
+<script>
+    function changeUrl(obj) {
+        document.getElementById(obj.id).href = "123"+obj.id;
+    }
+</script>
 </body>
 </html>
