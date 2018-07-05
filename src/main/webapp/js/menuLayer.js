@@ -86,7 +86,7 @@ function renameFileMenu(open_layer) {
     var nameLable=document.createElement("label");
     nameLable.innerHTML="重命名为: ";
     var oldFileName = document.createElement("input");
-    oldFileName.name="oldFileName";
+    oldFileName.name="oldFilePid";
     //oldFileName.style.display="none";
     var newFileName = document.createElement("input");
     newFileName.name="newFileName";
