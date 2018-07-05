@@ -16,13 +16,27 @@
 
 <div class="mainBoard">
     <div class="leftPart">
-        <h4>✪ 账号信息</h4>
+        <div class="img">
+            <img src="/EasyCloudStorage/img/defaultHead.png">
+        </div>
+        <div class="leftInfo">✪ 账号信息</div>
+        <div class="leftInfo">
+            <input type="button" value="修改资料" onclick="window.location.href='/EasyCloudStorage/modInfo'">
+        </div>
+
     </div>
     <div class="rightPart">
-        <span>昵称：</span>
-        <span>账号：</span>
-        <span>性别：</span>
-        <span>联系方式：</span>
+
+        <span>昵称:&nbsp;&nbsp;<span>${information.userName}</span></span>
+        <span>账号:&nbsp;&nbsp;<span>${information.accountId}</span></span>
+        <c:if test="${information.sex=='male'}">
+            <span>性别:&nbsp;&nbsp;<span>男</span></span>
+        </c:if>
+        <c:if test="${information.sex=='female'}">
+            <span>性别:&nbsp;&nbsp;<span>女</span></span>
+        </c:if>
+        <span>联系方式:&nbsp;&nbsp;<span>${information.phoneNumber}</span></span>
+
     </div>
 
 </div>

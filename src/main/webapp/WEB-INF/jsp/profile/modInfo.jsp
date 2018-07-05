@@ -9,32 +9,44 @@
          isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 
-<html>
-<head>
-    <title>Title</title>
-</head>
+<%@ include file="../shared/sharedHeader.jsp"%>
+<link href="/EasyCloudStorage/css/modInfo.css" type="text/css" rel="stylesheet"/>
 
-<body>
+<form method="post" action="modifyInfo">
+    <div class="mainBoard">
+        <div class="info">
+            <label>昵称：&nbsp;&nbsp;</label>
+            <input type="text" name="name" size="14" value="${information.userName}">
+        </div>
+        <div class="info">
+            <label>
+                账号：&nbsp;&nbsp;
+            </label>
+            ${information.accountId}
+        </div>
+        <div class="info">
+          <label>性别：&nbsp;&nbsp;</label>
+            <select name="sex">
+            <c:if test="${information.sex=='male'}">
+                <option selected="selected">男</option>
+                <option>女</option>
+            </c:if>
+            <c:if test="${information.sex=='female'}">
+                <option>男</option>
+                <option selected="selected">女</option>
+            </c:if>
+        </select>
 
-<form>
-    <table>
-        <tr>
-            <td>昵称：</td>
-            <td><input type="text" name="name" size="14"></td>
-        </tr>
-        <tr>
-            <td>
-                <select name="sex">
-                    <option>男</option>
-                    <option>女</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>联系电话：</td>
-            <td><input type="text" name="phoneNumber" size="14"></td>
-        </tr>
-    </table>
+        </div>
+        <div class="info">
+            <label>联系电话:&nbsp;&nbsp;</label>
+            <input type="text" name="phoneNumber" size="14" value="${information.phoneNumber}">
+        </div>
+        <div class="info">
+            <input class="button" type="submit" value="提交">
+            <input class="button" type="button" value="返回" onclick="window.location.href='/EasyCloudStorage/infoShow'">
+        </div>
+    </div>
 </form>
 
 </body>

@@ -1,3 +1,6 @@
+body{
+    background-color: whitesmoke;
+}
 .mainBoard{
     width:700px;
     height:500px;
@@ -6,15 +9,35 @@
     line-height: 60px;
     display: flex;
     background-color: white;
+    margin: 40px auto;
 }
 .leftPart{
     width: 250px;
     text-align: right;
+    padding-right: 30px;
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .rightPart{
     width: 450px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     border:1px solid gray;
+    padding-left: 50px;
+}
+.img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+.button{
+    text-align: center;
+}
+.leftInfo{
+    margin-top: 10px;
 }

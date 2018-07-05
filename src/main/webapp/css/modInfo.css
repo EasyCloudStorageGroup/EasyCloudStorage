@@ -1,0 +1,21 @@
+body{
+    background-color: whitesmoke;
+}
+.mainBoard{
+    width: 700px;
+    height: 500px;
+    border: 1px solid gray;
+    margin: 20px auto;
+    background-color: white;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 250px;
+}
+.info{
+    margin-top: 25px;
+}
+.button{
+    margin-right: 30px;
+}
