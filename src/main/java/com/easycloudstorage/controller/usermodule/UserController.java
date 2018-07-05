@@ -28,7 +28,7 @@ public class UserController  {
         return mv;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView login(@RequestParam("accountId")String accountId, @RequestParam("password")String password) {
         List<User> userList = userService.list();
         ModelAndView mv = new ModelAndView();
@@ -71,7 +71,7 @@ public class UserController  {
         return "checkout/login";
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView register(@RequestParam("userName")String userName, @RequestParam("password")String password,
                            @RequestParam("sex")String sex, @RequestParam("phoneNumber")String phoneNumber,
                                  @RequestParam("accountId")String accountId){

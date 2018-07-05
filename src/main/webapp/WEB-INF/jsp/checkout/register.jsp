@@ -30,7 +30,7 @@
                             <h3 align="center"><font color="red">${error}</font></h3>
                         </div>
                         <div class="form-bottom">
-                            <form action="register" method="get">
+                            <form action="register" method="post">
                                 <div class="form-group">
                                     <label class="sr-only" for="form-accountId">accountId</label>
                                     <input type="text" id="form-accountId" name = "accountId" class="form-accountId form-control" placeholder="请输入账户">
