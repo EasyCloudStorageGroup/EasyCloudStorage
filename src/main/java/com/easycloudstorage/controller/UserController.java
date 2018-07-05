@@ -43,7 +43,7 @@ public class UserController  {
             //将数据库中的user集合放在userlist中
             for(User user:userList){
                 if(accountId.equals(user.getAccountId()) && password.equals(user.getPassword())){
-                    mv.setViewName("checkout/register");
+                    mv.setViewName("checkout/welcome");
                 }
                 else {
                     //登录失败
