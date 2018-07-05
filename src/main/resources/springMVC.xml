@@ -40,4 +40,8 @@
             <bean class="com.easycloudstorage.intercepter.LoginIntercepter"/>
         </mvc:interceptor>
     </mvc:interceptors>
+
+    <!-- 对上传文件的解析-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
 </beans>

@@ -2,7 +2,7 @@ body{
     background-color: whitesmoke;
 }
 .mainBoard{
-    width:700px;
+    width:800px;
     height:500px;
     /*text-align: center;*/
     border: 1px solid grey;
@@ -12,8 +12,7 @@ body{
     margin: 40px auto;
 }
 .leftPart{
-    width: 250px;
-    text-align: right;
+    width: 280px;
     padding-right: 30px;
     align-items: flex-end;
     display: flex;
@@ -21,7 +20,7 @@ body{
     justify-content: center;
 }
 .rightPart{
-    width: 450px;
+    width: 520px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -29,10 +28,8 @@ body{
     padding-left: 50px;
 }
 .img{
-    height: 50px;
-    width: 50px;
-    border-radius: 50px;
-    overflow: hidden;
+    height: 60px;
+    width: 60px;
     margin-top: 10px;
 }
 .button{
@@ -40,4 +37,14 @@ body{
 }
 .leftInfo{
     margin-top: 10px;
+}
+.avatar{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.innerAvatar{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
 }
