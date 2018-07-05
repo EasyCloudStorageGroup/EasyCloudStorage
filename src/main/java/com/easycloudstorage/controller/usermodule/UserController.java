@@ -16,10 +16,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class UserController  {
     @Autowired
-
     private  UserService userService;
-
-
 
     @RequestMapping("checkout")
     public ModelAndView checkout(){
@@ -138,5 +135,13 @@ public class UserController  {
         return str.matches(re);
     }
 
+    /*
+     * 退出登录
+     */
+    @RequestMapping("logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("user");
 
+        return "redirect:checkout";
+    }
 }

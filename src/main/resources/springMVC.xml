@@ -25,4 +25,19 @@
         <property name="prefix" value="/WEB-INF/jsp/" />
         <property name="suffix" value=".jsp" />
     </bean>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/jquery/**"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/img/**"/>
+            <mvc:exclude-mapping path="/bootstrap/**"/>
+            <mvc:exclude-mapping path="/bootstrap-3.3.7-dist/**"/>
+            <mvc:exclude-mapping path="/font-awesome/**"/>
+            <mvc:exclude-mapping path="/layui/**"/>
+            <bean class="com.easycloudstorage.intercepter.LoginIntercepter"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

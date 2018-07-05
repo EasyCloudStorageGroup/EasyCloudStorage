@@ -19,13 +19,13 @@
 
 <div class="navigator">
     <div class="navigator-logo">
-        <a href="">
+        <a href="homePage">
             <img src="/EasyCloudStorage/img/home/logo.png">
             轻松云存储
         </a>
     </div>
     <ul class="layui-nav layui-nav-tree layui-nav-side left-navigator">
-        <li class="layui-nav-item layui-this"><a>全部文件</a></li>
+        <li class="layui-nav-item layui-this"><a href="homePage">全部文件</a></li>
         <li class="layui-nav-item"><a>图片</a></li>
         <li class="layui-nav-item"><a>视频</a></li>
         <li class="layui-nav-item"><a>音乐</a></li>
@@ -33,16 +33,16 @@
     </ul>
 
     <ul class="layui-nav top-left-navigator">
-        <li class="layui-nav-item layui-this"><a href="">网盘</a></li>
+        <li class="layui-nav-item layui-this"><a href="homePage">网盘</a></li>
         <li class="layui-nav-item"><a>其它</a></li>
     </ul>
 
     <ul class="layui-nav top-right-navigator">
         <li class="layui-nav-item">
-            <a href=""><img src="/EasyCloudStorage/img/avatar/default-avatar-male.webp" class="top-right-navigator-avatar">${user.userName}</a>
+            <img src="/EasyCloudStorage/img/avatar/default-avatar-male.png" class="top-right-navigator-avatar">${user.userName}
             <dl class="layui-nav-child">
                 <dd><a>修改信息</a></dd>
-                <dd><a>退出</a></dd>
+                <dd><a href="logout">退出</a></dd>
             </dl>
         </li>
         <li class="layui-nav-item">
