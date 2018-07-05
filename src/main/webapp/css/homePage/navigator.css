@@ -69,12 +69,8 @@
     margin-right: 8px;
 }
 
-.top-right-navigator .layui-this:after {
-    background-color: white;
-}
-
-.top-right-navigator .layui-nav-bar {
-    background-color: white !important;
+.top-right-navigator .layui-nav-bar, .top-right-navigator .layui-this:after {
+    display: none;
 }
 
 .top-right-navigator .layui-nav-item .layui-nav-child dd {
@@ -89,3 +85,8 @@
     width: 30px;
     height: 30px;
 }
+
+.top-right-navigator {
+    z-index: 100;
+}
+

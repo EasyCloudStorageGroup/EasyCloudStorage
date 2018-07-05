@@ -39,7 +39,6 @@
         top: 60px;
         background-color: white;
         border-radius:10px;
-        z-index: 0;
     }
 </style>
 

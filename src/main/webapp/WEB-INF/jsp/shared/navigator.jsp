@@ -20,7 +20,7 @@
 <div class="navigator">
     <div class="navigator-logo">
         <a href="">
-            <img src="/EasyCloudStorage/img/logo.png">
+            <img src="/EasyCloudStorage/img/home/logo.png">
             轻松云存储
         </a>
     </div>
@@ -46,7 +46,7 @@
             </dl>
         </li>
         <li class="layui-nav-item">
-            <a><img src="/EasyCloudStorage/img/change-bg-icon.png" class="change-bg-icon"></a>
+            <a><img src="/EasyCloudStorage/img/home/change-bg-icon.png" class="change-bg-icon"></a>
         </li>
     </ul>
 </div>
