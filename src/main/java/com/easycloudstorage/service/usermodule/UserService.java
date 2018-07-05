@@ -16,4 +16,8 @@ public class UserService {
     public List<User> list2(){return userMapper.userList2();}
 
     public void addUser(User user){ userMapper.addUser(user); }
+
+    public User getUserByAccountId(String accountId) {
+        return userMapper.getUserByAccountId(accountId);
+    }
 }

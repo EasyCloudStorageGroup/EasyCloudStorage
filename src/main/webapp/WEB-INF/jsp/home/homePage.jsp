@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 7/5/2018
-  Time: 8:54 AM
+  Time: 6:13 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8"
@@ -55,7 +55,7 @@
         </tr>
         <c:forEach items="${directoryList}" var="Directory">
             <tr>
-                <td><a href="/EasyCloudStorage/testHomePage?dirId=${Directory.dirId}" id=${Directory.dirId} > ${Directory.dirId }</a></td>
+                <td><a href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" id=${Directory.dirId} > ${Directory.dirId }</a></td>
                 <td>${Directory.name}</td>
                 <td>${Directory.lastMovedTime}</td>
                 <td>${Directory.realPath}</td>

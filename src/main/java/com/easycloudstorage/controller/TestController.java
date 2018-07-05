@@ -25,12 +25,4 @@ public class TestController {
 
         return mv;
     }
-
-    @RequestMapping("testHomePage")
-    public ModelAndView testHomePage() {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("test/testHomePage");
-
-        return mv;
-    }
 }

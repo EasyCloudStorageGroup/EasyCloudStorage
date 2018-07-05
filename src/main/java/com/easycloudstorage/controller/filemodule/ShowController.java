@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,26 +22,30 @@ public class ShowController {
     @Autowired
     private ShowService showService;
 
-    @RequestMapping("showPage")
-    public ModelAndView list() {
-        User user=new User();
+    @RequestMapping("homePage")
+    public ModelAndView show(String dirId, HttpSession session) {
 
-        user.setAccountId("1001");
-        //user=       //为该用户赋值
+        Directory rootDirectory=null;
 
-        Directory rootDirectory = showService.rootDirectory(user,showService.directoryList());  //依赖于该用户的根目录，需要同user层交互,目前user为空
+        User user=(User)session.getAttribute("user");
 
+        if(dirId==null) {//如果是第一次进入该函数，该函数为用户的根目录，此时dirID为空，先找到用户的根目录
+
+            rootDirectory = showService.rootDirectory(user, showService.directoryList()); //找到用户的根目录
+
+            dirId = rootDirectory.getDirId();
+        }
         List<Directory> directoryList=new ArrayList<Directory>();//当前目录下的子目录，即根目录下的第一层目录
 
-        directoryList=showService.showDirectory(rootDirectory.getDirId(),showService.directoryList());
+        directoryList=showService.showDirectory(dirId,showService.directoryList());
 
         List<NormalFile> normalFileList=new ArrayList<NormalFile>();//当前目录下的文件,即根目录下的文件
 
-        normalFileList=showService.showNormalFile(rootDirectory.getDirId(),showService.normalFileList());
+        normalFileList=showService.showNormalFile(dirId,showService.normalFileList());
 
         ModelAndView mv = new ModelAndView();
 
-        mv.setViewName("test/showPage");
+        mv.setViewName("home/homePage");
 
         mv.addObject("directoryList",directoryList);//根目录下的子目录
 
@@ -50,27 +55,4 @@ public class ShowController {
 
         return mv;
     }
-
-
-    @RequestMapping("homePage")
-    public String show(String dirId,Model model){
-
-        List<Directory> directoryList=new ArrayList<Directory>();//当前目录下的子目录
-
-        directoryList=showService.showDirectory(dirId,showService.directoryList());
-
-        List<NormalFile> normalFileList=new ArrayList<NormalFile>();//当前目录下的文件
-
-        normalFileList=showService.showNormalFile(dirId,showService.normalFileList());
-
-        model.addAttribute("directoryList",directoryList);
-
-        model.addAttribute("normalFileList",normalFileList);
-
-        model.addAttribute("rootDirectoryId",dirId);
-
-        return "test/showPage";
-
-    };
-
 }

@@ -15,4 +15,8 @@
         insert into user(accountId, userName, password, sex, phoneNumber) values (#{accountId}, #{userName}, #{password}, #{sex}, #{phoneNumber})
     </insert>
 
+    <select id="getUserByAccountId" resultType="User" parameterType="String">
+        select * from user where accountId = #{0}
+    </select>
+
 </mapper>

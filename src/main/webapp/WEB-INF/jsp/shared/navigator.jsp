@@ -39,7 +39,7 @@
 
     <ul class="layui-nav top-right-navigator">
         <li class="layui-nav-item">
-            <a href=""><img src="/EasyCloudStorage/img/avatar/default-avatar-male.webp" class="top-right-navigator-avatar">用户名</a>
+            <a href=""><img src="/EasyCloudStorage/img/avatar/default-avatar-male.webp" class="top-right-navigator-avatar">${user.userName}</a>
             <dl class="layui-nav-child">
                 <dd><a>修改信息</a></dd>
                 <dd><a>退出</a></dd>

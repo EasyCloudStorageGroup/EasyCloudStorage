@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -29,9 +30,11 @@ public class UserController  {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(@RequestParam("accountId")String accountId, @RequestParam("password")String password) {
+    public ModelAndView login(@RequestParam("accountId")String accountId, @RequestParam("password")String password,
+                              HttpSession session) {
         List<User> userList = userService.list();
         ModelAndView mv = new ModelAndView();
+        User theUser = userService.getUserByAccountId(accountId);
         int flag = 0;
         //避免输入为空
         if("".equals(accountId) || "".equals(password)){
@@ -48,7 +51,8 @@ public class UserController  {
                 }
             }
             if(flag != 0){
-                mv.setViewName("checkout/welcome");
+                session.setAttribute("user", theUser);
+                mv.setViewName("redirect:homePage");
             }
            else {
                 //登录错误
@@ -59,7 +63,6 @@ public class UserController  {
             return mv;
         }
     }
-
 
     @RequestMapping(value = "/toRegister", method = RequestMethod.GET)
     public String toRegister(){
