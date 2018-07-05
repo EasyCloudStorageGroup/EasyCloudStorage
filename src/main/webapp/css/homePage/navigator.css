@@ -1,0 +1,91 @@
+
+.navigator-logo {
+    position: relative;
+    top: 15px;
+    left: 15px;
+}
+
+.navigator-logo a:hover {
+    text-decoration: none;
+}
+
+.navigator-logo a {
+    color: white;
+    font: 23px "Microsoft YaHei", arial, SimSun, 宋体;
+}
+
+.navigator-logo img {
+    width: 45px;
+    height: 45px;
+}
+
+.left-navigator {
+    top: 80px;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.layui-nav .layui-nav-item a:hover {
+    text-decoration:none;
+}
+
+.left-navigator .layui-this, .layui-nav-tree .layui-this>a{
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.left-navigator .layui-nav-bar {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.top-left-navigator {
+    position: fixed;
+    top: 0px;
+    left: 240px;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.top-left-navigator .layui-nav-bar {
+    background-color: white !important;
+}
+
+.top-left-navigator .layui-this:after {
+    background-color: white;
+}
+
+.top-left-navigator .layui-nav-item {
+    margin-right: 50px;
+}
+
+.top-right-navigator {
+    position: fixed;
+    top: 0px;
+    right: 100px;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.top-right-navigator-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius:50%;
+    margin-right: 8px;
+}
+
+.top-right-navigator .layui-this:after {
+    background-color: white;
+}
+
+.top-right-navigator .layui-nav-bar {
+    background-color: white !important;
+}
+
+.top-right-navigator .layui-nav-item .layui-nav-child dd {
+    line-height: 40px;
+}
+
+.top-right-navigator .layui-nav-item {
+    margin-right: 15px;
+}
+
+.change-bg-icon {
+    width: 30px;
+    height: 30px;
+}
