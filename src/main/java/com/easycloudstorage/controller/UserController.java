@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import static javafx.scene.input.KeyCode.Z;
 
 
 @Controller
@@ -30,21 +29,33 @@ public class UserController  {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(@RequestParam("accountId")String accountId, @RequestParam("password")String password) {
+    public ModelAndView login(@RequestParam("accountId")String accountId, @RequestParam("password")String password) {
         List<User> userList = userService.list();
-
-        //将数据库中的user集合放在userlist中
-        for(User user:userList){
-            if(user.getAccountId().equals(accountId) && user.getPassword().equals(password)){
-                return "checkout/welcome";
-            }
-            else {
-                //登录失败
-
-            }
+        ModelAndView mv = new ModelAndView();
+        //避免输入为空
+        if("".equals(accountId) || "".equals(password)){
+            mv.setViewName("checkout/login");
+            //String error = "用户名或密码为空";
+            //mv.addObject("error2", error);
+            return mv;
         }
-        return "checkout/login";
+        else{
+            //将数据库中的user集合放在userlist中
+            for(User user:userList){
+                if(accountId.equals(user.getAccountId()) && password.equals(user.getPassword())){
+                    mv.setViewName("checkout/register");
+                }
+                else {
+                    //登录失败
+                    mv.setViewName("checkout/login");
+                    String error = "用户名或密码错误";
+                    mv.addObject("error2",error);
+                }
+            }
+            return mv;
+        }
     }
+
 
     @RequestMapping(value = "/toRegister", method = RequestMethod.GET)
     public String toRegister(){
@@ -56,35 +67,56 @@ public class UserController  {
                            @RequestParam("sex")String sex, @RequestParam("phoneNumber")String phoneNumber,
                                  @RequestParam("accountId")String accountId){
         ModelAndView mv = new ModelAndView();
-        List<User> userList = userService.list();
+        List<User> userList = userService.list2();
         int repeatFlag = 0;
+        int repeatFlag2 = 0;
         for(User user:userList){
-            if(user.getUserName().equals(userName)){
+            if(userName.equals(user.getUserName())){
                 repeatFlag++;
             }
+            if(accountId.equals(user.getAccountId())){
+                repeatFlag2++;
+            }
         }
-        //用户名重复
-        if(repeatFlag != 0){
+        //避免输入为空
+        if("".equals(userName) || "".equals(password) || "".equals(phoneNumber) || "".equals(accountId)){
             mv.setViewName("checkout/register");
+            String error = "输入为空";
+            mv.addObject("error", error);
         }
-        //账号密码只能由字母和数字组成，8-14位
-        else if(!(isProper(accountId) && isProper(password))){
-            mv.setViewName("checkout/register");
-
-        }
-        //均符合规范向数据库中添加用户
         else{
-            User user = new User();
-            user.setUserName(userName);
-            user.setPassword(password);
-            user.setAccountId(accountId);
-            user.setSex(sex);
-            user.setPhoneNumber(phoneNumber);
-            userService.addUser(user);
-            mv.setViewName("checkout/login");
-        }
-        //返回出错信息
+            //用户名重复
+            if(repeatFlag != 0){
+                mv.setViewName("checkout/register");
+                String error = "用户名重复";
+                mv.addObject("error", error);
+            }
+            //账号重复
+            else if(repeatFlag2 != 0){
+                mv.setViewName("checkout/register");
+                String error = "账号重复";
+                mv.addObject("error", error);
+            }
+            //账号密码只能由字母和数字组成，8-14位
+            else if(!(isProper(accountId) && isProper(password))){
+                mv.setViewName("checkout/register");
+                String error = "账号或密码格式错误";
+                mv.addObject("error", error);
+            }
+            //均符合规范向数据库中添加用户
+            else{
+                User user = new User();
+                user.setUserName(userName);
+                user.setPassword(password);
+                user.setAccountId(accountId);
+                user.setSex(sex);
+                user.setPhoneNumber(phoneNumber);
+                userService.addUser(user);
+                mv.setViewName("checkout/login");
+            }
+            //mv.setViewName("checkout/register");
 
+        }
         return mv;
     }
 

@@ -7,6 +7,9 @@
     <select id="userList" resultType="User">
         select accountId, password from user;
     </select>
+    <select id="userList2" resultType="User">
+        select accountId, userName, password, sex, phoneNumber from user;
+    </select>
 
     <insert id = "addUser" parameterType="User">
         insert into user(accountId, userName, password, sex, phoneNumber) values (#{accountId}, #{userName}, #{password}, #{sex}, #{phoneNumber})

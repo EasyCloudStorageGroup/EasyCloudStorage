@@ -13,6 +13,7 @@ public class UserService {
     private UserMapper userMapper;
 
     public List<User> list(){ return userMapper.userList();}
+    public List<User> list2(){return userMapper.userList2();}
 
     public void addUser(User user){ userMapper.addUser(user); }
 }
