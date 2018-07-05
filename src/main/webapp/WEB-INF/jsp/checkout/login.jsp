@@ -9,30 +9,11 @@
          isELIgnored="false"%>
 <%@ include file="../shared/sharedHeader.jsp"%>
 
-    <%--<h1 align="center">登录页面</h1>--%>
-    <%--<form action="login" method="get">--%>
-        <%--<table>--%>
-            <%--<tr>--%>
-                <%--<td><label>账号</label></td>--%>
-                <%--<td><input type="text" id="accountId" name="accountId"></td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-                <%--<td><label>密码</label></td>--%>
-                <%--<td><input type="text" id="password" name="password"></td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-                <%--<td><input type="submit" id="login" name="login" value="登录"></td>--%>
-            <%--</tr>--%>
-        <%--</table>--%>
-    <%--</form>--%>
-    <%--<form action="toRegister" method="get">--%>
-        <%--<input type="submit" id="register" name = "register" value="注册">--%>
-    <%--</form>--%>
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
 <link rel="stylesheet" href="/EasyCloudStorage/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="/EasyCloudStorage/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="/EasyCloudStorage/css/form-elements.css">
-<link rel="stylesheet" href="/EasyCloudStorage/css/style.css">
+<link rel="stylesheet" href="/EasyCloudStorage/css/login/form-elements.css">
+<link rel="stylesheet" href="/EasyCloudStorage/css/login/style.css">
 
 <link rel="shortcut icon" href="/EasyCloudStorage/img/ico/favicon.png">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/EasyCloudStorage/img/ico/apple-touch-icon-144-precomposed.png">
@@ -90,10 +71,10 @@
 
 </div>
 
-<script src="/EasyCloudStorage/jquery/jquery-1.11.1.min.js"></script>
+<script src="/EasyCloudStorage/jquery/jsForLogin/jquery-1.11.1.min.js"></script>
 <script src="/EasyCloudStorage/bootstrap/js/bootstrap.min.js"></script>
-<script src="/EasyCloudStorage/jquery/jquery.backstretch.min.js"></script>
-<script src="/EasyCloudStorage/jquery/scripts.js"></script>
+<script src="/EasyCloudStorage/jquery/jsForLogin/jquery.backstretch.min.js"></script>
+<script src="/EasyCloudStorage/jquery/jsForLogin/scripts.js"></script>
 
 
 </body>

@@ -5,9 +5,9 @@ jQuery(document).ready(function() {
         Fullscreen background
     */
     $.backstretch([
-                    "/EasyCloudStorage/img/backgrounds/2.jpg"
-	              , "/EasyCloudStorage/img/backgrounds/3.jpg"
-	              , "/EasyCloudStorage/img/backgrounds/1.jpg"
+                    "/EasyCloudStorage/img/login/backgrounds/2.jpg"
+	              , "/EasyCloudStorage/img/login/backgrounds/3.jpg"
+	              , "/EasyCloudStorage/img/login/backgrounds/1.jpg"
 	             ], {duration: 3000, fade: 750});
     
     /*

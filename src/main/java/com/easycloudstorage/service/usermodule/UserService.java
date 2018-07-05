@@ -1,6 +1,6 @@
-package com.easycloudstorage.service;
+package com.easycloudstorage.service.usermodule;
 
-import com.easycloudstorage.mapper.UserMapper;
+import com.easycloudstorage.mapper.usermodule.UserMapper;
 import com.easycloudstorage.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

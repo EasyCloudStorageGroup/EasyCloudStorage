@@ -1,8 +1,8 @@
-package com.easycloudstorage.controller;
+package com.easycloudstorage.controller.usermodule;
 
 import com.easycloudstorage.pojo.User;
 import java.util.*;
-import com.easycloudstorage.service.UserService;
+import com.easycloudstorage.service.usermodule.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,6 +60,11 @@ public class UserController  {
     @RequestMapping(value = "/toRegister", method = RequestMethod.GET)
     public String toRegister(){
         return "checkout/register";
+    }
+
+    @RequestMapping(value = "/toLogin", method = RequestMethod.GET)
+    public String toLogin(){
+        return "checkout/login";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)

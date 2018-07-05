@@ -1,4 +1,4 @@
-package com.easycloudstorage.mapper;
+package com.easycloudstorage.mapper.usermodule;
 
 import com.easycloudstorage.pojo.User;
 
