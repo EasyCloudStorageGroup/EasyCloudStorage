@@ -18,8 +18,9 @@
 <link href="/EasyCloudStorage/css/menu.css" rel="stylesheet"/>
 
 <ul class="client_menu" id="clientMenu">
-    <li><a href="#" onclick="openWindow()">重命名</a></li><br />
-    <li><a href="#">删除</a></li>
+    <li><a href="#" onclick="openRenameFileMenu()">重命名</a></li><br />
+    <li><a href="#" onclick="openDeleteFileMenu()">删除</a></li>
+    <li><a href="#" onclick="openMoveFileMenu()">移动到</a></li>
 </ul>
 <table border="0" class="renameTable" id="renameTable">
     <tr>

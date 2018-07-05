@@ -62,30 +62,70 @@ MyLayer.prototype.openLayer = function () {
     div_toolBar.appendChild(span_close);
     open_layer.appendChild(div_toolBar);
 
-    //centent
-    var div_content = document.createElement("div");
-    div_content.style.textAlign = "center";
-    var contentForm = document.createElement("form");
-    contentForm.method="POST";
-    contentForm.action="testPage";
-    var nameLable=document.createElement("label");
-    nameLable.innerHTML="重命名为: ";
-    var input = document.createElement("input");
-    input.name="name";
-    var button=document.createElement("input");
-    button.type="submit";
-    button.value="submit";
-    button.innerHTML="OK";
-    button.style.left="20px";
-    contentForm.appendChild(nameLable);
-    contentForm.appendChild(input);
-    contentForm.appendChild(button);
-    div_content.appendChild(contentForm);
-    open_layer.appendChild(div_content);
-
+    //content
+    if(this.options.content == "renameFileMenu")
+        renameFileMenu(open_layer);
+    else if(this.options.content=="deleteFileMenu")
+        deleteFileMenu(open_layer);
+    else if(this.options.content=="moveFileMenu")
+        moveFileMenu(open_layer);
 
     document.body.appendChild(open_layer);
     document.body.appendChild(background_layer);
     open_layer.style.display = "block" ;
     background_layer.style.display = "block";
 };
+
+function renameFileMenu(open_layer) {
+    var div_content = document.createElement("div");
+    div_content.style.textAlign = "center";
+    div_content.style.paddingTop = "5%";
+    var contentForm = document.createElement("form");
+    contentForm.method="POST";
+    contentForm.action="renamePage";
+    var nameLable=document.createElement("label");
+    nameLable.innerHTML="重命名为: ";
+    var oldFileName = document.createElement("input");
+    oldFileName.name="oldFileName";
+    //oldFileName.style.display="none";
+    var newFileName = document.createElement("input");
+    newFileName.name="newFileName";
+    newFileName.text="aaa";
+    var button=document.createElement("input");
+    button.type="submit";
+    button.value="OK";
+    contentForm.appendChild(oldFileName);
+    contentForm.appendChild(nameLable);
+    contentForm.appendChild(newFileName);
+    contentForm.appendChild(button);
+    div_content.appendChild(contentForm);
+    open_layer.appendChild(div_content);
+}
+
+function deleteFileMenu(open_layer) {
+    var div_content = document.createElement("div");
+    div_content.style.textAlign = "center";
+    div_content.paddingTop="2cm"
+    var aHref=document.createElement("a");
+    aHref.href="deleteFilePage?filePid=1";
+    var button=document.createElement("button");
+    button.type="button";
+    button.innerHTML="删除";
+    aHref.appendChild(button);
+    div_content.appendChild(aHref);
+    open_layer.appendChild(div_content);
+}
+
+function moveFileMenu(open_layer) {
+    var div_content = document.createElement("div");
+    div_content.style.textAlign = "center";
+    div_content.paddingTop="2cm"
+    var aHref=document.createElement("a");
+    aHref.href="moveFilePage?filePid=1&moveToPath=fff";
+    var button=document.createElement("button");
+    button.type="button";
+    button.innerHTML="删除";
+    aHref.appendChild(button);
+    div_content.appendChild(aHref);
+    open_layer.appendChild(div_content);
+}
