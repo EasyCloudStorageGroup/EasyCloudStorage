@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycloudstorage.mapper.usermodule.UserMapper">
+    <select id="userList" resultType="User">
+        select accountId, password from user;
+    </select>
+    <select id="userList2" resultType="User">
+        select accountId, userName, password, sex, phoneNumber from user;
+    </select>
+
+    <insert id = "addUser" parameterType="User">
+        insert into user(accountId, userName, password, sex, phoneNumber) values (#{accountId}, #{userName}, #{password}, #{sex}, #{phoneNumber})
+    </insert>
+
+</mapper>
