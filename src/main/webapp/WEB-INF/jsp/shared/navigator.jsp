@@ -39,11 +39,23 @@
 
     <ul class="layui-nav top-right-navigator">
         <li class="layui-nav-item">
-            <img src="/EasyCloudStorage/img/avatar/default-avatar-male.png" class="top-right-navigator-avatar">${user.userName}
-            <dl class="layui-nav-child">
-                <dd><a>修改信息</a></dd>
-                <dd><a href="logout">退出</a></dd>
-            </dl>
+            <a href="infoShow">
+                <c:if test="${user.defaultAvatar==1}">
+                    <c:if test="${user.sex=='male'}">
+                        <img src="/EasyCloudStorage/img/avatar/default-avatar-male.png" class="top-right-navigator-avatar">${user.userName}
+                    </c:if>
+                    <c:if test="${user.sex=='female'}">
+                        <img src="/EasyCloudStorage/img/avatar/default-avatar-female.png" class="top-right-navigator-avatar">${user.userName}
+                    </c:if>
+                </c:if>
+                <c:if test="${user.defaultAvatar==0}">
+                    <img src="/EasyCloudStorage/img/avatar/${user.accountId}.jpg" class="top-right-navigator-avatar">${user.userName}
+                </c:if>
+                <dl class="layui-nav-child">
+                    <dd><a href="infoShow">修改信息</a></dd>
+                    <dd><a href="logout">退出</a></dd>
+                </dl>
+            </a>
         </li>
         <li class="layui-nav-item">
             <a><img src="/EasyCloudStorage/img/home/change-bg-icon.png" class="change-bg-icon"></a>

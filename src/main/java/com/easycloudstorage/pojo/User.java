@@ -6,6 +6,7 @@ public class User {
     private String password;
     private String sex;
     private String phoneNumber;
+    private int defaultAvatar;
 
     //在为sex赋值时，请使用以下已经定义的静态属性
     public static String SEX_MALE = "male";
@@ -49,5 +50,13 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public int getDefaultAvatar() {
+        return defaultAvatar;
+    }
+
+    public void setDefaultAvatar(int defaultAvatar) {
+        this.defaultAvatar = defaultAvatar;
     }
 }

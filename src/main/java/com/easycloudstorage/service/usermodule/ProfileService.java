@@ -17,4 +17,8 @@ public class ProfileService {
     public void modInfo(User user){
         theUser.modifyInfo(user);
     }
+
+    public void unUseDefaultAvatar(User user) {
+        theUser.unUseDefaultAvatar(user);
+    }
 }

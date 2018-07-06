@@ -10,7 +10,11 @@
 
     <update id="modifyInfo" parameterType="User">
       UPDATE USER SET userName=#{userName},sex=#{sex},phoneNumber=#{phoneNumber}
-      WHERE accountId='1001';
+      WHERE accountId=#{accountId};
+    </update>
+
+    <update id="unUseDefaultAvatar" parameterType="User">
+        UPDATE USER SET defaultAvatar=0 WHERE accountId=#{accountId}
     </update>
 </mapper>
 

@@ -18,63 +18,59 @@
 <div class="mainBoard">
     <div class="leftPart">
         <div class="img">
-            <c:if test="${information.sex=='male'}">
-                <!--href触发模态框-->
-                <a data-toggle="modal" href="#myModal"><img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-male.webp"></a>
-                <!--模态框-->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="trye">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="myModalLabel">修改头像</h4>
-                            </div>
-                            <!--修改头像-->
-                            <form name="uploadForm">
-                                <div class="modal-body">
-                                    <center>
-                                        <div id="localImage">
-                                            <img class="innerAvatar" src="/EasyCloudStorage/img/avatar/default-avatar-male.webp" id="preview">
-                                        </div>
-                                    </center>
-                                    <center>
-                                        <button type="button" class="btn btn-default" onclick="selectFile()">上传图片</button>
-                                    </center>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    <button type="button" class="btn btn-primary">确认</button>
-                                    <input type="file" name="doc" onchange="setImagePreview()" id="doc" style="display: none">
-                                </div>
-                            </form>
-                        </div> <!--modal-content-->
-                    </div>
-                </div>
-            </c:if>
-            <c:if test="${information.sex=='female'}">
-                <!--href触发模态框-->
-                <a data-toggle="modal" href="#myModal"><img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-female.webp"></a>
-                <!--模态框-->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="trye">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="myModalLabel">修改头像</h4>
-                            </div>
+            <a data-toggle="modal" href="#myModal">
+                <c:if test="${user.defaultAvatar==1}">
+                    <c:if test="${user.sex=='male'}">
+                        <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-male.png">
+                    </c:if>
+                    <c:if test="${user.sex=='female'}">
+                        <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-female.png">
+                    </c:if>
+                </c:if>
+                <c:if test="${user.defaultAvatar==0}">
+                    <img class="avatar" src="/EasyCloudStorage/img/avatar/${user.accountId}.jpg">
+                </c:if>
+            </a>
+            <!--href触发模态框-->
+            <!--模态框-->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="trye">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">修改头像</h4>
+                        </div>
+                        <!--修改头像-->
+                        <form name="uploadForm" action="/EasyCloudStorage/modifyAvatar" method="post" enctype="multipart/form-data">
                             <div class="modal-body">
                                 <center>
-                                    <img class="innerAvatar" src="/EasyCloudStorage/img/avatar/default-avatar-female.webp">
+                                    <div id="localImage">
+                                        <c:if test="${user.defaultAvatar==1}">
+                                            <c:if test="${user.sex=='male'}">
+                                                <img class="innerAvatar" src="/EasyCloudStorage/img/avatar/default-avatar-male.png" id="preview">
+                                            </c:if>
+                                            <c:if test="${user.sex=='female'}">
+                                                <img class="innerAvatar" src="/EasyCloudStorage/img/avatar/default-avatar-female.png" id="preview">
+                                            </c:if>
+                                        </c:if>
+                                        <c:if test="${user.defaultAvatar==0}">
+                                            <img class="innerAvatar" src="/EasyCloudStorage/img/avatar/${user.accountId}.jpg" id="preview">
+                                        </c:if>
+                                    </div>
+                                </center>
+                                <center>
+                                    <button type="button" class="btn btn-default" onclick="selectFile()">上传图片</button>
                                 </center>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-primary">确认</button>
+                                <button type="submit" class="btn btn-primary">确认</button>
+                                <input type="file" accept="image/*" name="avatar" onchange="setImagePreview()" id="avatar" style="display: none">
                             </div>
-                        </div> <!--modal-content-->
-                    </div>
+                        </form>
+                    </div> <!--modal-content-->
                 </div>
-            </c:if>
+            </div>
         </div>
 
 
@@ -87,15 +83,15 @@
     </div>
     <div class="rightPart">
 
-        <span>昵称:&nbsp;&nbsp;<span>${information.userName}</span></span>
-        <span>账号:&nbsp;&nbsp;<span>${information.accountId}</span></span>
-        <c:if test="${information.sex=='male'}">
+        <span>昵称:&nbsp;&nbsp;<span>${user.userName}</span></span>
+        <span>账号:&nbsp;&nbsp;<span>${user.accountId}</span></span>
+        <c:if test="${user.sex=='male'}">
             <span>性别:&nbsp;&nbsp;<span>男</span></span>
         </c:if>
-        <c:if test="${information.sex=='female'}">
+        <c:if test="${user.sex=='female'}">
             <span>性别:&nbsp;&nbsp;<span>女</span></span>
         </c:if>
-        <span>联系方式:&nbsp;&nbsp;<span>${information.phoneNumber}</span></span>
+        <span>联系方式:&nbsp;&nbsp;<span>${user.phoneNumber}</span></span>
 
     </div>
 

@@ -1,12 +1,12 @@
 
 //打开文件选择框
 function selectFile(){
-    $("#doc").trigger("click");
+    $("#avatar").trigger("click");
 }
 
 //文件预览
 function setImagePreview() {
-    var docObj=document.getElementById("doc");
+    var docObj=document.getElementById("avatar");
     var imgObjPreview=document.getElementById("preview");
     if(docObj.files &&   docObj.files[0]){
         //火狐下，直接设img属性

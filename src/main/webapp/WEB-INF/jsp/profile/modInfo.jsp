@@ -16,22 +16,22 @@
     <div class="mainBoard">
         <div class="info">
             <label>昵称：&nbsp;&nbsp;</label>
-            <input type="text" name="name" size="14" value="${information.userName}">
+            <input type="text" name="name" size="14" value="${user.userName}">
         </div>
         <div class="info">
             <label>
                 账号：&nbsp;&nbsp;
             </label>
-            ${information.accountId}
+            ${user.accountId}
         </div>
         <div class="info">
           <label>性别：&nbsp;&nbsp;</label>
             <select name="sex">
-            <c:if test="${information.sex=='male'}">
+            <c:if test="${user.sex=='male'}">
                 <option selected="selected">男</option>
                 <option>女</option>
             </c:if>
-            <c:if test="${information.sex=='female'}">
+            <c:if test="${user.sex=='female'}">
                 <option>男</option>
                 <option selected="selected">女</option>
             </c:if>
@@ -40,7 +40,7 @@
         </div>
         <div class="info">
             <label>联系电话:&nbsp;&nbsp;</label>
-            <input type="text" name="phoneNumber" size="14" value="${information.phoneNumber}">
+            <input type="text" name="phoneNumber" size="14" value="${user.phoneNumber}">
         </div>
         <div class="info">
             <input class="button" type="submit" value="提交">
