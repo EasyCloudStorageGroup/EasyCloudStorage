@@ -49,9 +49,16 @@ public class ProfileControllor {
     public String modifyInfo(@RequestParam String name,@RequestParam String sex,@RequestParam String phoneNumber,
                              HttpSession session){
         User newUser=new User();
-        if(sex.equals("男")) sex="male";
-        else sex="female";
-        newUser.setAccountId(((User)session.getAttribute("User")).getAccountId());
+        User sessionUser=new User();
+
+        //更新会话的user信息
+        sessionUser=((User)session.getAttribute("user"));
+        sessionUser.setPhoneNumber(phoneNumber);
+        sessionUser.setSex(sex);
+        sessionUser.setUserName(name);
+
+        //更新数据库的user信息
+        newUser.setAccountId(((User)session.getAttribute("user")).getAccountId());
         newUser.setUserName(name);
         newUser.setSex(sex);
         newUser.setPhoneNumber(phoneNumber);

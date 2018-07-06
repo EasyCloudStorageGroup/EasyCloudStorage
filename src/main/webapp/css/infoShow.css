@@ -1,15 +1,34 @@
 body{
     background-color: whitesmoke;
+    background-image: url("/EasyCloudStorage/img/home/backgroundImage.jpg");
 }
+
+#wholePage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#title{
+    margin: 10px;
+    width:800px;
+    display: flex;
+    align-items: flex-start;
+}
+#infoTitle{
+    margin: 7px;
+}
+
 .mainBoard{
     width:800px;
     height:500px;
     /*text-align: center;*/
-    border: 1px solid grey;
+    border: 1px grey;
     line-height: 60px;
     display: flex;
     background-color: white;
-    margin: 40px auto;
+    margin: 5px auto;
 }
 .leftPart{
     width: 280px;
@@ -19,12 +38,22 @@ body{
     flex-direction: column;
     justify-content: center;
 }
+#leftInfo{
+    width: 120px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-right: 20px;
+    border-right: 1px solid gainsboro;
+}
+
 .rightPart{
     width: 520px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border:1px solid gray;
+    border:1px gray;
     padding-left: 50px;
 }
 .img{
@@ -35,13 +64,15 @@ body{
 .button{
     text-align: center;
 }
-.leftInfo{
+.leftInfomation{
     margin-top: 10px;
+    margin-right: 20px;
 }
 .avatar{
     width: 60px;
     height: 60px;
     border-radius: 50%;
+    margin-right: 20px;
 }
 .innerAvatar{
     width: 200px;
