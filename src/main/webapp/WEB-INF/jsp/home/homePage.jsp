@@ -45,6 +45,7 @@
 <%@ include file="../shared/navigator.jsp"%>
 
 <div class="file-manager-board">
+    <%@ include file="include/orderNav.jsp"%>
     <table width="80%" align="center">
         <tr>
             <td>编号</td>

@@ -93,4 +93,64 @@ public class ShowService {
     }
 */
 
+    /*
+     * 对普通文件列表进行排序
+     */
+    public void orderNarmalFileList(List<NormalFile> nfs, String orderBy) {
+        if(orderBy == null)
+            orderBy = "name";
+
+        for(int i = 0; i < nfs.size()-1; i++) {
+            for(int j = 0; j < nfs.size()-i-1; j++) {
+                if(orderBy.equals("name")) {
+                    if(nfs.get(i).getName().toLowerCase().compareTo(nfs.get(i+1).getName().toLowerCase())>0) {
+                        NormalFile nf = nfs.get(i);
+                        nfs.set(i, nfs.get(i+1));
+                        nfs.set(i+1, nf);
+                    }
+                }
+                else if(orderBy.equals("lastMovedTime")) {
+                    if(nfs.get(i).getLastMovedTime().compareTo(nfs.get(i+1).getLastMovedTime())>0) {
+                        NormalFile nf = nfs.get(i);
+                        nfs.set(i, nfs.get(i+1));
+                        nfs.set(i+1, nf);
+                    }
+                }
+                else if(orderBy.equals("size")) {
+                    if(nfs.get(i).getSize().compareTo(nfs.get(i+1).getSize())>0) {
+                        NormalFile nf = nfs.get(i);
+                        nfs.set(i, nfs.get(i+1));
+                        nfs.set(i+1, nf);
+                    }
+                }
+            }
+        }
+    }
+
+    public void orderDirectoryList(List<Directory> ds, String orderBy) {
+        if(orderBy == null)
+            orderBy = "name";
+
+        for(int i = 0; i < ds.size()-1; i++) {
+            for(int j = 0; j < ds.size()-i-1; j++) {
+                if(orderBy.equals("name")) {
+                    if(ds.get(i).getName().toLowerCase().compareTo(ds.get(i+1).getName().toLowerCase())>0) {
+                        Directory d = ds.get(i);
+                        ds.set(i, ds.get(i+1));
+                        ds.set(i+1, d);
+                    }
+                }
+                else if(orderBy.equals("lastMovedTime")) {
+                    if(ds.get(i).getLastMovedTime().compareTo(ds.get(i+1).getLastMovedTime())>0) {
+                        Directory d = ds.get(i);
+                        ds.set(i, ds.get(i+1));
+                        ds.set(i+1, d);
+                    }
+                }
+                else if(orderBy.equals("size")) {
+                }
+            }
+        }
+    }
+
 }
