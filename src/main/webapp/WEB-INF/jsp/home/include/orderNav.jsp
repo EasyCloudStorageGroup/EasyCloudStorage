@@ -12,13 +12,13 @@
 
 <div class="layui-btn-group order-btn-group">
     <a href="orderFile?orderBy=name">
-        <button class="layui-btn layui-btn-sm">
+        <button class="layui-btn layui-btn-sm" style="margin-right: 3px!important;">
             文件名
             <i class="layui-icon">&#xe619;</i>
         </button>
     </a>
     <a href="orderFile?orderBy=size">
-        <button class="layui-btn layui-btn-sm">
+        <button class="layui-btn layui-btn-sm" style="margin-right: 3px!important;">
             大小
             <i class="layui-icon">&#xe619;</i>
         </button>

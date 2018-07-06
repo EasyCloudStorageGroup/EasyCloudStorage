@@ -2,6 +2,7 @@ package com.easycloudstorage.service.filemodule;
 
 import com.easycloudstorage.mapper.filemodule.ShowMapper;
 import com.easycloudstorage.pojo.Directory;
+import com.easycloudstorage.pojo.File;
 import com.easycloudstorage.pojo.NormalFile;
 import com.easycloudstorage.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class ShowService {
     @Autowired
     private ShowMapper showMapper;
+
     public List<NormalFile> normalFileList()
     {
         return  showMapper.normalFileList();
@@ -103,30 +105,33 @@ public class ShowService {
         for(int i = 0; i < nfs.size()-1; i++) {
             for(int j = 0; j < nfs.size()-i-1; j++) {
                 if(orderBy.equals("name")) {
-                    if(nfs.get(i).getName().toLowerCase().compareTo(nfs.get(i+1).getName().toLowerCase())>0) {
-                        NormalFile nf = nfs.get(i);
-                        nfs.set(i, nfs.get(i+1));
-                        nfs.set(i+1, nf);
+                    if(nfs.get(j).getName().toLowerCase().compareTo(nfs.get(j+1).getName().toLowerCase())>0) {
+                        NormalFile nf = nfs.get(j);
+                        nfs.set(j, nfs.get(j+1));
+                        nfs.set(j+1, nf);
                     }
                 }
                 else if(orderBy.equals("lastMovedTime")) {
-                    if(nfs.get(i).getLastMovedTime().compareTo(nfs.get(i+1).getLastMovedTime())>0) {
-                        NormalFile nf = nfs.get(i);
-                        nfs.set(i, nfs.get(i+1));
-                        nfs.set(i+1, nf);
+                    if(nfs.get(j).getLastMovedTime().compareTo(nfs.get(j+1).getLastMovedTime())>0) {
+                        NormalFile nf = nfs.get(j);
+                        nfs.set(j, nfs.get(j+1));
+                        nfs.set(j+1, nf);
                     }
                 }
                 else if(orderBy.equals("size")) {
-                    if(nfs.get(i).getSize().compareTo(nfs.get(i+1).getSize())>0) {
-                        NormalFile nf = nfs.get(i);
-                        nfs.set(i, nfs.get(i+1));
-                        nfs.set(i+1, nf);
+                    if(nfs.get(j).getSize().compareTo(nfs.get(j+1).getSize())>0) {
+                        NormalFile nf = nfs.get(j);
+                        nfs.set(j, nfs.get(j+1));
+                        nfs.set(j+1, nf);
                     }
                 }
             }
         }
     }
 
+    /*
+     * 目录排序
+     */
     public void orderDirectoryList(List<Directory> ds, String orderBy) {
         if(orderBy == null)
             orderBy = "name";
@@ -134,22 +139,44 @@ public class ShowService {
         for(int i = 0; i < ds.size()-1; i++) {
             for(int j = 0; j < ds.size()-i-1; j++) {
                 if(orderBy.equals("name")) {
-                    if(ds.get(i).getName().toLowerCase().compareTo(ds.get(i+1).getName().toLowerCase())>0) {
-                        Directory d = ds.get(i);
-                        ds.set(i, ds.get(i+1));
-                        ds.set(i+1, d);
+                    if(ds.get(j).getName().toLowerCase().compareTo(ds.get(j+1).getName().toLowerCase())>0) {
+                        Directory d = ds.get(j);
+                        ds.set(j, ds.get(j+1));
+                        ds.set(j+1, d);
                     }
                 }
                 else if(orderBy.equals("lastMovedTime")) {
-                    if(ds.get(i).getLastMovedTime().compareTo(ds.get(i+1).getLastMovedTime())>0) {
-                        Directory d = ds.get(i);
-                        ds.set(i, ds.get(i+1));
-                        ds.set(i+1, d);
+                    if(ds.get(j).getLastMovedTime().compareTo(ds.get(j+1).getLastMovedTime())>0) {
+                        Directory d = ds.get(j);
+                        ds.set(j, ds.get(j+1));
+                        ds.set(j+1, d);
                     }
                 }
                 else if(orderBy.equals("size")) {
                 }
             }
+        }
+    }
+
+    /*
+     * 文件名搜索
+     */
+    public void searchFiles(List<NormalFile> srcNFiles, List<Directory> srcDirectories,
+                            List<NormalFile> searchedNFiles, List<Directory> searchedDirectories,
+                            String keyword) {
+        for(NormalFile srcNFile : srcNFiles) {
+            if(srcNFile.getName().toLowerCase().contains(keyword.toLowerCase()))
+                searchedNFiles.add(srcNFile);
+        }
+
+        for(Directory directory : srcDirectories) {
+            if(directory.getName().toLowerCase().contains(keyword.toLowerCase()))
+                searchedDirectories.add(directory);
+
+            List<Directory> nextSrcDirs = showDirectory(directory.getDirId(), directoryList());
+            List<NormalFile> nexSrcNFiles = showNormalFile(directory.getDirId(), normalFileList());
+
+            searchFiles(nexSrcNFiles, nextSrcDirs, searchedNFiles, searchedDirectories, keyword);
         }
     }
 

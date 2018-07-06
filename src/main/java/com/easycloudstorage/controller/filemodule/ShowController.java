@@ -20,60 +20,65 @@ public class ShowController {
     private ShowService showService;
 
     @RequestMapping("homePage")
-    public ModelAndView show(String dirId, HttpSession session, String orderBy) {
+    public ModelAndView show(String dirId, HttpSession session) {
 
         Directory rootDirectory=null;
 
         User user=(User)session.getAttribute("user");
 
         if(dirId==null) {//如果是第一次进入该函数，该函数为用户的根目录，此时dirID为空，先找到用户的根目录
-
             rootDirectory = showService.rootDirectory(user, showService.directoryList()); //找到用户的根目录
-
             dirId = rootDirectory.getDirId();
         }
 
-        session.setAttribute("dirId", dirId);
-
         List<Directory> directoryList=new ArrayList<Directory>();//当前目录下的子目录，即根目录下的第一层目录
-
         directoryList=showService.showDirectory(dirId,showService.directoryList());
-
         List<NormalFile> normalFileList=new ArrayList<NormalFile>();//当前目录下的文件,即根目录下的文件
-
         normalFileList=showService.showNormalFile(dirId,showService.normalFileList());
 
+        session.setAttribute("currentNormalFiles", normalFileList);
+        session.setAttribute("currentDirectories", directoryList);
+
         ModelAndView mv = new ModelAndView();
-
         mv.setViewName("home/homePage");
-
-        mv.addObject("directoryList",directoryList);//根目录下的子目录
-
-        mv.addObject("normalFileList",normalFileList);//根目录下的文件
-
-        mv.addObject("rootDirectory", rootDirectory);//根目录
 
         return mv;
     }
 
     @RequestMapping("orderFile")
-    public ModelAndView orderFile(HttpSession session, String orderBy) {
-        String dirId = (String) session.getAttribute("dirId");
+    public String orderFile(HttpSession session, String orderBy) {
 
-        List<Directory> directoryList=new ArrayList<Directory>();//当前目录下的子目录，即根目录下的第一层目录
-        directoryList=showService.showDirectory(dirId,showService.directoryList());
-        List<NormalFile> normalFileList=new ArrayList<NormalFile>();//当前目录下的文件,即根目录下的文件
-        normalFileList=showService.showNormalFile(dirId,showService.normalFileList());
+        List<Directory> directoryList = (List<Directory>)session.getAttribute("currentDirectories");
+        List<NormalFile> normalFileList= (List<NormalFile>)session.getAttribute("currentNormalFiles");
 
         showService.orderDirectoryList(directoryList, orderBy);
         showService.orderNarmalFileList(normalFileList, orderBy);
 
-        ModelAndView mv = new ModelAndView();
+        session.setAttribute("currentNormalFiles", normalFileList);
+        session.setAttribute("currentDirectories", directoryList);
 
-        mv.setViewName("home/homePage");
-        mv.addObject("directoryList",directoryList);//根目录下的子目录
-        mv.addObject("normalFileList",normalFileList);//根目录下的文件
+        return "home/homePage";
+    }
 
-        return mv;
+    @RequestMapping("searchFiles")
+    public String searchFiles(HttpSession session, String keyword) {
+        String rootId;
+        Directory rootDirectory;
+        User user=(User)session.getAttribute("user");
+        rootDirectory = showService.rootDirectory(user, showService.directoryList());
+        rootId = rootDirectory.getDirId();
+
+        List<Directory> rootDirs = showService.showDirectory(rootId,showService.directoryList());
+        List<NormalFile> rootNFiles = showService.showNormalFile(rootId,showService.normalFileList());
+
+        List<Directory> searchedDirs = new ArrayList<>();
+        List<NormalFile> searchedNFiles = new ArrayList<>();
+
+        showService.searchFiles(rootNFiles, rootDirs, searchedNFiles, searchedDirs, keyword);
+
+        session.setAttribute("currentNormalFiles", searchedNFiles);
+        session.setAttribute("currentDirectories", searchedDirs);
+
+        return "home/homePage";
     }
 }

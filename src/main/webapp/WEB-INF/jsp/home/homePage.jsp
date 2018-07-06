@@ -46,6 +46,7 @@
 
 <div class="file-manager-board">
     <%@ include file="include/orderNav.jsp"%>
+    <%@ include file="include/searchBox.jsp"%>
     <table width="80%" align="center">
         <tr>
             <td>编号</td>
@@ -53,7 +54,7 @@
             <td>最后一次修改时间</td>
             <td>路径</td>
         </tr>
-        <c:forEach items="${directoryList}" var="Directory">
+        <c:forEach items="${currentDirectories}" var="Directory">
             <tr>
                 <td><a href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" id=${Directory.dirId} > ${Directory.dirId }</a></td>
                 <td>${Directory.name}</td>
@@ -61,7 +62,7 @@
                 <td>${Directory.realPath}</td>
             </tr>
         </c:forEach>
-        <c:forEach items="${normalFileList}" var="NormalFile">
+        <c:forEach items="${currentNormalFiles}" var="NormalFile">
             <tr>
                 <td>${NormalFile.fileId }</td>
                 <td>${NormalFile.name}</td>
