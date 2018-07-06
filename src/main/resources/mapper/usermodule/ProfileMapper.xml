@@ -5,7 +5,7 @@
 
 <mapper namespace="com.easycloudstorage.mapper.usermodule.ProfileMapper">
     <select id="userInfo" resultType="User">
-        select * from User where accountId='1001';
+        select * from User where accountId=#{accountId};
     </select>
 
     <update id="modifyInfo" parameterType="User">
