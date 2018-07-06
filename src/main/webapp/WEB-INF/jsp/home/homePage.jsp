@@ -48,11 +48,19 @@
 <div class="file-manager-board">
     <%@ include file="include/orderNav.jsp"%>
 
+
     <%@ include file="include/searchBox.jsp"%>
+
+
 
 
     <script src="/EasyCloudStorage/js/homePage/fileShow.js" charset="utf-8"></script>
 
+    <a  href="/EasyCloudStorage/homePage?dirId=${rootDirectory.dirId}"}><font size="3" color="#0066CC">全部文件||</font></a>
+
+    <c:forEach items="${directoryList}" var="Directory">
+        <a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}></a>
+    </c:forEach>
     <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo"  >
         <thead>
 
@@ -71,7 +79,9 @@
 
             <tr>
                 <td ><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>
-                <td ><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" id=${Directory.name}>${Directory.name}</a></td>
+
+                <td ><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td>
+
                 <td >${Directory.lastMovedTime}</td>
             </tr>
         </c:forEach>
@@ -88,6 +98,7 @@
 
         </tbody>
     </table>
+
 </div>
 
 </body>
