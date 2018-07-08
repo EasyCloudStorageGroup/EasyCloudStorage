@@ -47,12 +47,12 @@
 <style>
     .empty-notice-board{
         position: relative;
-        left: 500px;
-        top: 300px;
+        left: 400px;
+        top: 100px;
         background-color: white;
         border-radius:10px;
+        opacity:0.6;
 
-        color:rgba(0,0,0,0.5)
 
     }
 </style>
@@ -83,7 +83,8 @@
 <c:choose>
     <c:when test="${empty currentDirectories&&empty currentNormalFiles}">
 
-        <div class="empty-notice-board" ><h1>当前没有任何文件哦,赶紧上传一个吧！</h1></div>
+        <div class="empty-notice-board" ><img src="/EasyCloudStorage/img/home/smile.PNG" width="400px" height="320px"/>
+            <h2>当前没有任何文件哦,赶紧上传一个吧！</h2></div>
 
     </c:when>
     <c:otherwise>

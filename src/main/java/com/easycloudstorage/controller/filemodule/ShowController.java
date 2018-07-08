@@ -31,6 +31,7 @@ public class ShowController {
 
         if(dirId==null) {//如果是第一次进入该函数，该函数为用户的根目录，此时dirID为空，先找到用户的根目录
             rootDirectory = showService.rootDirectory(user, showService.directoryList()); //找到用户的根目录
+
             dirId = rootDirectory.getDirId();
         }
 
@@ -68,6 +69,7 @@ public class ShowController {
 
             }
             parentDirList.add(parentDir);
+            parentDirList.get(0).setName("全部文件");
             if(parentDir==null) {
                 parentDirList = new ArrayList<Directory>();
             }
