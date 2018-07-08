@@ -21,6 +21,13 @@
     }
 </style>
 <div class="button-board">
+    <a href="test">
+        <button class="layui-btn layui-btn-sm">
+            上传文件
+            <i class="layui-icon">&#xe619;</i>
+        </button>
+    </a>
+
 <div class="layui-btn-group order-btn-group" >
     <a href="orderFile?orderBy=name">
         <button class="layui-btn layui-btn-sm" style="margin-right: 3px!important;">
@@ -40,4 +47,5 @@
             <i class="layui-icon">&#xe619;</i>
         </button>
     </a>
-</div></div>
+</div>
+</div>

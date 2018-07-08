@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycloudstorage.mapper.filemodule.FileMapper">
+    <insert id="insertFile" parameterType="com.easycloudstorage.pojo.NormalFile">
+        INSERT INTO `easycloudstorage`.`normalfile` (`name`, `lastMovedTime`, `realPath`, `type`, `size`, `parentDirId`, `ownerId`)
+        VALUES (#{name},#{lastMovedTime}, #{realPath}, #{type},#{size}, #{parentDirId},#{ownerId});
+    </insert>
+</mapper>
