@@ -13,6 +13,7 @@
 
 <link rel="stylesheet" href="/EasyCloudStorage/css/homePage/homePage.css"/>
 <link rel="stylesheet" href="/EasyCloudStorage/css/homePage/fileShow.css">
+<script src="layui/layui.js"></script>
 
 <script>
     $(function() {
@@ -81,7 +82,7 @@
 
     <%@ include file="include/searchBox.jsp"%>
 
-    <script src="/EasyCloudStorage/js/homePage/fileShow.js" charset="utf-8"></script>
+
 <c:choose>
     <c:when test="${empty currentDirectories&&empty currentNormalFiles}">
 
