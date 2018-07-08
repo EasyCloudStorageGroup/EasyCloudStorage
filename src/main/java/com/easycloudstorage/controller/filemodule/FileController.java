@@ -1,9 +1,11 @@
 package com.easycloudstorage.controller.filemodule;
 
+import com.easycloudstorage.pojo.Directory;
 import com.easycloudstorage.pojo.FileManager;
 import com.easycloudstorage.pojo.Test;
 import com.easycloudstorage.service.TestService;
 
+import com.easycloudstorage.service.filemodule.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -20,23 +22,8 @@ import  com.easycloudstorage.pojo.User;
 @Controller
 public class FileController {
     @Autowired
-    private TestService testService;
+    private FileService fileService;
 
-    //定位到上传单个文件界面 /hello/upload
-    @RequestMapping("uploadPage")
-    public String showUploadPage(){
-        return "test/uploadPage";
-    }
-
-    @RequestMapping("tempFile")
-    public String temp(){
-        return "test/tempFile";
-    }
-
-    @RequestMapping("angular")
-    public String temp2(){
-        return "test/angularjs";
-    }
 
     @RequestMapping("test")
     public String temp3(){
@@ -47,20 +34,14 @@ public class FileController {
     @RequestMapping(value="/upload", method=RequestMethod.POST)
     public Result  doUploadFile(@RequestParam("file") MultipartFile[] files, HttpServletRequest request) {
         System.out.println("function called "+files.length);
-        String result=FileManager.uploadFiles(files,request);
+        String result=FileManager.uploadFiles(files,request,fileService);
         Result res=new Result();
+        if (result.equals("success"))
         res.setCode(0);
+        else
+            res.setCode(1);
         return res;
         }
-
-    @RequestMapping("upload")
-    @ResponseBody
-    public  Result upload(){
-        Result res=new Result();
-        res.setCode(0);
-        System.out.println("访问");
-        return res;
-    }
 
 }
 

@@ -1,5 +1,7 @@
 <html>
 <body>
-<h2>Hello World!</h2>
+<script>
+    window.location = "/EasyCloudStorage/homePage"
+</script>
 </body>
 </html>
