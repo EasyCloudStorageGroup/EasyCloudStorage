@@ -24,24 +24,29 @@
 
 <style>
     .search-box {
+        position: absolute;
         width: 250px;
+        right: 400px;
     }
 
     .search-box .search-box-input {
         background-color: rgb(240, 240, 240);
         border-radius:15px;
+
     }
 
     .search-box-but {
+      position:absolute;
+        right: 320px;
 
     }
 </style>
 
-<div class="layui-input-inline search-box" style="margin-left:400px">
+<div class="layui-input-inline search-box" >
     <input class="layui-input search-box-input" type="text" placeholder="搜索文件"/>
 </div>
 <a href="searchFiles" class="search-box-but-link">
-    <button class="layui-btn layui-btn-radius layui-btn-primary search-box-but" style="margin-left: auto">
+    <button class="layui-btn layui-btn-radius layui-btn-primary search-box-but" >
         搜索
     </button>
 </a>

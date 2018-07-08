@@ -81,7 +81,6 @@ public class ShowService {
                 result.add(tem);
         }
         return result;
-
     }
 
     public  Directory findParentDir(String dirId,List<Directory> directoryList)//找到该dir的父目录
@@ -110,11 +109,29 @@ public class ShowService {
         for(int i=0;i<directoryList.size();i++)
         {
             currentDir=directoryList.get(i);
-            if(dirId.equals(currentDir.getDirId()))
+            if(dirId!=null&&dirId.equals(currentDir.getDirId()))
                 return currentDir;
 
         }
         return null;
+    }
+    public List<NormalFile> findFileByType(String type,User user,List<NormalFile> normalFileList)
+    {
+        NormalFile tem=new NormalFile();
+        List<NormalFile> result=new ArrayList<NormalFile>();
+        for(int i=0;i<normalFileList.size();i++) {
+            tem = normalFileList.get(i);
+            if(!type.equals("other")){
+            if (tem.getOwnerId().equals(user.getAccountId())&&tem.getType().equals(type))
+                result.add(tem);
+            }
+            else{
+                if (tem.getOwnerId().equals(user.getAccountId())&&!tem.getType().equals("jpg")&&!tem.getType().equals("mp3")&&!tem.getType().equals("mp4"))
+                    result.add(tem);
+            }
+
+        }
+        return result;
     }
 
     /*
