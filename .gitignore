@@ -1,0 +1,4 @@
+#上传到github时，过滤（不上传）以下文件
+target/
+.idea/
+EasyCloudStorage.iml
