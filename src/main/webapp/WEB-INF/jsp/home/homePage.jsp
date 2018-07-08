@@ -135,6 +135,7 @@
     <li><a href="#" class="demo" onclick="openRenameFileMenu()" data-type="rename">重命名</a></li>
     <li><a href="#" onclick="openDeleteFileMenu()">删除</a></li>
     <li><a href="#" onclick="openMoveFileMenu()">移动到</a></li>
+    <li><a href="#" onclick="openNewDirectoryMenu()">新建文件夹</a></li>
 </ul>
 <div style="display: none" id="formTest">
     <label>重命名为：</label>
