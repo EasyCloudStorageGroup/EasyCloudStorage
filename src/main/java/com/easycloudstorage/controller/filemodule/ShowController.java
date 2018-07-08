@@ -22,7 +22,10 @@ public class ShowController {
     @RequestMapping("homePage")
     public ModelAndView show(String dirId, HttpSession session) {
 
-        Directory rootDirectory=null;
+        Directory rootDirectory=null;//当前目录
+
+        Directory parentDir;
+
 
         User user=(User)session.getAttribute("user");
 
@@ -31,13 +34,50 @@ public class ShowController {
             dirId = rootDirectory.getDirId();
         }
 
+
         List<Directory> directoryList=new ArrayList<Directory>();//当前目录下的子目录，即根目录下的第一层目录
         directoryList=showService.showDirectory(dirId,showService.directoryList());
         List<NormalFile> normalFileList=new ArrayList<NormalFile>();//当前目录下的文件,即根目录下的文件
         normalFileList=showService.showNormalFile(dirId,showService.normalFileList());
 
+        List<Directory> parentDirList=(List<Directory>)session.getAttribute("parentDirList");
+        Directory tem;
+        int position;
+        List<Directory> temp=new ArrayList<Directory>();
+        if(parentDirList==null)
+        {
+            parentDirList=new ArrayList<Directory>();
+        }
+        else {
+
+            parentDir = showService.findParentDir(dirId, showService.directoryList());
+
+
+            for (int i=0;i<parentDirList.size();i++) {
+                tem=parentDirList.get(i);
+                if(parentDir!=null&&parentDir.getDirId().equals(tem.getDirId()))
+                {
+                    position=i;
+                    for(int j=0;j<position-2;j++)
+                    {
+                        temp.add(parentDirList.get(j));
+                    }
+                    parentDirList=temp;
+                    break;
+                }
+
+            }
+            parentDirList.add(parentDir);
+            if(parentDir==null) {
+                parentDirList = new ArrayList<Directory>();
+            }
+        }
+
+
         session.setAttribute("currentNormalFiles", normalFileList);
         session.setAttribute("currentDirectories", directoryList);
+        session.setAttribute("rootDirectory",rootDirectory);
+        session.setAttribute("parentDirList", parentDirList);
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName("home/homePage");

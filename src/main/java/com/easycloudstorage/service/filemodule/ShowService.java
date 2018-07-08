@@ -20,13 +20,22 @@ public class ShowService {
     private ShowMapper showMapper;
 
     public List<NormalFile> normalFileList()
-    {
-        return  showMapper.normalFileList();
+    {List<NormalFile> list=showMapper.normalFileList();
+        for (NormalFile normalFile:list
+                ) {
+            normalFile.setDisplayTime();
+        }
+
+        return  list;
     };//这里返回的是数据库中的所有非目录文件
     public List<Directory> directoryList()
     {
-        System.out.println("oooos");
+
         List<Directory> list =showMapper.directoryList();
+        for (Directory directory:list
+             ) {
+            directory.setDisplayTime();
+        }
         System.out.println("======="+list.size());
         return  list;
     };//这里返回的是数据库中的所有目录
@@ -71,6 +80,26 @@ public class ShowService {
         }
         return result;
 
+    }
+
+    public  Directory findParentDir(String dirId,List<Directory> directoryList)//找到该dir的父目录
+    {
+
+        Directory currentDir=new Directory();
+
+        Directory parentDir=new Directory();
+
+        for(int i=0;i<directoryList.size();i++) {//找到该dirId的dir对象
+            currentDir = directoryList.get(i);
+            if (currentDir.getDirId().equals(dirId))//通过Id找到了该对象
+                break;
+        }
+    for(int i=0;i<directoryList.size();i++) {//找到该dirId的dir对象
+        parentDir = directoryList.get(i);
+        if (currentDir.getParentDirId()!=null&&currentDir.getParentDirId().equals(parentDir.getDirId()))//通过Id找到了该对象
+            return parentDir;
+        }
+    return null;
     }
 /* public  JSONArray DirListToJson(List<Directory> directoryList) {
         JSONArray jsonArray = new JSONArray();

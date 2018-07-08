@@ -1,5 +1,6 @@
 package com.easycloudstorage.pojo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class File {
@@ -8,6 +9,16 @@ public class File {
     private String realPath;
     private String parentDirId;
     private String ownerId;
+    private String displayTime;
+
+    public void setDisplayTime(){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        displayTime=sdf.format(lastMovedTime);
+
+    }
+
+    public String getDisplayTime(){return displayTime;}
 
     public String getName() {
         return name;

@@ -48,19 +48,24 @@
 <div class="file-manager-board">
     <%@ include file="include/orderNav.jsp"%>
 
+<c:choose>
+    <c:when test="${empty parentDirList}">
+        全部文件
+    </c:when>
+
+    <c:otherwise>
+        <c:forEach items="${parentDirList}" var="Directory">
+            <a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}>></a>
+        </c:forEach>
+    </c:otherwise>
+</c:choose>
+
+
 
     <%@ include file="include/searchBox.jsp"%>
 
-
-
-
     <script src="/EasyCloudStorage/js/homePage/fileShow.js" charset="utf-8"></script>
 
-    <a  href="/EasyCloudStorage/homePage?dirId=${rootDirectory.dirId}"}><font size="3" color="#0066CC">全部文件||</font></a>
-
-    <c:forEach items="${directoryList}" var="Directory">
-        <a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}></a>
-    </c:forEach>
     <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo"  >
         <thead>
 
@@ -69,9 +74,6 @@
             <th lay-data="{field:'username', width:50}">名称</th>
             <th lay-data="{field:'joinTime', width:50}">最后移动时间</th>
         </tr>
-
-
-
         </thead>
         <tbody>
         <c:forEach items="${currentDirectories}" var="Directory">
@@ -82,7 +84,7 @@
 
                 <td ><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td>
 
-                <td >${Directory.lastMovedTime}</td>
+                <td >${Directory.displayTime}</td>
             </tr>
         </c:forEach>
 
@@ -91,7 +93,7 @@
             <tr>
                 <td ><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
                 <td >${NormalFile.name}.${NormalFile.type}</td>
-                <td>${NormalFile.lastMovedTime}</td>
+                <td>${NormalFile.displayTime}</td>
 
             </tr>
         </c:forEach>

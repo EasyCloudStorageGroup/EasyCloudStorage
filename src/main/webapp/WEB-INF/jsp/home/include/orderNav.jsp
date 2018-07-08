@@ -17,7 +17,7 @@
         background-color: white;
         border-radius:10px;
         height: 30px;
-        width: 300px;
+        width: 280px;
     }
 </style>
 <div class="button-board">

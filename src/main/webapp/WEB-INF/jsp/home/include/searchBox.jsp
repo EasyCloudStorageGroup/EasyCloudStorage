@@ -37,11 +37,11 @@
     }
 </style>
 
-<div class="layui-input-inline search-box">
+<div class="layui-input-inline search-box" style="margin-left:400px">
     <input class="layui-input search-box-input" type="text" placeholder="搜索文件"/>
 </div>
 <a href="searchFiles" class="search-box-but-link">
-    <button class="layui-btn layui-btn-radius layui-btn-primary search-box-but">
+    <button class="layui-btn layui-btn-radius layui-btn-primary search-box-but" style="margin-left: auto">
         搜索
     </button>
 </a>
