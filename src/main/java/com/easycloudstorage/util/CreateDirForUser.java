@@ -6,7 +6,7 @@ import com.easycloudstorage.pojo.User;
 import java.io.File;
 
 public class CreateDirForUser {
-    private static String path = "E:\\EasyCloudStorageData\\";
+    private static String path = "D:\\EasyCloudStorageData\\";
 
     public String createDir(User user){
         String userRootDir = path + user.getAccountId();
