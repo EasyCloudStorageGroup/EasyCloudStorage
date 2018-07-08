@@ -19,4 +19,8 @@
         select * from user where accountId = #{0}
     </select>
 
+    <insert id = "addDir" parameterType="File">
+        insert into directory(name, lastMovedTime, parentDirId, ownerId, realPath) values (#{name}, #{lastMovedTime}, #{parentDirId}, #{ownerId}, #{realPath})
+    </insert>
+
 </mapper>
