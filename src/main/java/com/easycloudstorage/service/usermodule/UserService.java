@@ -1,6 +1,8 @@
 package com.easycloudstorage.service.usermodule;
 
 import com.easycloudstorage.mapper.usermodule.UserMapper;
+import com.easycloudstorage.pojo.Directory;
+import com.easycloudstorage.pojo.File;
 import com.easycloudstorage.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,4 +22,6 @@ public class UserService {
     public User getUserByAccountId(String accountId) {
         return userMapper.getUserByAccountId(accountId);
     }
+
+    public void addDir(File file){userMapper.addDir(file);}
 }

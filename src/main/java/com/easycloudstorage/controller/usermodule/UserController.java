@@ -1,8 +1,10 @@
 package com.easycloudstorage.controller.usermodule;
 
+import com.easycloudstorage.pojo.File;
 import com.easycloudstorage.pojo.User;
 import java.util.*;
 import com.easycloudstorage.service.usermodule.UserService;
+import com.easycloudstorage.util.CreateDirForUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -122,6 +124,17 @@ public class UserController  {
                 user.setPhoneNumber(phoneNumber);
                 userService.addUser(user);
                 mv.setViewName("checkout/login");
+                //为每一个注册成功的用户生成一个根目录
+                CreateDirForUser cd = new CreateDirForUser();
+                String userRootDir = cd.createDir(user);
+                //向directory中添加数据
+                File file = new File();
+                file.setName(user.getAccountId());
+                file.setLastMovedTime(new Date());
+                file.setParentDirId(null);
+                file.setOwnerId(user.getAccountId());
+                file.setRealPath(userRootDir);
+                userService.addDir(file);
             }
             //mv.setViewName("checkout/register");
 
