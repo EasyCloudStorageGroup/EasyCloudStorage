@@ -4,6 +4,7 @@ public class NormalFile extends File {
     private String fileId;
     private String type;
     private String size;
+    private String sortType;
 
     public String getFileId() {
         return fileId;
@@ -29,7 +30,7 @@ public class NormalFile extends File {
         this.size = size;
     }
 
-    public String judgeType(){
+    public String getSortType(){
         this.type=this.type.toLowerCase();
         if(this.type.equals("jpg")||this.type.equals("png")||this.type.equals("gif")||this.type.equals("bmp")||
                 this.type.equals("tiff"))

@@ -97,7 +97,8 @@
         </thead>
         <tbody>
         <c:forEach items="${currentDirectories}" var="Directory">
-            <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id=${Directory.dirId}>
+            <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id="${Directory.dirId}"
+            sortType="Directory">
                 <td ><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>
 
                 <td ><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td>
@@ -107,7 +108,7 @@
         </c:forEach>
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
-            <tr class="normalFileClass" id=${NormalFile.fileId}>
+            <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
                 <td ><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
                 <td >${NormalFile.name}.${NormalFile.type}</td>
                 <td>${NormalFile.displayTime}</td>

@@ -26,10 +26,10 @@
     </div>
     <ul class="layui-nav layui-nav-tree layui-nav-side left-navigator">
         <li class="layui-nav-item layui-this"><a href="homePage">全部文件</a></li>
-        <li class="layui-nav-item"><a href="SortFile?typeTag=1">图片</a></li>
-        <li class="layui-nav-item"><a href="SortFile?typeTag=2">视频</a></li>
-        <li class="layui-nav-item"><a href="SortFile?typeTag=3">音乐</a></li>
-        <li class="layui-nav-item"><a href="SortFile?typeTag=4">其它</a></li>
+        <li class="layui-nav-item" sortType="Picture"><a>图片</a></li>
+        <li class="layui-nav-item" sortType="Vedio"><a>视频</a></li>
+        <li class="layui-nav-item" sortType="Music"><a>音乐</a></li>
+        <li class="layui-nav-item" sortType="Other"><a>其它</a></li>
     </ul>
 
     <ul class="layui-nav top-left-navigator">
