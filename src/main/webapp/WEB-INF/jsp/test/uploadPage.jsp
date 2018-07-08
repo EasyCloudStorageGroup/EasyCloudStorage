@@ -20,7 +20,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <title>上传单个文件示例</title>
-    <script></script>
+    <script type="text/javascript" src="js/FileManager/uploadModule.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/main.css" type="text/css" />
 
 </head>
@@ -31,11 +31,17 @@
 
     <h1>上传附件</h1>
 
-    <form method="post" action="upload" enctype="multipart/form-data" onformchange>
+    <form method="post" action="upload" enctype="multipart/form-data">
 
-        <input type="file" name="file" multiple="multiple" value="search" onchange="change"/>
-
+        <input type="file" id="uploader" name="file" multiple="multiple" value="浏览" onchange="onChange()"/>
         <button type="submit" >upload</button>
+        <table id="table" border="2">
+            <caption>传输列表</caption>
+            <tr>
+                <th width="100">名字</th>
+                <th width="=50">状态</th>
+            </tr>
+        </table>
 
     </form>
 

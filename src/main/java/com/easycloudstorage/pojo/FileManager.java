@@ -12,14 +12,24 @@ import java.io.InputStream;
 
 public class FileManager {
 
-    public static String upload(MultipartFile file, HttpServletRequest request){
+    public static String uploadFiles(MultipartFile[] files,HttpServletRequest request){
+
+        boolean flag=true;
+        for (MultipartFile file:files
+             ) {
+            String temp=uploadOneFile(file,request);
+            flag &= temp.equals("success");
+        }
+        if (flag==true)return "success";
+        else return "failed";
+    }
+    public static String uploadOneFile(MultipartFile file, HttpServletRequest request){
 
         System.out.println();
         String name=file.getOriginalFilename();
         User user=(User) request.getSession().getAttribute("user");
         user=new User();
         user.setUserName("why");
-        System.out.println(System.getProperty("user.dir"));
         java.io.File userDir=new File("D:\\EasyCloudStorageData\\"+user.getUserName());
         int BufferSize=4096;
         byte buffer[]=new byte[BufferSize];
@@ -27,18 +37,19 @@ public class FileManager {
             if (!userDir.exists())
             userDir.mkdir();
             File temp=new File(userDir,name);
-            FileOutputStream writer=new FileOutputStream(temp);
-            InputStream reader=file.getInputStream();
-
-            int number=0;
-            while ((number=reader.read(buffer))!=-1){
-
-                writer.write(buffer, 0, number);
-
-            }
-            writer.flush();
-            writer.close();
-            reader.close();
+            file.transferTo(temp);
+//            FileOutputStream writer=new FileOutputStream(temp);
+//            InputStream reader=file.getInputStream();
+//
+//            int number=0;
+//            while ((number=reader.read(buffer))!=-1){
+//
+//                writer.write(buffer, 0, number);
+//
+//            }
+//            writer.flush();
+//            writer.close();
+//            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
             return "failed";
