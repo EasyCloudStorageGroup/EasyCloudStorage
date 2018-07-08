@@ -21,4 +21,6 @@ public interface FileControllerMapper {
     void deleteNormalFile(NormalFile normalFile);
 
     void deleteDirectory(Directory directory);
+
+    void newDirectory(Directory directory);
 }

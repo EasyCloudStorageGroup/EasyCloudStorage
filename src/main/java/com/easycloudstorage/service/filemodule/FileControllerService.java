@@ -52,4 +52,9 @@ public class FileControllerService {
     {
         fileControllerMapper.deleteDirectory(directory);
     }
+
+    public void newDirectory(Directory directory)
+    {
+        fileControllerMapper.newDirectory(directory);
+    }
 }

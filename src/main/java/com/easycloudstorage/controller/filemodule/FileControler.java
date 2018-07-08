@@ -1,9 +1,11 @@
 package com.easycloudstorage.controller.filemodule;
 
 import com.easycloudstorage.mapper.filemodule.FileControllerMapper;
+import com.easycloudstorage.mapper.filemodule.ShowMapper;
 import com.easycloudstorage.pojo.Directory;
 import com.easycloudstorage.pojo.NormalFile;
 import com.easycloudstorage.pojo.User;
+import com.easycloudstorage.service.filemodule.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,11 +15,16 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+
 @Controller
 public class FileControler {
     private String dataDir="D:/EasyCloudStorageData/";
     @Autowired
     private FileControllerMapper fileControllerMapper;
+    @Autowired
+    private ShowMapper showMapper;
 
     @RequestMapping("rename")
     public ModelAndView list() {
@@ -80,6 +87,29 @@ public class FileControler {
             return "redirect:homePage";
         else
             return "redirect:homePage?dirId="+dirId;
+    }
+    @RequestMapping("newDirPage")
+    public String newDirectory(@RequestParam("dirId")String dirId, String newFileName,HttpSession session)
+    {
+        User user=(User)session.getAttribute("user");
+        List<Directory> directories= showMapper.directoryList();
+        ShowService showService = new ShowService();
+        Directory userRootDir = showService.rootDirectory(user, directories);
+        if(dirId.equals("-1") && userRootDir!=null)
+            dirId=(userRootDir).getDirId();
+        Directory directory=fileControllerMapper.selectDirectory(dirId);
+        File file=new File(directory.getRealPath()+"\\"+newFileName);
+        file.mkdir();
+
+        Directory newDir=new Directory();
+        newDir.setName(newFileName);
+        newDir.setLastMovedTime(new Date());
+        newDir.setParentDirId(dirId);
+        newDir.setOwnerId(user.getAccountId());
+        newDir.setRealPath(file.getAbsolutePath());
+        fileControllerMapper.newDirectory(newDir);
+
+        return "redirect:homePage?dirId="+dirId;
     }
     @RequestMapping("deleteFilePage")
     public String deleteFile(String fileId,String dirId)throws IOException

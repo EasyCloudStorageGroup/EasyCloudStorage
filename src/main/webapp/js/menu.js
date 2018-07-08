@@ -18,6 +18,7 @@ function menuEvent(event){
     clientMenu.style.top = event.clientY + 'px';
     clientMenu.style.visibility = 'visible';
     clientMenu.id=this.id;
+    clientMenu.objName=this.children[1].innerText;
     clientMenu.objClass=this.className;
     return false;
 }
@@ -42,7 +43,8 @@ function openRenameFileMenu()
         layer.prompt({
             formType: 0,
             title: '重命名为：',
-            area:'500px'
+            area:'500px',
+            value:clientMenu.objName
         }, function(value, index, elem){
             layer.close(index);
             if(clientMenu.objClass=="normalFileClass")
@@ -50,6 +52,37 @@ function openRenameFileMenu()
             else if(clientMenu.objClass=="dirClass")
                 window.location.href="renameDirectoryPage?oldFileId="+clientMenu.id+"&newFileName="+value+"&dirId="+dirId;
             layer.msg("重命名成功")
+        });
+
+    });
+    /*new MyLayer({
+        top:"40%",
+        left:"30%",
+        width:"40%",
+        height:"20%",
+        title:"重命名",
+        id:clientMenu.id,
+        content:"renameFileMenu"
+    }).openLayer();*/
+}
+function openNewDirectoryMenu()
+{
+    var result=/dirId=([0-9]+)/.exec(window.location.href);
+    var dirId;
+    if(result!=null&&result.length>1) dirId=result[1];
+    else dirId=-1;
+    layui.use('layer',function () {
+        var $ = layui.jquery, layer = layui.layer;
+
+        layer.prompt({
+            formType: 0,
+            title: '新建文件夹：',
+            area:'500px',
+            value:"新建文件夹"
+        }, function(value, index, elem){
+            layer.close(index);
+            window.location.href="newDirPage?dirId="+dirId+"&newFileName="+value;
+            layer.msg("新建文件夹成功")
         });
 
     });
@@ -78,7 +111,7 @@ function openDeleteFileMenu()
     },function () {
         layer.msg("删除成功",{time:6000});
         if(clientMenu.objClass=="normalFileClass")
-            window.location.href="deleteFilePage?oldFileId="+clientMenu.id+"&dirId="+dirId;
+            window.location.href="deleteFilePage?fileId="+clientMenu.id+"&dirId="+dirId;
         else if(clientMenu.objClass=="dirClass")
         window.location.href="deleteDirectoryPage?fileId="+clientMenu.id+"&dirId="+dirId;
         });

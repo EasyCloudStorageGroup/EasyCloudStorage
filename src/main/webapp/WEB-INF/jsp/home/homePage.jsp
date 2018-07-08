@@ -62,6 +62,8 @@
 
 
 <div class="file-manager-board">
+    <a href="#" onclick="openNewDirectoryMenu()"><button class="layui-btn layui-btn-normal">新建文件夹</button></a>
+    <%@ include file="include/searchBox.jsp"%>
     <%@ include file="include/orderNav.jsp"%>
 
 <c:choose>
@@ -77,11 +79,6 @@
         ${currentDir.name}
     </c:otherwise>
 </c:choose>
-
-
-
-    <%@ include file="include/searchBox.jsp"%>
-
 
 <c:choose>
     <c:when test="${empty currentDirectories&&empty currentNormalFiles}">
