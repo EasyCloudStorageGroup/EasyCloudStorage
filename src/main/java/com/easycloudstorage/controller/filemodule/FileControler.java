@@ -51,7 +51,7 @@ public class FileControler {
         normalFile.setRealPath(newFile.getAbsolutePath());
         fileControllerMapper.updateNormalFile(normalFile);
 
-        if(dirId=="-1")
+        if(dirId.equals("-1"))
             return "redirect:homePage";
         else
             return "redirect:homePage?dirId="+dirId;

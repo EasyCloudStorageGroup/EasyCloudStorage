@@ -1,7 +1,7 @@
 var clientMenu = document.getElementById('clientMenu');
 var table = document.getElementById('1008');
-var testClass=document.getElementsByClassName("dirClass");
-var formText;
+var dirClass=document.getElementsByClassName("dirClass");
+var normalFileClass=document.getElementsByClassName("normalFileClass");
 
 function menuEvent(event){
     /*if(event.clientX + 242 > screen.availWidth){
@@ -18,6 +18,7 @@ function menuEvent(event){
     clientMenu.style.top = event.clientY + 'px';
     clientMenu.style.visibility = 'visible';
     clientMenu.id=this.id;
+    clientMenu.objClass=this.className;
     return false;
 }
 
@@ -44,7 +45,10 @@ function openRenameFileMenu()
             area:'500px'
         }, function(value, index, elem){
             layer.close(index);
-            window.location.href="renameDirectoryPage?oldFileId="+clientMenu.id+"&newFileName="+value+"&dirId="+dirId;
+            if(clientMenu.objClass=="normalFileClass")
+                window.location.href="renameFilePage?oldFileId="+clientMenu.id+"&newFileName="+value+"&dirId="+dirId;
+            else if(clientMenu.objClass=="dirClass")
+                window.location.href="renameDirectoryPage?oldFileId="+clientMenu.id+"&newFileName="+value+"&dirId="+dirId;
             layer.msg("重命名成功")
         });
 
@@ -73,6 +77,9 @@ function openDeleteFileMenu()
         btn:['确定','取消']
     },function () {
         layer.msg("删除成功",{time:6000});
+        if(clientMenu.objClass=="normalFileClass")
+            window.location.href="deleteFilePage?oldFileId="+clientMenu.id+"&dirId="+dirId;
+        else if(clientMenu.objClass=="dirClass")
         window.location.href="deleteDirectoryPage?fileId="+clientMenu.id+"&dirId="+dirId;
         });
     });
@@ -117,8 +124,10 @@ function openMoveFileMenu()
 function init(){
     //for(var child=0;child<table.childNodes.length;child++)
         //table.oncontextmenu=menuEvent;
-    for(var a =0; a<testClass.length;a++)
-        testClass[a].oncontextmenu=menuEvent;
+    for(var a =0; a<dirClass.length;a++)
+        dirClass[a].oncontextmenu=menuEvent;
+    for(var a =0; a<normalFileClass.length;a++)
+        normalFileClass[a].oncontextmenu=menuEvent;
     document.body.onclick=hiddenMenu;
     clientMenu.oncontextmenu = defaultMenu;
 }
