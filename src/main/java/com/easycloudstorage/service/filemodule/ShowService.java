@@ -20,13 +20,22 @@ public class ShowService {
     private ShowMapper showMapper;
 
     public List<NormalFile> normalFileList()
-    {
-        return  showMapper.normalFileList();
+    {List<NormalFile> list=showMapper.normalFileList();
+        for (NormalFile normalFile:list
+                ) {
+            normalFile.setDisplayTime();
+        }
+
+        return  list;
     };//这里返回的是数据库中的所有非目录文件
     public List<Directory> directoryList()
     {
-        System.out.println("oooos");
+
         List<Directory> list =showMapper.directoryList();
+        for (Directory directory:list
+             ) {
+            directory.setDisplayTime();
+        }
         System.out.println("======="+list.size());
         return  list;
     };//这里返回的是数据库中的所有目录
@@ -72,28 +81,39 @@ public class ShowService {
         return result;
 
     }
-/* public  JSONArray DirListToJson(List<Directory> directoryList) {
-        JSONArray jsonArray = new JSONArray();
-        if (directoryList() != null && usersList.size() > 0 ) {
 
+    public  Directory findParentDir(String dirId,List<Directory> directoryList)//找到该dir的父目录
+    {
 
-            for (Directory directory : directoryList) {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("dirId", directory.getDirId());
-                jsonObject.put("name", directory.getName());
-                jsonObject.put("lastMovedTime", directory.getLastMovedTime());
-                jsonObject.put(" realPath", directory.getRealPath());
-                jsonObject.put("parentDirId", directory.getParentDirId());
-                jsonObject.put("ownerId", directory.getOwnerId());
+        Directory currentDir=new Directory();
 
+        Directory parentDir=new Directory();
 
-                jsonArray.add(jsonObject);
-            }
+        for(int i=0;i<directoryList.size();i++) {//找到该dirId的dir对象
+            currentDir = directoryList.get(i);
+            if (currentDir.getDirId().equals(dirId))//通过Id找到了该对象
+                break;
         }
-
-        return jsonArray;
+    for(int i=0;i<directoryList.size();i++) {//找到该dirId的dir对象
+        parentDir = directoryList.get(i);
+        if (currentDir.getParentDirId()!=null&&currentDir.getParentDirId().equals(parentDir.getDirId()))//通过Id找到了该对象
+            return parentDir;
+        }
+    return null;
     }
-*/
+
+    public Directory findDirectoryById(String dirId,List<Directory> directoryList)
+    {
+        Directory currentDir=new Directory();
+        for(int i=0;i<directoryList.size();i++)
+        {
+            currentDir=directoryList.get(i);
+            if(dirId.equals(currentDir.getDirId()))
+                return currentDir;
+
+        }
+        return null;
+    }
 
     /*
      * 对普通文件列表进行排序

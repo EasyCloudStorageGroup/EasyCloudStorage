@@ -9,8 +9,26 @@
          isELIgnored="false"%>
 
 <link rel="stylesheet" href="/EasyCloudStorage/css/homePage/orderNav.css"/>
+<style>
+    .button-board {
+        position: relative;
+        left: 1000px;
+        top: 0px;
+        background-color: white;
+        border-radius:10px;
+        height: 30px;
+        width: 280px;
+    }
+</style>
+<div class="button-board">
+    <a href="test">
+        <button class="layui-btn layui-btn-sm">
+            上传文件
+            <i class="layui-icon">&#xe619;</i>
+        </button>
+    </a>
 
-<div class="layui-btn-group order-btn-group">
+<div class="layui-btn-group order-btn-group" >
     <a href="orderFile?orderBy=name">
         <button class="layui-btn layui-btn-sm" style="margin-right: 3px!important;">
             文件名
@@ -29,10 +47,5 @@
             <i class="layui-icon">&#xe619;</i>
         </button>
     </a>
-    <a href="test">
-        <button class="layui-btn layui-btn-sm">
-            上传文件
-            <i class="layui-icon">&#xe619;</i>
-        </button>
-    </a>
+</div>
 </div>

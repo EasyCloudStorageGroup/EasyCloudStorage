@@ -5,7 +5,7 @@
 
 <mapper namespace="com.easycloudstorage.mapper.filemodule.FileMapper">
     <insert id="insertFile" parameterType="com.easycloudstorage.pojo.NormalFile">
-        insert into normalfile
-        value (#{fileId},#{name},#{lastMovedTime},#{realPath},#{type},#{parentDirId},#{ownerId});
+        INSERT INTO `easycloudstorage`.`normalfile` (`name`, `lastMovedTime`, `realPath`, `type`, `size`, `parentDirId`, `ownerId`)
+        VALUES (#{name},#{lastMovedTime}, #{realPath}, #{type},#{size}, #{parentDirId},#{ownerId});
     </insert>
 </mapper>

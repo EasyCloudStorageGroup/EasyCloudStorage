@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 public class FileManager {
 
@@ -35,11 +36,10 @@ public class FileManager {
         String size=Long.toString(file.getSize());
         uploadFile.setSize(size+"kb");
         uploadFile.setType(file.getContentType());
-        uploadFile.setLastMovedTime(dir.getLastMovedTime());
+        uploadFile.setLastMovedTime(new Date());
         uploadFile.setOwnerId(dir.getOwnerId());
         uploadFile.setParentDirId(dir.getDirId());
         uploadFile.setRealPath(dir.getRealPath()+"\\"+name);
-        fileService.insertFile(uploadFile);
 
         User user=(User) request.getSession().getAttribute("user");
         user=new User();
@@ -48,6 +48,7 @@ public class FileManager {
         int BufferSize=4096;
         byte buffer[]=new byte[BufferSize];
         try {
+            fileService.insertFile(uploadFile);
             if (!userDir.exists())
             userDir.mkdir();
             File temp=new File(userDir,name);

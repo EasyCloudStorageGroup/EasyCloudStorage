@@ -12,6 +12,7 @@
 <%@ include file="../shared/sharedHeader.jsp"%>
 
 <link rel="stylesheet" href="/EasyCloudStorage/css/homePage/homePage.css"/>
+<link rel="stylesheet" href="/EasyCloudStorage/css/homePage/fileShow.css">
 
 <script>
     $(function() {
@@ -42,35 +43,84 @@
     }
 </style>
 
+<style>
+    .empty-notice-board{
+        position: relative;
+        left: 500px;
+        top: 300px;
+        background-color: white;
+        border-radius:10px;
+
+        color:rgba(0,0,0,0.5)
+
+    }
+</style>
+
 <%@ include file="../shared/navigator.jsp"%>
 
 <div class="file-manager-board">
     <%@ include file="include/orderNav.jsp"%>
+
+<c:choose>
+    <c:when test="${empty parentDirList}">
+        全部文件
+    </c:when>
+
+    <c:otherwise>
+        <c:forEach items="${parentDirList}" var="Directory">
+            <a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}>></a>
+        </c:forEach>
+
+        ${currentDir.name}
+    </c:otherwise>
+</c:choose>
+
+
+
     <%@ include file="include/searchBox.jsp"%>
-    <table width="80%" align="center">
+
+    <script src="/EasyCloudStorage/js/homePage/fileShow.js" charset="utf-8"></script>
+<c:choose>
+    <c:when test="${empty currentDirectories&&empty currentNormalFiles}">
+
+        <div class="empty-notice-board" ><h1>当前没有任何文件哦,赶紧上传一个吧！</h1></div>
+
+    </c:when>
+    <c:otherwise>
+    <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo"  >
+        <thead>
+
         <tr>
-            <td>编号</td>
-            <td>名字</td>
-            <td>最后一次修改时间</td>
-            <td>路径</td>
+            <th lay-data="{field:'type', width:50}"> 类型 </th>
+            <th lay-data="{field:'username', width:50}">名称</th>
+            <th lay-data="{field:'joinTime', width:50}">最后移动时间</th>
         </tr>
+        </thead>
+        <tbody>
         <c:forEach items="${currentDirectories}" var="Directory">
             <tr>
-                <td><a href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" id=${Directory.dirId} > ${Directory.dirId }</a></td>
-                <td>${Directory.name}</td>
-                <td>${Directory.lastMovedTime}</td>
-                <td>${Directory.realPath}</td>
+                <td ><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>
+
+                <td ><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td>
+
+                <td >${Directory.displayTime}</td>
             </tr>
         </c:forEach>
+
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
+
             <tr>
-                <td>${NormalFile.fileId }</td>
-                <td>${NormalFile.name}</td>
-                <td>${NormalFile.lastMovedTime}</td>
-                <td>${NormalFile.realPath}</td>
+                <td ><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
+                <td >${NormalFile.name}.${NormalFile.type}</td>
+                <td>${NormalFile.displayTime}</td>
+
             </tr>
         </c:forEach>
+
+        </tbody>
     </table>
+    </c:otherwise>
+</c:choose>
 </div>
 
 </body>
