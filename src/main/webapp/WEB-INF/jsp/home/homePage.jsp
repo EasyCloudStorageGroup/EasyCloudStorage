@@ -109,7 +109,7 @@
         </c:forEach>
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
-            <tr class="dirClass" id=${NormalFile.fileId}>
+            <tr class="normalFileClass" id=${NormalFile.fileId}>
                 <td ><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
                 <td >${NormalFile.name}.${NormalFile.type}</td>
                 <td>${NormalFile.displayTime}</td>
