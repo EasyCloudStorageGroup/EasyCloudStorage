@@ -41,12 +41,7 @@ public class FileManager {
         uploadFile.setParentDirId(dir.getDirId());
         uploadFile.setRealPath(dir.getRealPath()+"\\"+name);
 
-        User user=(User) request.getSession().getAttribute("user");
-        user=new User();
-        user.setUserName("why");
-        java.io.File userDir=new File("D:\\EasyCloudStorageData\\"+user.getUserName());
-        int BufferSize=4096;
-        byte buffer[]=new byte[BufferSize];
+        java.io.File userDir=new File(dir.getRealPath());
         try {
             fileService.insertFile(uploadFile);
             if (!userDir.exists())
