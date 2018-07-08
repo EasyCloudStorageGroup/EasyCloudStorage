@@ -43,19 +43,32 @@
         border-radius:10px;
     }
 </style>
+<style>
+    .directory-show-board {
+        position: relative;
+        top: 10px;
+        width: 400px;
+        background-color: white;
+        border-radius:10px;
+    }
+</style>
 
 <style>
     .empty-notice-board{
         position: relative;
-        left: 500px;
-        top: 300px;
+        left: 400px;
+        top: 100px;
         background-color: white;
         border-radius:10px;
-
-        color:rgba(0,0,0,0.5)
-
-    }
+        opacity:0.6;}
 </style>
+<style>
+    .table-show-board{
+    position:relative;
+    top:10px;
+
+
+}</style>
 
 <%@ include file="../shared/navigator.jsp"%>
 <link href="/EasyCloudStorage/css/menu.css" rel="stylesheet"/>
@@ -65,29 +78,41 @@
     <a href="#" onclick="openNewDirectoryMenu()"><button class="layui-btn layui-btn-normal">新建文件夹</button></a>
     <%@ include file="include/searchBox.jsp"%>
     <%@ include file="include/orderNav.jsp"%>
-
+    <%@ include file="include/searchBox.jsp"%>
 <c:choose>
     <c:when test="${empty parentDirList}">
-        全部文件
+        <div class="directory-show-board">全部文件</div>
     </c:when>
 
     <c:otherwise>
         <c:forEach items="${parentDirList}" var="Directory">
-            <a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}>></a>
+            <a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" style="color: #4169E1;">${Directory.name}>></a>
         </c:forEach>
 
         ${currentDir.name}
     </c:otherwise>
 </c:choose>
 
+
+
+
+
+
+    <script src="/EasyCloudStorage/js/homePage/fileShow.js" charset="utf-8"></script>
+
 <c:choose>
     <c:when test="${empty currentDirectories&&empty currentNormalFiles}">
 
-        <div class="empty-notice-board" ><h1>当前没有任何文件哦,赶紧上传一个吧！</h1></div>
+        <div class="empty-notice-board" ><img src="/EasyCloudStorage/img/home/smile.PNG" width="400px" height="320px"/>
+            <h2>当前没有任何文件哦,赶紧上传一个吧！</h2></div>
 
     </c:when>
     <c:otherwise>
-    <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo" id="file-manager-table">
+
+<div class="table-show-board">
+    <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo" id="file-manager-table" >
+
+
         <thead>
         <tr>
             <th lay-data="{field:'type', width:50}"> 类型 </th>
@@ -95,6 +120,7 @@
             <th lay-data="{field:'joinTime', width:50}">最后移动时间</th>
         </tr>
         </thead>
+
         <tbody>
         <c:forEach items="${currentDirectories}" var="Directory">
             <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id="${Directory.dirId}"
@@ -108,8 +134,10 @@
         </c:forEach>
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
+
             <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
                 <td ><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
+
                 <td >${NormalFile.name}.${NormalFile.type}</td>
                 <td>${NormalFile.displayTime}</td>
             </tr>
@@ -117,6 +145,7 @@
 
         </tbody>
     </table>
+</div>
     </c:otherwise>
 </c:choose>
 </div>
