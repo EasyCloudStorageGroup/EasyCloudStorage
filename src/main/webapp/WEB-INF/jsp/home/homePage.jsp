@@ -43,6 +43,19 @@
     }
 </style>
 
+<style>
+    .empty-notice-board{
+        position: relative;
+        left: 500px;
+        top: 300px;
+        background-color: white;
+        border-radius:10px;
+
+        color:rgba(0,0,0,0.5)
+
+    }
+</style>
+
 <%@ include file="../shared/navigator.jsp"%>
 
 <div class="file-manager-board">
@@ -67,7 +80,13 @@
     <%@ include file="include/searchBox.jsp"%>
 
     <script src="/EasyCloudStorage/js/homePage/fileShow.js" charset="utf-8"></script>
+<c:choose>
+    <c:when test="${empty currentDirectories&&empty currentNormalFiles}">
 
+        <div class="empty-notice-board" ><h1>当前没有任何文件哦,赶紧上传一个吧！</h1></div>
+
+    </c:when>
+    <c:otherwise>
     <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo"  >
         <thead>
 
@@ -79,8 +98,6 @@
         </thead>
         <tbody>
         <c:forEach items="${currentDirectories}" var="Directory">
-
-
             <tr>
                 <td ><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>
 
@@ -102,7 +119,8 @@
 
         </tbody>
     </table>
-
+    </c:otherwise>
+</c:choose>
 </div>
 
 </body>
