@@ -69,6 +69,7 @@ public class ShowController {
 
             }
             parentDirList.add(parentDir);
+            if(parentDirList.get(0)!=null)
             parentDirList.get(0).setName("全部文件");
             if(parentDir==null) {
                 parentDirList = new ArrayList<Directory>();

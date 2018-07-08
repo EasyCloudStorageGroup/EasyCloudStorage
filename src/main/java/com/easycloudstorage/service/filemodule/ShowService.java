@@ -48,7 +48,9 @@ public class ShowService {
         for(int i=0;i<directoryList.size();i++) {
             tem = directoryList.get(i);
             if (tem.getParentDirId() == null && tem.getOwnerId().equals(user.getAccountId()))
+            {
                 return tem;
+            }
         }
         return null;
     }
@@ -60,7 +62,7 @@ public class ShowService {
         List<Directory> result=new ArrayList<Directory>();
         for(int i=0;i<directoryList.size();i++) {
             tem = directoryList.get(i);
-            System.out.println(tem.getDirId());
+
             if (tem.getParentDirId()!=null&&tem.getParentDirId().equals(currentDirId))
                 result.add(tem);
         }

@@ -11,9 +11,10 @@
 <link rel="stylesheet" href="/EasyCloudStorage/css/homePage/orderNav.css"/>
 <style>
     .button-board {
-        position: relative;
-        left: 1000px;
+        position: absolute;
+        right: 20px;
         top: 0px;
+
         background-color: white;
         border-radius:10px;
         height: 30px;
