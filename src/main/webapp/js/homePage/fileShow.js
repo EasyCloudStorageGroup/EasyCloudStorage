@@ -48,8 +48,7 @@
 
   //内置模块
   ,modules = {
-    layer: 'modules/layer' //弹层
-    ,laydate: 'modules/laydate' //日期
+    laydate: 'modules/laydate' //日期
     ,laypage: 'modules/laypage' //分页
     ,laytpl: 'modules/laytpl' //模板引擎
     ,layim: 'modules/layim' //web通讯
