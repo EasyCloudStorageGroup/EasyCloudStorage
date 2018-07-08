@@ -101,28 +101,19 @@ public class ShowService {
         }
     return null;
     }
-/* public  JSONArray DirListToJson(List<Directory> directoryList) {
-        JSONArray jsonArray = new JSONArray();
-        if (directoryList() != null && usersList.size() > 0 ) {
 
+    public Directory findDirectoryById(String dirId,List<Directory> directoryList)
+    {
+        Directory currentDir=new Directory();
+        for(int i=0;i<directoryList.size();i++)
+        {
+            currentDir=directoryList.get(i);
+            if(dirId.equals(currentDir.getDirId()))
+                return currentDir;
 
-            for (Directory directory : directoryList) {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("dirId", directory.getDirId());
-                jsonObject.put("name", directory.getName());
-                jsonObject.put("lastMovedTime", directory.getLastMovedTime());
-                jsonObject.put(" realPath", directory.getRealPath());
-                jsonObject.put("parentDirId", directory.getParentDirId());
-                jsonObject.put("ownerId", directory.getOwnerId());
-
-
-                jsonArray.add(jsonObject);
-            }
         }
-
-        return jsonArray;
+        return null;
     }
-*/
 
     /*
      * 对普通文件列表进行排序

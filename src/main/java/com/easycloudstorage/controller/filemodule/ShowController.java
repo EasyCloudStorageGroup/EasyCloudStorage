@@ -72,12 +72,12 @@ public class ShowController {
                 parentDirList = new ArrayList<Directory>();
             }
         }
-
-
+        Directory currentDir=showService.findDirectoryById(dirId,showService.directoryList());
         session.setAttribute("currentNormalFiles", normalFileList);
         session.setAttribute("currentDirectories", directoryList);
-        session.setAttribute("rootDirectory",rootDirectory);
+
         session.setAttribute("parentDirList", parentDirList);
+        session.setAttribute("currentDir",currentDir);
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName("home/homePage");
