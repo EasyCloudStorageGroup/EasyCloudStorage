@@ -43,22 +43,22 @@ public class ShowController {
         List<Directory> parentDirList=(List<Directory>)session.getAttribute("parentDirList");
         Directory tem;
         int position;
-        List<Directory> temp=new ArrayList<Directory>();
+
         if(parentDirList==null)
         {
             parentDirList=new ArrayList<Directory>();
         }
         else {
 
-            parentDir = showService.findParentDir(dirId, showService.directoryList());
+            parentDir = showService.findParentDir(dirId, showService.directoryList());//找到父目录
 
-
+            List<Directory> temp=new ArrayList<Directory>();
             for (int i=0;i<parentDirList.size();i++) {
                 tem=parentDirList.get(i);
                 if(parentDir!=null&&parentDir.getDirId().equals(tem.getDirId()))
                 {
                     position=i;
-                    for(int j=0;j<position-2;j++)
+                    for(int j=0;j<position;j++)
                     {
                         temp.add(parentDirList.get(j));
                     }

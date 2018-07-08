@@ -12,9 +12,9 @@ public class File {
     private String displayTime;
 
     public void setDisplayTime(){
-
+     if(lastMovedTime!=null){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        displayTime=sdf.format(lastMovedTime);
+        displayTime=sdf.format(lastMovedTime);}
 
     }
 

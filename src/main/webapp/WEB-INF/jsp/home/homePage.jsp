@@ -57,6 +57,7 @@
         <c:forEach items="${parentDirList}" var="Directory">
             <a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}>></a>
         </c:forEach>
+
         ${currentDir.name}
     </c:otherwise>
 </c:choose>
