@@ -4,7 +4,8 @@
 <%@ include file="../shared/sharedHeader.jsp"%>
 
 <div class="layui-upload">
-    <button type="button" class="layui-btn layui-btn-normal" id="testList">选择多文件</button>
+    <button type="button" class="layui-btn layui-btn-normal" id="testList" style="position:relative;left:35%; margin: 10px">选择多文件</button>
+    <button type="button" class="layui-btn" id="testListAction" style="position:relative;left: 40%; margin: 10px">开始上传</button>
     <div class="layui-upload-list">
         <table class="layui-table">
             <thead>
@@ -16,7 +17,7 @@
             <tbody id="demoList"></tbody>
         </table>
     </div>
-    <button type="button" class="layui-btn" id="testListAction">开始上传</button>
+
 </div>
 
 <script>
