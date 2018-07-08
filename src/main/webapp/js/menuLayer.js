@@ -64,11 +64,11 @@ MyLayer.prototype.openLayer = function () {
 
     //content
     if(this.options.content == "renameFileMenu")
-        renameFileMenu(open_layer);
+        renameFileMenu(open_layer,this);
     else if(this.options.content=="deleteFileMenu")
-        deleteFileMenu(open_layer);
+        deleteFileMenu(open_layer,this);
     else if(this.options.content=="moveFileMenu")
-        moveFileMenu(open_layer);
+        moveFileMenu(open_layer,this);
 
     document.body.appendChild(open_layer);
     document.body.appendChild(background_layer);
@@ -76,21 +76,21 @@ MyLayer.prototype.openLayer = function () {
     background_layer.style.display = "block";
 };
 
-function renameFileMenu(open_layer) {
+function renameFileMenu(open_layer, myLayer) {
     var div_content = document.createElement("div");
     div_content.style.textAlign = "center";
     div_content.style.paddingTop = "5%";
     var contentForm = document.createElement("form");
     contentForm.method="POST";
-    contentForm.action="renamePage";
+    contentForm.action="renameDirectoryPage";
     var nameLable=document.createElement("label");
     nameLable.innerHTML="重命名为: ";
     var oldFileName = document.createElement("input");
-    oldFileName.name="oldFilePid";
+    oldFileName.name="oldFileId";
+    oldFileName.value=myLayer.options.id;
     //oldFileName.style.display="none";
     var newFileName = document.createElement("input");
     newFileName.name="newFileName";
-    newFileName.text="aaa";
     var button=document.createElement("input");
     button.type="submit";
     button.value="OK";
@@ -102,12 +102,12 @@ function renameFileMenu(open_layer) {
     open_layer.appendChild(div_content);
 }
 
-function deleteFileMenu(open_layer) {
+function deleteFileMenu(open_layer, myLayer) {
     var div_content = document.createElement("div");
     div_content.style.textAlign = "center";
     div_content.paddingTop="2cm"
     var aHref=document.createElement("a");
-    aHref.href="deleteFilePage?filePid=1";
+    aHref.href="deleteDirectoryPage?fileId="+myLayer.options.id;
     var button=document.createElement("button");
     button.type="button";
     button.innerHTML="删除";
@@ -116,12 +116,12 @@ function deleteFileMenu(open_layer) {
     open_layer.appendChild(div_content);
 }
 
-function moveFileMenu(open_layer) {
+function moveFileMenu(open_layer, myLayer) {
     var div_content = document.createElement("div");
     div_content.style.textAlign = "center";
     div_content.paddingTop="2cm"
     var aHref=document.createElement("a");
-    aHref.href="moveFilePage?filePid=1&moveToPath=fff";
+    aHref.href="moveFilePage?fileId=1&moveToId=fff";
     var button=document.createElement("button");
     button.type="button";
     button.innerHTML="删除";

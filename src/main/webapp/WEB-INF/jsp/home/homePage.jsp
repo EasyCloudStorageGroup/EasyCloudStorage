@@ -57,6 +57,8 @@
 </style>
 
 <%@ include file="../shared/navigator.jsp"%>
+<link href="/EasyCloudStorage/css/menu.css" rel="stylesheet"/>
+
 
 <div class="file-manager-board">
     <%@ include file="include/orderNav.jsp"%>
@@ -87,9 +89,8 @@
 
     </c:when>
     <c:otherwise>
-    <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo"  >
+    <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo" id="file-manager-table">
         <thead>
-
         <tr>
             <th lay-data="{field:'type', width:50}"> 类型 </th>
             <th lay-data="{field:'username', width:50}">名称</th>
@@ -98,7 +99,7 @@
         </thead>
         <tbody>
         <c:forEach items="${currentDirectories}" var="Directory">
-            <tr>
+            <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id=${Directory.dirId}>
                 <td ><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>
 
                 <td ><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td>
@@ -108,12 +109,10 @@
         </c:forEach>
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
-
-            <tr>
+            <tr class="dirClass" id=${NormalFile.fileId}>
                 <td ><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
                 <td >${NormalFile.name}.${NormalFile.type}</td>
                 <td>${NormalFile.displayTime}</td>
-
             </tr>
         </c:forEach>
 
@@ -122,6 +121,25 @@
     </c:otherwise>
 </c:choose>
 </div>
-
+<div  class="testClass" style="text-align: left;display: none">
+    <c:forEach items="${directoryList}" var="Directory">
+       <li>
+           <input type="radio" name="dir" value=${Directory.dirId} title=${Directory.name}>
+                ${Directory.name}
+            </input>
+       </li>
+    </c:forEach>
+</div>
+<ul class="client_menu" id="clientMenu" style="background-color: dodgerblue">
+    <li><a href="#" class="demo" onclick="openRenameFileMenu()" data-type="rename">重命名</a></li>
+    <li><a href="#" onclick="openDeleteFileMenu()">删除</a></li>
+    <li><a href="#" onclick="openMoveFileMenu()">移动到</a></li>
+</ul>
+<div style="display: none" id="formTest">
+    <label>重命名为：</label>
+    <input type="text" name="searchForm.name" />
+</div>
+<script src="js/menu.js"></script>
+<script src="js/menuLayer.js"></script>
 </body>
 </html>
