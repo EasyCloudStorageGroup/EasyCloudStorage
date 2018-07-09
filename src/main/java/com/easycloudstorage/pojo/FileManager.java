@@ -45,25 +45,10 @@ public class FileManager {
         try {
             fileService.insertFile(uploadFile);
             if (!userDir.exists())
-            userDir.mkdir();
+            userDir.mkdirs();
             File temp=new File(userDir,name);
             file.transferTo(temp);
-//            FileOutputStream writer=new FileOutputStream(temp);
-//            InputStream reader=file.getInputStream();
-//
-//            int number=0;
-//            while ((number=reader.read(buffer))!=-1){
-//
-//                writer.write(buffer, 0, number);
-//
-//            }
-//            writer.flush();
-//            writer.close();
-//            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "failed";
-        }catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
             return "failed";
         }
