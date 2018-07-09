@@ -14,25 +14,35 @@ import java.util.Date;
 
 public class FileManager {
 
-    public static String uploadFiles(MultipartFile[] files, HttpServletRequest request, FileService fileService){
+    public static boolean uploadFiles(MultipartFile[] files, HttpServletRequest request, FileService fileService){
 
         boolean flag=true;
         for (MultipartFile file:files
              ) {
-            String temp=uploadOneFile(file,request,fileService);
-            flag &= temp.equals("success");
+            boolean result=uploadOneFile(file,request,fileService);
+            flag &=  result;
         }
-        if (flag==true)return "success";
-        else return "failed";
+        return flag;
     }
-    public static String uploadOneFile(MultipartFile file, HttpServletRequest request,FileService fileService){
+    public static String changeName(String str){
+        String tempStr;
+        int i=1;
+        str=str+"("+i+")";
+        File tempFile = new File(str);
+        while (tempFile.exists()){
+            ++i;
+            str=str.substring(0,str.length()-2)+i+")";
+            tempFile=new File(str);
+        }
+        return str;
+    }
+    public static boolean uploadOneFile(MultipartFile file, HttpServletRequest request,FileService fileService){
 
         String name=file.getOriginalFilename();
         HttpSession session=request.getSession();
         Directory dir=(Directory) session.getAttribute("currentDir");
         com.easycloudstorage.pojo.NormalFile uploadFile=new com.easycloudstorage.pojo.NormalFile();
 
-        uploadFile.setName(name);
         String size=Long.toString(file.getSize());
         uploadFile.setSize(size+"kb");
         uploadFile.setType(file.getContentType());
@@ -43,16 +53,21 @@ public class FileManager {
 
         java.io.File userDir=new File(dir.getRealPath());
         try {
-            fileService.insertFile(uploadFile);
             if (!userDir.exists())
             userDir.mkdirs();
             File temp=new File(userDir,name);
+            if (temp.exists()) {
+                name = changeName(name);
+            }
+            temp = new File(userDir,name);
+            uploadFile.setName(name);
+            fileService.insertFile(uploadFile);
             file.transferTo(temp);
         } catch (Exception e){
             e.printStackTrace();
-            return "failed";
+            return false;
         }
-        return "success";  //上传成功则跳转至此success.jsp页
+        return true;  //上传成功则跳转至此success.jsp页
     }
 
 
