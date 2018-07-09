@@ -36,7 +36,7 @@ function openRenameFileMenu()
     var result=/dirId=([0-9]+)/.exec(window.location.href);
     var dirId;
     if(result!=null&&result.length>1) dirId=result[1];
-    else dirId=-1;
+    else dirId=0;
     layui.use('layer',function () {
         var $ = layui.jquery, layer = layui.layer;
 
