@@ -84,7 +84,6 @@
         </button>
     </a>
 
-    <%@ include file="include/searchBox.jsp"%>
     <%@ include file="include/orderNav.jsp"%>
     <%@ include file="include/searchBox.jsp"%>
 
