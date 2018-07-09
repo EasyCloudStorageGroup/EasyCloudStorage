@@ -67,9 +67,8 @@
     .table-show-board{
     position:relative;
     top:10px;
-
-
-}</style>
+}
+</style>
 
 <%@ include file="include/navigator.jsp"%>
 <link href="/EasyCloudStorage/css/menu.css" rel="stylesheet"/>
@@ -78,7 +77,7 @@
 <div class="file-manager-board">
     <a href="#" onclick="openNewDirectoryMenu()"><button class="layui-btn layui-btn-normal">新建文件夹</button></a>
 
-    <a href="test">
+    <a href="uploadPage">
         <button class="layui-btn layui-btn-normal">
             上传文件
         </button>
