@@ -15,7 +15,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 
 <%@ include file="../shared/sharedHeader.jsp"%>
-<%@ include file="../shared/navigator.jsp"%>
+<%@ include file="../home/include/navigator.jsp"%>
 
 <link rel="stylesheet" href="/EasyCloudStorage/css/homePage/homePage.css"/>
 

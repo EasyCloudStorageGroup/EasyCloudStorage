@@ -21,7 +21,6 @@ import java.util.List;
 
 @Controller
 public class FileController {
-    private String dataDir="D:/EasyCloudStorageData/";
 
     @Autowired
     private FileService fileService;
