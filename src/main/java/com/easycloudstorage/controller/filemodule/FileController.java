@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.io.File;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
 
@@ -56,6 +57,9 @@ public class FileController {
     public String renameFilePage(@RequestParam("oldFileId")int oldFileId, String newFileName, int dirId)
             throws IOException
     {
+        newFileName = URLDecoder.decode(newFileName, "utf-8").replaceAll("%25","%")
+                .replaceAll("%23","#").replaceAll("%26","&")
+                .replaceAll("%2B","+");
         NormalFile normalFile=fileService.selectNormalFile(oldFileId);
         File file=new File(normalFile.getRealPath());
 
@@ -78,7 +82,7 @@ public class FileController {
         fileService.updateNormalFile(normalFile);
 
         if(dirId == 0)
-            return "redirect:homePage";
+            return "redirect:homePage?dirId=0";
         else
             return "redirect:homePage?dirId="+dirId;
     }
@@ -86,6 +90,9 @@ public class FileController {
     public String renameDirectoryPage(@RequestParam("oldFileId")int oldFileId, String newFileName,int dirId)
             throws IOException
     {
+        newFileName = URLDecoder.decode(newFileName, "utf-8").replaceAll("%25","%")//处理特殊字符
+                .replaceAll("%23","#").replaceAll("%26","&")
+                .replaceAll("%2B","+");
         System.out.println("in file rename dir  and pid="+oldFileId+" and new name: "+newFileName);
         Directory directory=fileService.selectDirectory(oldFileId);
         File file=new File(directory.getRealPath());
@@ -101,13 +108,17 @@ public class FileController {
         fileService.updateDirectory(directory);
 
         if(dirId == 0)
-            return "redirect:homePage";
+            return "redirect:homePage?dirId=0";
         else
             return "redirect:homePage?dirId="+dirId;
     }
     @RequestMapping("newDirPage")
     public String newDirectory(@RequestParam("dirId")int dirId, String newFileName,HttpSession session)
+            throws UnsupportedEncodingException
     {
+        newFileName = URLDecoder.decode(newFileName, "utf-8").replaceAll("%25","%")//处理特殊字符
+                .replaceAll("%23","#").replaceAll("%26","&")
+                .replaceAll("%2B","+");
         User user=(User)session.getAttribute("user");
         List<Directory> directories= showService.directoryList();
         ShowService showService = new ShowService();
@@ -139,7 +150,7 @@ public class FileController {
         file.delete();
 
         if(dirId == 0)
-            return "redirect:homePage";
+            return "redirect:homePage?dirId=0";
         else
             return "redirect:homePage?dirId="+dirId;
     }
@@ -154,7 +165,7 @@ public class FileController {
         fileService.deleteDirectory(directory);
 
         if(dirId == 0)
-            return "redirect:homePage";
+            return "redirect:homePage?dirId=0";
         else
             return "redirect:homePage?dirId="+dirId;
     }
@@ -175,7 +186,7 @@ public class FileController {
         fileService.updateNormalFile(normalFile);
 
         if(dirId == 0)
-            return "redirect:homePage";
+            return "redirect:homePage?dirId=0";
         else
             return "redirect:homePage?dirId="+dirId;
     }
@@ -196,7 +207,7 @@ public class FileController {
         //if(!moveToFile.getParentFile().exists())    moveToFile.getParentFile().mkdirs();
 
         if(dirId == 0)
-            return "redirect:homePage";
+            return "redirect:homePage?dirId=0";
         else
             return "redirect:homePage?dirId="+dirId;
     }

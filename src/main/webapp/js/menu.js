@@ -46,11 +46,12 @@ function openRenameFileMenu()
             area:'500px',
             value:clientMenu.objName
         }, function(value, index, elem){
+            value = value.replace(/\%/g,"%25").replace(/\#/g,"%23").replace(/\&/g,"%26").replace(/\+/g,"%2B");//特殊字符处理
             layer.close(index);
             if(clientMenu.objClass=="normalFileClass")
-                window.location.href="renameFilePage?oldFileId="+clientMenu.id+"&newFileName="+value+"&dirId="+dirId;
+                window.location.href=encodeURI(encodeURI("renameFilePage?oldFileId="+clientMenu.id+"&newFileName="+value+"&dirId="+dirId));
             else if(clientMenu.objClass=="dirClass")
-                window.location.href="renameDirectoryPage?oldFileId="+clientMenu.id+"&newFileName="+value+"&dirId="+dirId;
+                window.location.href=encodeURI(encodeURI("renameDirectoryPage?oldFileId="+clientMenu.id+"&newFileName="+value+"&dirId="+dirId));
             layer.msg("重命名成功")
         });
 
@@ -80,8 +81,9 @@ function openNewDirectoryMenu()
             area:'500px',
             value:"新建文件夹"
         }, function(value, index, elem){
+            value = value.replace(/\%/g,"%25").replace(/\#/g,"%23").replace(/\&/g,"%26").replace(/\+/g,"%2B");//特殊字符处理
             layer.close(index);
-            window.location.href="newDirPage?dirId="+dirId+"&newFileName="+value;
+            window.location.href=encodeURI(encodeURI("newDirPage?dirId="+dirId+"&newFileName="+value));
             layer.msg("新建文件夹成功")
         });
 
@@ -111,9 +113,9 @@ function openDeleteFileMenu()
     },function () {
         layer.msg("删除成功",{time:6000});
         if(clientMenu.objClass=="normalFileClass")
-            window.location.href="deleteFilePage?fileId="+clientMenu.id+"&dirId="+dirId;
+            window.location.href=encodeURI(encodeURI("deleteFilePage?fileId="+clientMenu.id+"&dirId="+dirId));
         else if(clientMenu.objClass=="dirClass")
-        window.location.href="deleteDirectoryPage?fileId="+clientMenu.id+"&dirId="+dirId;
+        window.location.href=encodeURI(encodeURI("deleteDirectoryPage?fileId="+clientMenu.id+"&dirId="+dirId));
         });
     });
     /*new MyLayer({
