@@ -20,7 +20,9 @@ public class ShowController {
     private ShowService showService;
 
     @RequestMapping("homePage")
-    public ModelAndView show(String dirId, HttpSession session) {
+
+    public ModelAndView show(int dirId, HttpSession session,String type) {
+
 
         List<Directory> directoryList=new ArrayList<Directory>();
         List<NormalFile> normalFileList=new ArrayList<NormalFile>();
@@ -33,7 +35,7 @@ public class ShowController {
             User user = (User) session.getAttribute("user");
 
 
-            if (dirId == null) {//如果是第一次进入该函数，该函数为用户的根目录，此时dirID为空，先找到用户的根目录
+            if (dirId == 0) {//如果是第一次进入该函数，该函数为用户的根目录，此时dirID为空，先找到用户的根目录
 
                 rootDirectory = showService.rootDirectory(user, showService.directoryList()); //找到用户的根目录
 
@@ -59,7 +61,7 @@ public class ShowController {
                 List<Directory> temp = new ArrayList<Directory>();
                 for (int i = 0; i < parentDirList.size(); i++) {
                     tem = parentDirList.get(i);
-                    if (parentDir != null && parentDir.getDirId().equals(tem.getDirId())) {
+                    if (parentDir != null && parentDir.getDirId() == tem.getDirId()) {
                         position = i;
                         for (int j = 0; j < position; j++) {
                             temp.add(parentDirList.get(j));
@@ -121,7 +123,7 @@ public class ShowController {
 
     @RequestMapping("searchFiles")
     public String searchFiles(HttpSession session, String keyword) {
-        String rootId;
+        int rootId;
         Directory rootDirectory;
         User user=(User)session.getAttribute("user");
         rootDirectory = showService.rootDirectory(user, showService.directoryList());

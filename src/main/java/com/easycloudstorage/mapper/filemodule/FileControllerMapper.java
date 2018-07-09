@@ -6,11 +6,11 @@ import com.easycloudstorage.pojo.NormalFile;
 import java.util.List;
 
 public interface FileControllerMapper {
-    NormalFile selectNormalFile(String fileId);
+    NormalFile selectNormalFile(int fileId);
 
     List<NormalFile> selectAllNormalFiles();
 
-    Directory selectDirectory(String dirId);
+    Directory selectDirectory(int dirId);
 
     List<Directory> selectAllDirectories();
 

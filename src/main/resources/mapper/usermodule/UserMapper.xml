@@ -20,7 +20,7 @@
     </select>
 
     <insert id = "addDir" parameterType="File">
-        insert into directory(name, lastMovedTime, parentDirId, ownerId, realPath) values (#{name}, #{lastMovedTime}, #{parentDirId}, #{ownerId}, #{realPath})
+        insert into directory(name, lastMovedTime, parentDirId, ownerId, realPath) values (#{name}, #{lastMovedTime}, NULL, #{ownerId}, #{realPath})
     </insert>
 
 </mapper>

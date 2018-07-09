@@ -1,16 +1,16 @@
 package com.easycloudstorage.pojo;
 
 public class NormalFile extends File {
-    private String fileId;
+    private int fileId;
     private String type;
     private String size;
     private String sortType;
 
-    public String getFileId() {
+    public int getFileId() {
         return fileId;
     }
 
-    public void setFileId(String fileId) {
+    public void setFileId(int fileId) {
         this.fileId = fileId;
     }
 

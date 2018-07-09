@@ -33,7 +33,6 @@ public class FileController {
     @ResponseBody
     @RequestMapping(value="/upload", method=RequestMethod.POST)
     public Result  doUploadFile(@RequestParam("file") MultipartFile[] files, HttpServletRequest request) {
-        System.out.println("function called "+files.length);
         String result=FileManager.uploadFiles(files,request,fileService);
         Result res=new Result();
         if (result.equals("success"))
@@ -42,7 +41,6 @@ public class FileController {
             res.setCode(1);
         return res;
         }
-
 }
 
 class Result{
