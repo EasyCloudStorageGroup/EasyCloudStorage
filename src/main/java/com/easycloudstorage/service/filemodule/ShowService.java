@@ -8,10 +8,13 @@ import com.easycloudstorage.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.FileInputStream;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 
 @Service
@@ -82,6 +85,9 @@ public class ShowService {
         }
         return result;
     }
+/*
+ * 根据dirID找到他的父目录
+ */
 
     public  Directory findParentDir(String dirId,List<Directory> directoryList)//找到该dir的父目录
     {
@@ -102,10 +108,12 @@ public class ShowService {
         }
     return null;
     }
-
+/*
+* 根据dirID找到该ID的directory对象
+* */
     public Directory findDirectoryById(String dirId,List<Directory> directoryList)
     {
-        Directory currentDir=new Directory();
+        Directory currentDir;
         for(int i=0;i<directoryList.size();i++)
         {
             currentDir=directoryList.get(i);
@@ -115,29 +123,63 @@ public class ShowService {
         }
         return null;
     }
-    public List<NormalFile> findFileByType(String type,User user,List<NormalFile> normalFileList)
+    /*
+     * 根据fileID找到该ID的file对象
+     * */
+    public NormalFile findNormalFileById(String fileId,List<NormalFile> normalFileList)
     {
-        NormalFile tem=new NormalFile();
-        List<NormalFile> result=new ArrayList<NormalFile>();
-        for(int i=0;i<normalFileList.size();i++) {
-            tem = normalFileList.get(i);
-            if(!type.equals("other")){
-            if (tem.getOwnerId().equals(user.getAccountId())&&tem.getType().equals(type))
-                result.add(tem);
-            }
-            else{
-                if (tem.getOwnerId().equals(user.getAccountId())&&!tem.getType().equals("jpg")&&!tem.getType().equals("mp3")&&!tem.getType().equals("mp4"))
-                    result.add(tem);
-            }
+        NormalFile file;
+        for(int i=0;i<normalFileList.size();i++)
+        {
+            file=normalFileList.get(i);
+            if(fileId!=null&&fileId.equals(file.getFileId()))
+                return file;
 
         }
-        return result;
+        return null;
     }
+
+  /*  public StringBuffer readFile(String filePath){
+        StringBuffer fileContent = new StringBuffer();
+        File file = new File(uploadPath+fileName);
+        if(file.exists()){
+            String suffix = file.getName().substring(file.getName().lastIndexOf(".")+1);
+            //Word2003
+            if (suffix.equals("doc")) {
+                FileInputStream fis = new FileInputStream(file);
+                WordExtractor wordExtractor = new WordExtractor(fis);
+                String text = wordExtractor.getText();
+                fileContent.append(text);
+            }
+            //Word2007
+            else if (suffix.equals("docx")) {
+                OPCPackage opcPackage = POIXMLDocument.openPackage(uploadPath+fileName);
+                POIXMLTextExtractor extractor = new XWPFWordExtractor(opcPackage);
+                String text = extractor.getText();
+                fileContent.append(text);
+            }
+            //TXT
+            else if (suffix.equals("txt")) {
+                BufferedReader bufferReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"utf-8"));
+                //每从BufferedReader对象中读取一行字符。
+                String line = null;
+                while((line=bufferReader.readLine()) !=null){
+                    fileContent.append(line);
+                }
+                bufferReader.close();
+            }
+        }else{
+            System.out.println("文件不存在！");
+        }
+        return fileContent;
+    }*/
+
+
 
     /*
      * 对普通文件列表进行排序
      */
-    public void orderNarmalFileList(List<NormalFile> nfs, String orderBy) {
+    public void orderNormalFileList(List<NormalFile> nfs, String orderBy) {
         if(orderBy == null)
             orderBy = "name";
 

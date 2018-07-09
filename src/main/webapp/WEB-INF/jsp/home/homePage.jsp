@@ -142,7 +142,7 @@
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
             <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
                 <td><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
-                <td>${NormalFile.name}</td>
+                <td><a  href="/EasyCloudStorage/detail/detailPage?fileId=${NormalFile.fileId}">${NormalFile.name}</a></td>
                 <td>${NormalFile.type}</td>
                 <td>${NormalFile.displayTime}</td>
             </tr>

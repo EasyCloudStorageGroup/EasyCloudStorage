@@ -20,7 +20,7 @@ public class ShowController {
     private ShowService showService;
 
     @RequestMapping("homePage")
-    public ModelAndView show(String dirId, HttpSession session,String type) {
+    public ModelAndView show(String dirId, HttpSession session) {
 
         List<Directory> directoryList=new ArrayList<Directory>();
         List<NormalFile> normalFileList=new ArrayList<NormalFile>();
@@ -32,7 +32,6 @@ public class ShowController {
 
             User user = (User) session.getAttribute("user");
 
-            if(type==null){
 
             if (dirId == null) {//如果是第一次进入该函数，该函数为用户的根目录，此时dirID为空，先找到用户的根目录
 
@@ -77,11 +76,8 @@ public class ShowController {
                     parentDirList = new ArrayList<Directory>();
                 }
             }
-            }
-            else {
-                normalFileList=showService.findFileByType(type,user,showService.normalFileList());
 
-            }
+
         Directory currentDir=showService.findDirectoryById(dirId,showService.directoryList());
 
         session.setAttribute("currentNormalFiles", normalFileList);
@@ -96,6 +92,18 @@ public class ShowController {
         return mv;
     }
 
+    @RequestMapping("detailPage")
+    public ModelAndView detailShow(String fileId, HttpSession session) {
+
+        NormalFile file=showService.findNormalFileById(fileId,showService.normalFileList());
+        ModelAndView mv = new ModelAndView();
+        session.setAttribute("file",file);
+        mv.addObject(file);
+        mv.setViewName("detail/detailPage");
+
+        return mv;
+    }
+
     @RequestMapping("orderFile")
     public String orderFile(HttpSession session, String orderBy) {
 
@@ -103,7 +111,7 @@ public class ShowController {
         List<NormalFile> normalFileList= (List<NormalFile>)session.getAttribute("currentNormalFiles");
 
         showService.orderDirectoryList(directoryList, orderBy);
-        showService.orderNarmalFileList(normalFileList, orderBy);
+        showService.orderNormalFileList(normalFileList, orderBy);
 
         session.setAttribute("currentNormalFiles", normalFileList);
         session.setAttribute("currentDirectories", directoryList);
