@@ -32,8 +32,8 @@ public class NormalFile extends File {
 
     public String getSortType(){
         this.type=this.type.toLowerCase();
-        if(this.type.equals("jpg")||this.type.equals("png")||this.type.equals("gif")||this.type.equals("bmp")||
-                this.type.equals("tiff"))
+        if(this.type.equals("image/jpg")||this.type.equals("image/png")||this.type.equals("image/gif")||this.type.equals("image/bmp")||
+                this.type.equals("image/tiff"))
             return "Picture";
         else if(this.type.equals("mp4")||this.type.equals("dat")||this.type.equals("mpg")||this.type.equals("mpeg"))
             return "Vedio";

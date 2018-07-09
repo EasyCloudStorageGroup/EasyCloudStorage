@@ -26,7 +26,7 @@
     .search-box {
         position: absolute;
         width: 250px;
-        right: 400px;
+        right: 630px;
     }
 
     .search-box .search-box-input {
@@ -37,7 +37,7 @@
 
     .search-box-but {
       position:absolute;
-        right: 320px;
+        right: 550px;
 
     }
 </style>
