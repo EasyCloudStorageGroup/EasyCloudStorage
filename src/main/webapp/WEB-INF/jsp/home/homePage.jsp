@@ -41,6 +41,7 @@
         background-color: white;
         border-radius:10px;
         overflow: auto;
+        opacity: 0.85;
     }
 </style>
 <style>
