@@ -14,9 +14,9 @@
             var keyword = $(".search-box-input").val();
             if(keyword.replace(/(^\s*)|(\s*$)/g,"").length == 0)
                 return false;
-            var newHref = "searchFiles?keyword="+keyword;
-           $(".search-box-but-link").attr("href", "searchFiles?keyword="+keyword);
-           return true;
+
+            $(".search-box-but-link").attr("href", "searchFiles?keyword="+keyword);
+            return true;
         });
     });
 </script>
@@ -24,29 +24,25 @@
 
 <style>
     .search-box {
+        width: 450px;
         position: absolute;
-        width: 250px;
-        right: 630px;
+        left: 450px;
     }
 
     .search-box .search-box-input {
         background-color: rgb(240, 240, 240);
         border-radius:15px;
-
-    }
-
-    .search-box-but {
-      position:absolute;
-        right: 550px;
-
     }
 </style>
 
-<div class="layui-input-inline search-box" >
-    <input class="layui-input search-box-input" type="text" placeholder="搜索文件"/>
+<div class="layui-inline search-box">
+    <div class="layui-input-inline">
+        <input class="layui-input search-box-input" type="text" placeholder="搜索文件"/>
+    </div>
+
+    <a href="searchFiles" class="search-box-but-link">
+        <button class="layui-btn layui-btn-radius layui-btn-primary search-box-but">
+            搜索
+        </button>
+    </a>
 </div>
-<a href="searchFiles" class="search-box-but-link">
-    <button class="layui-btn layui-btn-radius layui-btn-primary search-box-but" >
-        搜索
-    </button>
-</a>

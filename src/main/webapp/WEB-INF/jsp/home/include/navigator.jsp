@@ -15,17 +15,21 @@
          isELIgnored="false"%>
 
 <link rel="stylesheet" href="/EasyCloudStorage/css/homePage/navigator.css"/>
+<link rel="stylesheet" href="/EasyCloudStorage/css/changeSkin/changeSkin.css">
 <script src="/EasyCloudStorage/js/homePage/navigator.js"></script>
+
+
+
 
 <div class="navigator">
     <div class="navigator-logo">
-        <a href="homePage">
+        <a href="homePage?dirId=0">
             <img src="/EasyCloudStorage/img/home/logo.png">
             轻松云存储
         </a>
     </div>
     <ul class="layui-nav layui-nav-tree layui-nav-side left-navigator">
-        <li class="layui-nav-item layui-this"><a href="homePage">全部文件</a></li>
+        <li class="layui-nav-item layui-this"><a href="homePage?dirId=0">全部文件</a></li>
 
         <li class="layui-nav-item" sortType="Picture"><a>图片</a></li>
         <li class="layui-nav-item" sortType="Vedio"><a>视频</a></li>
@@ -35,7 +39,7 @@
     </ul>
 
     <ul class="layui-nav top-left-navigator">
-        <li class="layui-nav-item layui-this"><a href="homePage">网盘</a></li>
+        <li class="layui-nav-item layui-this"><a href="homePage?dirId=0">网盘</a></li>
         <li class="layui-nav-item"><a>其它</a></li>
     </ul>
 
@@ -60,7 +64,44 @@
             </a>
         </li>
         <li class="layui-nav-item">
-            <a><img src="/EasyCloudStorage/img/home/change-bg-icon.png" class="change-bg-icon"></a>
+            <a id="changeSkin"><img src="/EasyCloudStorage/img/home/change-bg-icon.png" class="change-bg-icon"></a>
         </li>
     </ul>
 </div>
+
+<div class="head">
+    <div class="main">
+        <div class="imgList">
+                <img src="/EasyCloudStorage/img/changeSkin/1.jpg">
+                <img src="/EasyCloudStorage/img/changeSkin/2.jpg">
+                <img src="/EasyCloudStorage/img/changeSkin/3.jpg">
+                <img src="/EasyCloudStorage/img/changeSkin/4.jpg">
+                <img src="/EasyCloudStorage/img/changeSkin/5.jpg">
+                <img src="/EasyCloudStorage/img/changeSkin/6.jpg">
+                <img src="/EasyCloudStorage/img/changeSkin/7.jpg">
+                <img src="/EasyCloudStorage/img/changeSkin/8.jpg">
+                <img src="/EasyCloudStorage/img/changeSkin/9.jpg">
+                <img src="/EasyCloudStorage/img/changeSkin/10.jpg">
+        </div>
+        <div class="imgShow"></div>
+    </div>
+    <div class="bottom"><button class="quit layui-btn">收起</button></div>
+</div>
+<script type="text/javascript" src="/EasyCloudStorage/jquery/changeSkin/jquery.js"></script>
+<script type="text/javascript">
+    var i = 0;
+    $("#changeSkin").click(function(){
+        $(".head").animate({height:"288px"},500);
+    });
+    $(".quit").click(function () {
+        $(".head").animate({height:"0px"},500)
+    });
+    $(".imgList img").hover(function () {
+        i = $(this).index();
+        $(".imgShow").css("background", 'url(/EasyCloudStorage/img/changeSkin/'+ (i+1) +'.jpg)');
+        $(".imgShow").css("background-size","264px 180px");
+    });
+    $(".imgList img").click(function () {
+        $("body").css("background", 'url(/EasyCloudStorage/img/changeSkin/'+ (i+1) +'.jpg)');
+    });
+</script>

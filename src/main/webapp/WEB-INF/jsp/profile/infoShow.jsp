@@ -16,7 +16,7 @@
 <script src="/EasyCloudStorage/js/OpenFilePage/openFile.js"></script>
 
 <div id="wholePage">
-    <div id="title"><a href="/EasyCloudStorage/homePage" class="layui-btn layui-btn-sm"> 轻松云存储</a>
+    <div id="title"><a href="/EasyCloudStorage/homePage?dirId=0" class="layui-btn layui-btn-sm"> 轻松云存储</a>
         <div id="infoTitle">&nbsp;&nbsp;>&nbsp;&nbsp;个人资料</div>
     </div>
     <div class="mainBoard">

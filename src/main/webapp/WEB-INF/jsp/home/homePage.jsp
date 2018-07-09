@@ -41,6 +41,7 @@
         background-color: white;
         border-radius:10px;
         overflow: auto;
+        opacity: 0.85
     }
 </style>
 <style>
@@ -70,7 +71,7 @@
 
 }</style>
 
-<%@ include file="../shared/navigator.jsp"%>
+<%@ include file="include/navigator.jsp"%>
 <link href="/EasyCloudStorage/css/menu.css" rel="stylesheet"/>
 
 
@@ -85,7 +86,6 @@
         </button>
     </a>
 
-    <%@ include file="include/searchBox.jsp"%>
     <%@ include file="include/orderNav.jsp"%>
     <%@ include file="include/searchBox.jsp"%>
 

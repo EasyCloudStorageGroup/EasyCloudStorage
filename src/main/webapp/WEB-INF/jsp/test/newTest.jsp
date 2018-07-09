@@ -4,6 +4,9 @@
 <%@ include file="../shared/sharedHeader.jsp"%>
 
 <div class="layui-upload">
+    <a href="javascript:history.go(-1)">
+    <button type="button" class="layui-btn layui-btn-normal" id="return" style="background-color: #a94442; position:relative;left:0%; margin: 10px">返回</button>
+    </a>
     <button type="button" class="layui-btn layui-btn-normal" id="testList" style="position:relative;left:35%; margin: 10px">选择多文件</button>
     <button type="button" class="layui-btn" id="testListAction" style="position:relative;left: 40%; margin: 10px">开始上传</button>
     <div class="layui-upload-list">
@@ -21,6 +24,7 @@
 </div>
 
 <script>
+    
     layui.use('upload', function() {
         var upload = layui.upload;
         //多文件列表示例
