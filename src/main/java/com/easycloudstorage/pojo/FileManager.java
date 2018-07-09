@@ -24,7 +24,7 @@ public class FileManager {
         }
         return flag;
     }
-    public static String changeName(String str){
+    public static String changeName(File parentDir,String str){
         int i=1;
         int indexOfDot=str.lastIndexOf('.');
         int indexOfNum;
@@ -33,14 +33,14 @@ public class FileManager {
             indexOfNum=str.length()-2;
         }
         else{
-            str=str.substring(0,indexOfDot)+"("+i+")"+str.substring(indexOfDot+1);
+            str=str.substring(0,indexOfDot)+"("+i+")."+str.substring(indexOfDot+1);
             indexOfNum=indexOfDot+1;
         }
-        File tempFile = new File(str);
+        File tempFile = new File(parentDir,str);
         while (tempFile.exists()){
             ++i;
             str=str.substring(0,indexOfNum)+i+str.substring(indexOfNum+1);
-            tempFile=new File(str);
+            tempFile=new File(parentDir,str);
         }
         return str;
     }
@@ -91,7 +91,7 @@ public class FileManager {
             userDir.mkdirs();
             File temp=new File(userDir,name);
             if (temp.exists()) {
-                name = changeName(name);
+                name = changeName(userDir,name);
             }
             temp = new File(userDir,name);
             uploadFile.setName(name);
