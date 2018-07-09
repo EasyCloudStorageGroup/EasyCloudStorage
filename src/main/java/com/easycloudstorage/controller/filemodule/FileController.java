@@ -36,9 +36,10 @@ public class FileController {
     @ResponseBody
     @RequestMapping(value="/upload", method=RequestMethod.POST)
     public Result  doUploadFile(@RequestParam("file") MultipartFile[] files, HttpServletRequest request) {
-        String result=FileManager.uploadFiles(files,request,fileService);
+        System.out.println("function called "+files.length);
+        boolean result=FileManager.uploadFiles(files,request,fileService);
         Result res=new Result();
-        if (result.equals("success"))
+        if (result)
         res.setCode(0);
         else
             res.setCode(1);
