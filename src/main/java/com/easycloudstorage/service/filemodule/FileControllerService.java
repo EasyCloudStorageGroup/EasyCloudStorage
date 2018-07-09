@@ -13,7 +13,7 @@ public class FileControllerService {
     @Autowired
     private FileControllerMapper fileControllerMapper;
 
-    public NormalFile selectNormalFile(String fileId)
+    public NormalFile selectNormalFile(int fileId)
     {
         return fileControllerMapper.selectNormalFile(fileId);
     }
@@ -23,7 +23,7 @@ public class FileControllerService {
         return fileControllerMapper.selectAllNormalFiles();
     }
 
-    public Directory selectDirectory(String dirId)
+    public Directory selectDirectory(int dirId)
     {
         return fileControllerMapper.selectDirectory(dirId);
     }

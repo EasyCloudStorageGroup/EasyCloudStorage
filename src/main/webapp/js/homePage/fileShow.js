@@ -48,6 +48,7 @@
 
   //内置模块
   ,modules = {
+    layer:'modules/layer',
     laydate: 'modules/laydate' //日期
     ,laypage: 'modules/laypage' //分页
     ,laytpl: 'modules/laytpl' //模板引擎
@@ -105,6 +106,7 @@
 
   //使用特定模块
   Layui.prototype.use = function(apps, callback, exports){
+    config.dir='layui/'
     var that = this
     ,dir = config.dir = config.dir ? config.dir : getPath
     ,head = doc.getElementsByTagName('head')[0];

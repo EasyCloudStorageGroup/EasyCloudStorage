@@ -51,7 +51,7 @@ public class UserController  {
             }
             if(flag != 0){
                 session.setAttribute("user", theUser);
-                mv.setViewName("redirect:homePage");
+                mv.setViewName("redirect:homePage?dirId=0");
             }
            else {
                 //登录错误
@@ -131,7 +131,6 @@ public class UserController  {
                 File file = new File();
                 file.setName(user.getAccountId());
                 file.setLastMovedTime(new Date());
-                file.setParentDirId(null);
                 file.setOwnerId(user.getAccountId());
                 file.setRealPath(userRootDir);
                 userService.addDir(file);
