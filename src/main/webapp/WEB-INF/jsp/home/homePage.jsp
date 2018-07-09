@@ -75,6 +75,8 @@
 
 
 <div class="file-manager-board">
+    <c:choose>
+        <c:when test="${empty normalFile}">
     <a href="#" onclick="openNewDirectoryMenu()"><button class="layui-btn layui-btn-normal">新建文件夹</button></a>
 
     <a href="test">
@@ -142,7 +144,7 @@
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
             <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
                 <td><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
-                <td><a  href="/EasyCloudStorage/detail/detailPage?fileId=${NormalFile.fileId}">${NormalFile.name}</a></td>
+                <td><a  href="/EasyCloudStorage/homePage?fileId=${NormalFile.fileId}&dirId=0">${NormalFile.name}</a></td>
                 <td>${NormalFile.type}</td>
                 <td>${NormalFile.displayTime}</td>
             </tr>
@@ -174,5 +176,9 @@
 </div>
 <script src="js/menu.js"></script>
 <script src="js/menuLayer.js"></script>
-</body>
-</html>
+        </c:when>
+        <c:otherwise>
+
+            <img alt="error" src="/img/test.png">
+        </c:otherwise>
+    </c:choose>

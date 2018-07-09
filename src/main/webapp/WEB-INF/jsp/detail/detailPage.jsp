@@ -43,15 +43,7 @@
 <link href="/EasyCloudStorage/css/menu.css" rel="stylesheet"/>
 
 <div class="detail-show-board">
-    <c:choose>
-        <c:when test="${file.type=='jpg'}">
-    <img src="${file.realPath}'\'${file.name}.${file.type}">
-    </c:when>
-    <c:otherwise>
-
-    </c:otherwise>
-
-    </c:choose>
+    <img src="G:\picture\1.jpg">
 </div>
 
 

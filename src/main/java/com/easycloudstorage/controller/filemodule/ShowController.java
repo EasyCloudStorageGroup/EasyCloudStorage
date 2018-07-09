@@ -21,12 +21,12 @@ public class ShowController {
 
     @RequestMapping("homePage")
 
-    public ModelAndView show(int dirId, HttpSession session,String type) {
+    public ModelAndView show(int dirId, int fileId,HttpSession session) {
 
-
-        List<Directory> directoryList=new ArrayList<Directory>();
-        List<NormalFile> normalFileList=new ArrayList<NormalFile>();
-        List<Directory> parentDirList=new ArrayList<Directory>();
+        NormalFile file=showService.findNormalFileById(fileId,showService.normalFileList());
+        List<Directory> directoryList;
+        List<NormalFile> normalFileList;
+        List<Directory> parentDirList;
 
             Directory rootDirectory = null;//当前目录
 
@@ -82,6 +82,7 @@ public class ShowController {
 
         Directory currentDir=showService.findDirectoryById(dirId,showService.directoryList());
 
+        session.setAttribute("normalFile",file);
         session.setAttribute("currentNormalFiles", normalFileList);
         session.setAttribute("currentDirectories", directoryList);
 
@@ -90,21 +91,11 @@ public class ShowController {
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName("home/homePage");
-
         return mv;
     }
 
-    @RequestMapping("detailPage")
-    public ModelAndView detailShow(String fileId, HttpSession session) {
 
-        NormalFile file=showService.findNormalFileById(fileId,showService.normalFileList());
-        ModelAndView mv = new ModelAndView();
-        session.setAttribute("file",file);
-        mv.addObject(file);
-        mv.setViewName("detail/detailPage");
 
-        return mv;
-    }
 
     @RequestMapping("orderFile")
     public String orderFile(HttpSession session, String orderBy) {

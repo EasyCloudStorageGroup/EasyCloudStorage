@@ -130,13 +130,13 @@ public class ShowService {
     /*
      * 根据fileID找到该ID的file对象
      * */
-    public NormalFile findNormalFileById(String fileId,List<NormalFile> normalFileList)
+    public NormalFile findNormalFileById(int fileId,List<NormalFile> normalFileList)
     {
         NormalFile file;
         for(int i=0;i<normalFileList.size();i++)
         {
             file=normalFileList.get(i);
-            if(fileId!=null&&fileId.equals(file.getFileId()))
+            if(fileId!=0&&fileId==(file.getFileId()))
                 return file;
 
         }
