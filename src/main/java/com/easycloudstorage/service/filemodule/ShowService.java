@@ -2,16 +2,19 @@ package com.easycloudstorage.service.filemodule;
 
 import com.easycloudstorage.mapper.filemodule.ShowMapper;
 import com.easycloudstorage.pojo.Directory;
-import com.easycloudstorage.pojo.File;
+
 import com.easycloudstorage.pojo.NormalFile;
 import com.easycloudstorage.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 
 @Service
@@ -82,6 +85,9 @@ public class ShowService {
         }
         return result;
     }
+/*
+ * 根据dirID找到他的父目录
+ */
 
     public  Directory findParentDir(int dirId,List<Directory> directoryList)//找到该dir的父目录
     {
@@ -103,9 +109,15 @@ public class ShowService {
     return null;
     }
 
+/*
+* 根据dirID找到该ID的directory对象
+* */
+
+
     public Directory findDirectoryById(int dirId,List<Directory> directoryList)
+
     {
-        Directory currentDir=new Directory();
+        Directory currentDir;
         for(int i=0;i<directoryList.size();i++)
         {
             currentDir=directoryList.get(i);
@@ -115,29 +127,70 @@ public class ShowService {
         }
         return null;
     }
-    public List<NormalFile> findFileByType(String type,User user,List<NormalFile> normalFileList)
+    /*
+     * 根据fileID找到该ID的file对象
+     * */
+    public NormalFile findNormalFileById(int fileId,List<NormalFile> normalFileList)
     {
-        NormalFile tem=new NormalFile();
-        List<NormalFile> result=new ArrayList<NormalFile>();
-        for(int i=0;i<normalFileList.size();i++) {
-            tem = normalFileList.get(i);
-            if(!type.equals("other")){
-            if (tem.getOwnerId().equals(user.getAccountId())&&tem.getType().equals(type))
-                result.add(tem);
-            }
-            else{
-                if (tem.getOwnerId().equals(user.getAccountId())&&!tem.getType().equals("jpg")&&!tem.getType().equals("mp3")&&!tem.getType().equals("mp4"))
-                    result.add(tem);
-            }
+        NormalFile file;
+        for(int i=0;i<normalFileList.size();i++)
+        {
+            file=normalFileList.get(i);
+            if(fileId!=0&&fileId==(file.getFileId()))
+                return file;
 
         }
-        return result;
+        return null;
     }
+
+   public StringBuffer readFile(String filePath) throws Exception {
+        StringBuffer fileContent = new StringBuffer();
+        File file = new File(filePath);
+        String code=resolveCode(filePath);
+        if(file.exists()){
+            String suffix = file.getName().substring(file.getName().lastIndexOf(".")+1);
+            //Word2003
+           if (suffix.equals("txt")) {
+                BufferedReader bufferReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),code));
+                //每从BufferedReader对象中读取一行字符。
+                String line = null;
+                while((line=bufferReader.readLine()) !=null){
+                    fileContent.append(line);
+                }
+                bufferReader.close();
+            }
+        }else{
+            System.out.println("文件不存在！");
+        }
+        return fileContent;
+    }
+
+    public static String resolveCode(String path) throws Exception {
+        InputStream inputStream = new FileInputStream(path);
+        byte[] head = new byte[3];
+        inputStream.read(head);
+        String code = "gb2312";  //或GBK
+        if (head[0] == -1 && head[1] == -2 )
+            code = "UTF-16";
+        else if (head[0] == -2 && head[1] == -1 )
+            code = "Unicode";
+        else if(head[0]==-17 && head[1]==-69 && head[2] ==-65)
+            code = "UTF-8";
+
+        inputStream.close();
+
+        System.out.println(code);
+        return code;
+    }
+
+
+
+
 
     /*
      * 对普通文件列表进行排序
      */
-    public void orderNarmalFileList(List<NormalFile> nfs, String orderBy) {
+    public void orderNormalFileList(List<NormalFile> nfs, String orderBy) {
         if(orderBy == null)
             orderBy = "name";
 

@@ -5,12 +5,22 @@ import com.easycloudstorage.pojo.NormalFile;
 import com.easycloudstorage.pojo.User;
 import com.easycloudstorage.service.filemodule.ShowService;
 
+
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageDecoder;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +30,27 @@ public class ShowController {
     private ShowService showService;
 
     @RequestMapping("homePage")
-    public ModelAndView show(int dirId, HttpSession session,String type) {
 
-        List<Directory> directoryList=new ArrayList<Directory>();
-        List<NormalFile> normalFileList=new ArrayList<NormalFile>();
-        List<Directory> parentDirList=new ArrayList<Directory>();
+    public ModelAndView show(int dirId, int fileId,HttpSession session) {
+        NormalFile file;
+        file=showService.findNormalFileById(fileId,showService.normalFileList());
+        String filePath = null;
+        StringBuffer fileContent=null;
+        if(file!=null&&(file.getType().equals("image/jpeg")||file.getType().equals("image/png"))){
+        filePath=file.getRealPath();
+        filePath=filePath.substring(23);
+        }
+        else if(file!=null&&file.getType().equals("text/plain")){
+            filePath=file.getRealPath();
+        try {
+            fileContent=showService.readFile(filePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        }
+        List<Directory> directoryList;
+        List<NormalFile> normalFileList;
+        List<Directory> parentDirList;
 
             Directory rootDirectory = null;//当前目录
 
@@ -32,7 +58,6 @@ public class ShowController {
 
             User user = (User) session.getAttribute("user");
 
-            if(type==null){
 
             if (dirId == 0) {//如果是第一次进入该函数，该函数为用户的根目录，此时dirID为空，先找到用户的根目录
 
@@ -77,24 +102,22 @@ public class ShowController {
                     parentDirList = new ArrayList<Directory>();
                 }
             }
-            }
-            else {
-                normalFileList=showService.findFileByType(type,user,showService.normalFileList());
 
-            }
+
         Directory currentDir=showService.findDirectoryById(dirId,showService.directoryList());
 
+        session.setAttribute("normalFile",file);
         session.setAttribute("currentNormalFiles", normalFileList);
         session.setAttribute("currentDirectories", directoryList);
-
+        session.setAttribute("filePath",filePath);
         session.setAttribute("parentDirList", parentDirList);
         session.setAttribute("currentDir",currentDir);
-
+        session.setAttribute("fileContent",fileContent);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("home/homePage");
-
         return mv;
     }
+
 
     @RequestMapping("orderFile")
     public String orderFile(HttpSession session, String orderBy) {
@@ -103,7 +126,7 @@ public class ShowController {
         List<NormalFile> normalFileList= (List<NormalFile>)session.getAttribute("currentNormalFiles");
 
         showService.orderDirectoryList(directoryList, orderBy);
-        showService.orderNarmalFileList(normalFileList, orderBy);
+        showService.orderNormalFileList(normalFileList, orderBy);
 
         session.setAttribute("currentNormalFiles", normalFileList);
         session.setAttribute("currentDirectories", directoryList);
