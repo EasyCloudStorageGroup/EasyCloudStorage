@@ -9,16 +9,8 @@ public class File {
     private String realPath;
     private int parentDirId = 0;
     private String ownerId;
+    private int orgId;
     private String displayTime;
-
-    public void setDisplayTime(){
-     if(lastMovedTime!=null){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        displayTime=sdf.format(lastMovedTime);}
-
-    }
-
-    public String getDisplayTime(){return displayTime;}
 
     public String getName() {
         return name;
@@ -59,4 +51,21 @@ public class File {
     public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
     }
+
+    public int getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(int orgId) {
+        this.orgId = orgId;
+    }
+
+    public void setDisplayTime(){
+        if(lastMovedTime!=null){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            displayTime=sdf.format(lastMovedTime);}
+
+    }
+
+    public String getDisplayTime(){return displayTime;}
 }
