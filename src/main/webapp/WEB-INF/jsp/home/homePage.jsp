@@ -153,15 +153,15 @@
     </c:otherwise>
 </c:choose>
 </div>
-<div  class="testClass" style="text-align: left;display: none">
-    <c:forEach items="${directoryList}" var="Directory">
+<!--div  class="testClass" style="text-align: left">
+    <c:forEach items="${currentDirectories}" var="Directory">
        <li>
            <input type="radio" name="dir" value=${Directory.dirId} title=${Directory.name}>
                 ${Directory.name}
             </input>
        </li>
     </c:forEach>
-</div>
+</div-->
 <ul class="client_menu" id="clientMenu" style="background-color: dodgerblue">
     <li><a href="#" class="demo" onclick="openRenameFileMenu()" data-type="rename">重命名</a></li>
     <li><a href="#" onclick="openDeleteFileMenu()">删除</a></li>
@@ -172,6 +172,5 @@
     <input type="text" name="searchForm.name" />
 </div>
 <script src="js/menu.js"></script>
-<script src="js/menuLayer.js"></script>
 </body>
 </html>

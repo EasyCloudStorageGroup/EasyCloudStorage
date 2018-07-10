@@ -58,7 +58,21 @@ public class FileController {
         newFileName = URLDecoder.decode(newFileName, "utf-8").replaceAll("%25","%")
                 .replaceAll("%23","#").replaceAll("%26","&")
                 .replaceAll("%2B","+");
+        List<Directory> allDirectories = showService.directoryList();
+        int parentDirId = showService.findParentDir(oldFileId, allDirectories).getDirId();
         NormalFile normalFile=fileService.selectNormalFile(oldFileId);
+        if(!normalFile.getName().equals(newFileName) && fileAlreadyExist(parentDirId, newFileName))
+        {
+            for(int i=1;i<1000;i++)//1000，最多后缀1000,
+            {
+                if(!fileAlreadyExist(dirId, newFileName.substring(0,newFileName.lastIndexOf("."))+"("+i+")"
+                                            +newFileName.substring(newFileName.lastIndexOf(".")))) {
+                    newFileName = newFileName.substring(0,newFileName.lastIndexOf("."))+"("+i+")"
+                            +newFileName.substring(newFileName.lastIndexOf("."));//这一串处理后缀名
+                    break;
+                }
+            }
+        }
         File file=new File(normalFile.getRealPath());
 
         //处理文件后缀名
@@ -91,8 +105,20 @@ public class FileController {
         newFileName = URLDecoder.decode(newFileName, "utf-8").replaceAll("%25","%")//处理特殊字符
                 .replaceAll("%23","#").replaceAll("%26","&")
                 .replaceAll("%2B","+");
+        List<Directory> allDirectories = showService.directoryList();
+        int parentDirId = showService.findParentDir(oldFileId, allDirectories).getDirId();
         System.out.println("in file rename dir  and pid="+oldFileId+" and new name: "+newFileName);
         Directory directory=fileService.selectDirectory(oldFileId);
+        if(!directory.getName().equals(newFileName) && fileAlreadyExist(parentDirId, newFileName))
+        {
+            for(int i=1;i<1000;i++)//1000，最多后缀1000,
+            {
+                if(!fileAlreadyExist(parentDirId, newFileName+"("+i+")")) {
+                    newFileName = newFileName+"("+i+")";
+                    break;
+                }
+            }
+        }
         File file=new File(directory.getRealPath());
 
         //对本地文件处理
@@ -121,8 +147,18 @@ public class FileController {
         List<Directory> directories= showService.directoryList();
         ShowService showService = new ShowService();
         Directory userRootDir = showService.rootDirectory(user, directories);
-        if(dirId == 0 && userRootDir!=null)
+        if(dirId == 0 && userRootDir!=null)//根目录
             dirId=(userRootDir).getDirId();
+        if(fileAlreadyExist(dirId, newFileName))
+        {
+            for(int i=1;i<1000;i++)//1000，最多后缀1000,
+            {
+                if(!fileAlreadyExist(dirId, newFileName+"("+i+")")) {
+                    newFileName = newFileName+"("+i+")";
+                    break;
+                }
+            }
+        }
         Directory directory=fileService.selectDirectory(dirId);
         File file=new File(directory.getRealPath()+"\\"+newFileName);
         file.mkdir();
@@ -208,6 +244,24 @@ public class FileController {
             return "redirect:homePage?dirId=0";
         else
             return "redirect:homePage?dirId="+dirId;
+    }
+
+    private boolean fileAlreadyExist(int parentDirId, String fileName)
+    {
+        List<Directory> allDirectories = showService.directoryList();
+        List<Directory> directoriesOfDir = showService.showDirectory(parentDirId, allDirectories);
+
+        for(Directory directory : directoriesOfDir)
+            if(directory.getName().equals(fileName))
+                return true;
+
+        List<NormalFile> allNormalFiles = showService.normalFileList();
+        List<NormalFile> normalFilesOfDir = showService.showNormalFile(parentDirId, allNormalFiles);
+        for(NormalFile normalFile : allNormalFiles)
+            if(normalFile.getName().equals(fileName))
+                return true;
+
+        return false;
     }
 }
 

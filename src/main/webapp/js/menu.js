@@ -56,22 +56,13 @@ function openRenameFileMenu()
         });
 
     });
-    /*new MyLayer({
-        top:"40%",
-        left:"30%",
-        width:"40%",
-        height:"20%",
-        title:"重命名",
-        id:clientMenu.id,
-        content:"renameFileMenu"
-    }).openLayer();*/
 }
 function openNewDirectoryMenu()
 {
     var result=/dirId=([0-9]+)/.exec(window.location.href);
     var dirId;
     if(result!=null&&result.length>1) dirId=result[1];
-    else dirId=-1;
+    else dirId=0;
     layui.use('layer',function () {
         var $ = layui.jquery, layer = layui.layer;
 
@@ -88,15 +79,6 @@ function openNewDirectoryMenu()
         });
 
     });
-    /*new MyLayer({
-        top:"40%",
-        left:"30%",
-        width:"40%",
-        height:"20%",
-        title:"重命名",
-        id:clientMenu.id,
-        content:"renameFileMenu"
-    }).openLayer();*/
 }
 
 function openDeleteFileMenu()
@@ -104,7 +86,7 @@ function openDeleteFileMenu()
     var result=/dirId=([0-9]+)/.exec(window.location.href);
     var dirId;
     if(result!=null&&result.length>1) dirId=result[1];
-    else dirId=-1;
+    else dirId=0;
     layui.use('layer',function () {
         var $ = layui.jquery, layer = layui.layer;
 
@@ -118,15 +100,6 @@ function openDeleteFileMenu()
         window.location.href=encodeURI(encodeURI("deleteDirectoryPage?fileId="+clientMenu.id+"&dirId="+dirId));
         });
     });
-    /*new MyLayer({
-        top:"40%",
-        left:"30%",
-        width:"40%",
-        height:"20%",
-        title:"确认删除",
-        id:clientMenu.id,
-        content:"deleteFileMenu"
-    }).openLayer();*/
 }
 
 function openMoveFileMenu()
@@ -134,26 +107,21 @@ function openMoveFileMenu()
     var result=/dirId=([0-9]+)/.exec(window.location.href);
     var dirId;
     if(result!=null&&result.length>1) dirId=result[1];
-    else dirId=-1;
+    else dirId=0;
+    //var test = $('.testClass').clone();
+    //$(".testClass").css("display","");
+    var test = document.getElementsByClassName("testClass")[0].outerHTML
     layui.use('layer',function () {
         var $ = layui.jquery, layer = layui.layer;
 
-        layer.prompt({
-            formType: 2,
+        layer.open({
+            type: 1,
             title: '移动到：',
-            content: $('.testClass')
+            content: test
         }, function (pass, index) {
             alert("ff");
         });
     });
-    /*new MyLayer({
-        top:"20%",
-        left:"30%",
-        width:"60%",
-        height:"20%",
-        title:"文件移动",
-        content:"moveFileMenu"
-    }).openLayer();*/
 }
 
 function init(){
