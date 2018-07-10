@@ -41,7 +41,7 @@
         background-color: white;
         border-radius:10px;
         overflow: auto;
-        opacity: 0.85
+        opacity: 0.9;
     }
 </style>
 <style>
@@ -55,13 +55,13 @@
 </style>
 
 <style>
-    .empty-notice-board{
+    .picture-show-board{
         position: relative;
         left: 400px;
         top: 100px;
         background-color: white;
         border-radius:10px;
-        opacity:0.6;}
+        opacity:1;}
 </style>
 <style>
     .table-show-board{
@@ -111,7 +111,7 @@
 <c:choose>
     <c:when test="${empty currentDirectories&&empty currentNormalFiles}">
 
-        <div class="empty-notice-board" ><img src="/EasyCloudStorage/img/home/smile.PNG" width="400px" height="320px"/>
+        <div class="picture-show-board" ><img src="/EasyCloudStorage/img/home/smile.PNG" width="400px" height="320px"/>
             <h2>当前没有任何文件哦,赶紧上传一个吧！</h2></div>
 
     </c:when>
@@ -178,7 +178,8 @@
 <script src="js/menuLayer.js"></script>
         </c:when>
         <c:otherwise>
-
-            <img alt="error" src="/img/test.png">
+            <div class="picture-show-board" >
+            <img  src="/${normalFile.realPath}}>
+            </div>
         </c:otherwise>
     </c:choose>

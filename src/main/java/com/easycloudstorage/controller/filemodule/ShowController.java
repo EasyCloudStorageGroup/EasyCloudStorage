@@ -5,12 +5,22 @@ import com.easycloudstorage.pojo.NormalFile;
 import com.easycloudstorage.pojo.User;
 import com.easycloudstorage.service.filemodule.ShowService;
 
+
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageDecoder;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +34,8 @@ public class ShowController {
     public ModelAndView show(int dirId, int fileId,HttpSession session) {
 
         NormalFile file=showService.findNormalFileById(fileId,showService.normalFileList());
+        String filePath=file.getRealPath()+file.getName()+"."+file.getType();
+        filePath=filePath.substring(23);
         List<Directory> directoryList;
         List<NormalFile> normalFileList;
         List<Directory> parentDirList;
@@ -85,7 +97,7 @@ public class ShowController {
         session.setAttribute("normalFile",file);
         session.setAttribute("currentNormalFiles", normalFileList);
         session.setAttribute("currentDirectories", directoryList);
-
+        session.setAttribute("filePath",filePath);
         session.setAttribute("parentDirList", parentDirList);
         session.setAttribute("currentDir",currentDir);
 
@@ -93,8 +105,6 @@ public class ShowController {
         mv.setViewName("home/homePage");
         return mv;
     }
-
-
 
 
     @RequestMapping("orderFile")
