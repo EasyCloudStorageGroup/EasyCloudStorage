@@ -5,10 +5,12 @@ import com.easycloudstorage.pojo.NormalFile;
 import com.easycloudstorage.pojo.User;
 import com.easycloudstorage.service.filemodule.ShowService;
 
-
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageDecoder;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
+
+import com.easycloudstorage.service.orgModule.OrgService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,12 +30,13 @@ import java.util.List;
 public class ShowController {
     @Autowired
     private ShowService showService;
+    @Autowired
+    private OrgService orgService;
 
     @RequestMapping("homePage")
-
     public ModelAndView show(Integer dirId, Integer fileId,HttpSession session,String type) {
         NormalFile file;
-        file=showService.findNormalFileById(fileId,showService.normalFileList());
+        file = showService.findNormalFileById(fileId, showService.normalFileList());
         String filePath = null;
         StringBuffer fileContent=null;
         if(file!=null&&(file.getType().equals("image/jpeg")||file.getType().equals("image/png")||file.getType().equals("audio/mp3")||file.getType().equals("video/mp4"))){
@@ -52,12 +55,12 @@ public class ShowController {
         List<NormalFile> normalFileList=null;
         List<Directory> parentDirList=null;
 
-            Directory rootDirectory = null;//当前目录
 
-            Directory parentDir;
+        Directory rootDirectory = null;//当前目录
 
-            User user = (User) session.getAttribute("user");
+        Directory parentDir;
 
+        User user = (User) session.getAttribute("user");
 
     if (dirId == null) {//如果是第一次进入该函数，该函数为用户的根目录，此时dirID为空，先找到用户的根目录
 
@@ -121,8 +124,6 @@ public class ShowController {
         mv.setViewName("home/homePage");
         return mv;
     }
-
-
     @RequestMapping("orderFile")
     public String orderFile(HttpSession session, String orderBy) {
 

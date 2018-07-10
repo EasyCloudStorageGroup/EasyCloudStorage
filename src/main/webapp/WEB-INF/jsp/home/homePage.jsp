@@ -15,9 +15,10 @@
 <link rel="stylesheet" href="/EasyCloudStorage/css/homePage/fileShow.css"/>
 
 <script>
+    var Orgnization=
     $(function() {
         var leftNavW = 200;
-        var topNavH = 60;
+        var topNavH = 70;
         var boardWidth = $(document).width() - leftNavW - 15;
         var boardHeight = $(document).height() - topNavH;
         $(".file-manager-board").css("width", boardWidth+"px");
@@ -38,7 +39,7 @@
     .file-manager-board {
         position: fixed;
         left: 200px;
-        top: 60px;
+        top: 70px;
         background-color: white;
         border-radius:10px;
 
@@ -146,8 +147,8 @@
 
     <%@ include file="include/orderNav.jsp"%>
     <%@ include file="include/searchBox.jsp"%>
-
             <div class="directory-show-board">
+
         <c:choose>
             <c:when test="${empty parentDirList}">
               全部文件
@@ -160,7 +161,10 @@
                 ${currentDir.name}
             </c:otherwise>
         </c:choose>
+
     </div>
+
+
 
     <script src="/EasyCloudStorage/js/homePage/fileShow.js" charset="utf-8"></script>
 

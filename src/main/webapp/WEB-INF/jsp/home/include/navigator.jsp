@@ -69,8 +69,17 @@
     </ul>
 
     <ul class="layui-nav top-left-navigator">
+<<<<<<< HEAD
         <li class="layui-nav-item layui-this"><a href="homePage">网盘</a></li>
+=======
+<<<<<<< HEAD
+        <li class="layui-nav-item layui-this"><a href="homePage?dirId=0&fileId=0">网盘</a></li>
+>>>>>>> 组织界面设计
         <li class="layui-nav-item"><a>其它</a></li>
+=======
+    <li class="layui-nav-item layui-this"><a href="homePage?dirId=0">网盘</a></li>
+        <li class="layui-nav-item"><a href="orgnizationPage" id="orgnizationButton">组织</a></li>
+>>>>>>> 组织界面设计
     </ul>
 
     <ul class="layui-nav top-right-navigator">
