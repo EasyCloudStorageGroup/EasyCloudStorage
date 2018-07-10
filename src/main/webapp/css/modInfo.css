@@ -1,0 +1,28 @@
+body{
+    background-color: whitesmoke;
+    background-image: url("/EasyCloudStorage/img/home/backgroundImage.jpg");
+}
+.mainBoard{
+    width: 800px;
+    height: 500px;
+    border: 1px gray;
+    margin: 20px auto;
+    background-color: white;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 250px;
+}
+.layui-inline{
+    margin-top: 25px;
+}
+.button{
+    margin-right: 30px;
+}
+
+.avatar{
+    width: 100px;
+    height: 100px;
+    border-radius: 80%;
+}

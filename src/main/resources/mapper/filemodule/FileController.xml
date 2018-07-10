@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycloudstorage.mapper.filemodule.FileControllerMapper">
+    <select id="selectNormalFile" resultType="NormalFile">
+        select * from NormalFile where fileId=#{fileId};
+    </select>
+    <select id="selectAllNormalFiles" resultType="NormalFile">
+        select * from NormalFile;
+    </select>
+    <select id="selectDirectory" resultType="Directory">
+        select * from Directory where dirId=#{dirId};
+    </select>
+    <select id="selectAllDirectories" resultType="Directory">
+        select * from Directory;
+    </select>
+    <update id="updateNormalFile" parameterType="NormalFile">
+        update normalfile set name=#{name},lastMovedTime=#{lastMovedTime},realPath=#{realPath},
+                type=#{type},size=#{size},parentDirId=#{parentDirId},ownerId=#{ownerId}
+                where fileId=#{fileId};
+    </update>
+    <update id="updateDirectory" parameterType="Directory">
+        update directory set name=#{name},lastMovedTime=#{lastMovedTime},realPath=#{realPath},
+                parentDirId=#{parentDirId},ownerId=#{ownerId}
+                where dirId=#{dirId};
+    </update>
+    <delete id="deleteNormalFile" parameterType="NormalFile">
+        delete from normalfile where fileId=#{fileId};
+    </delete>
+    <delete id="deleteDirectory" parameterType="Directory">
+        delete from directory where dirId=#{dirId};
+    </delete>
+    <insert id="newDirectory" parameterType="Directory">
+        insert into directory ( `name`, `lastMovedTime`, `parentDirId`, `ownerId`, `realPath`) values(#{name},#{lastMovedTime},
+          #{parentDirId},#{ownerId},#{realPath});
+    </insert>
+</mapper>
