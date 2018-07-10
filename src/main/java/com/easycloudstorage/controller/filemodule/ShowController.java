@@ -32,10 +32,22 @@ public class ShowController {
     @RequestMapping("homePage")
 
     public ModelAndView show(int dirId, int fileId,HttpSession session) {
-
-        NormalFile file=showService.findNormalFileById(fileId,showService.normalFileList());
-        String filePath=file.getRealPath()+file.getName()+"."+file.getType();
+        NormalFile file;
+        file=showService.findNormalFileById(fileId,showService.normalFileList());
+        String filePath = null;
+        StringBuffer fileContent=null;
+        if(file!=null&&(file.getType().equals("image/jpeg")||file.getType().equals("image/png"))){
+        filePath=file.getRealPath();
         filePath=filePath.substring(23);
+        }
+        else if(file!=null&&file.getType().equals("text/plain")){
+            filePath=file.getRealPath();
+        try {
+            fileContent=showService.readFile(filePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        }
         List<Directory> directoryList;
         List<NormalFile> normalFileList;
         List<Directory> parentDirList;
@@ -100,7 +112,7 @@ public class ShowController {
         session.setAttribute("filePath",filePath);
         session.setAttribute("parentDirList", parentDirList);
         session.setAttribute("currentDir",currentDir);
-
+        session.setAttribute("fileContent",fileContent);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("home/homePage");
         return mv;

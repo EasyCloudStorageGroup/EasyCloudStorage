@@ -2,13 +2,13 @@ package com.easycloudstorage.service.filemodule;
 
 import com.easycloudstorage.mapper.filemodule.ShowMapper;
 import com.easycloudstorage.pojo.Directory;
-import com.easycloudstorage.pojo.File;
+
 import com.easycloudstorage.pojo.NormalFile;
 import com.easycloudstorage.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.FileInputStream;
+import java.io.*;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,28 +143,15 @@ public class ShowService {
         return null;
     }
 
-  /*  public StringBuffer readFile(String filePath){
+   public StringBuffer readFile(String filePath) throws Exception {
         StringBuffer fileContent = new StringBuffer();
-        File file = new File(uploadPath+fileName);
+        File file = new File(filePath);
+        String code=resolveCode(filePath);
         if(file.exists()){
             String suffix = file.getName().substring(file.getName().lastIndexOf(".")+1);
             //Word2003
-            if (suffix.equals("doc")) {
-                FileInputStream fis = new FileInputStream(file);
-                WordExtractor wordExtractor = new WordExtractor(fis);
-                String text = wordExtractor.getText();
-                fileContent.append(text);
-            }
-            //Word2007
-            else if (suffix.equals("docx")) {
-                OPCPackage opcPackage = POIXMLDocument.openPackage(uploadPath+fileName);
-                POIXMLTextExtractor extractor = new XWPFWordExtractor(opcPackage);
-                String text = extractor.getText();
-                fileContent.append(text);
-            }
-            //TXT
-            else if (suffix.equals("txt")) {
-                BufferedReader bufferReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"utf-8"));
+           if (suffix.equals("txt")) {
+                BufferedReader bufferReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),code));
                 //每从BufferedReader对象中读取一行字符。
                 String line = null;
                 while((line=bufferReader.readLine()) !=null){
@@ -176,7 +163,27 @@ public class ShowService {
             System.out.println("文件不存在！");
         }
         return fileContent;
-    }*/
+    }
+
+    public static String resolveCode(String path) throws Exception {
+        InputStream inputStream = new FileInputStream(path);
+        byte[] head = new byte[3];
+        inputStream.read(head);
+        String code = "gb2312";  //或GBK
+        if (head[0] == -1 && head[1] == -2 )
+            code = "UTF-16";
+        else if (head[0] == -2 && head[1] == -1 )
+            code = "Unicode";
+        else if(head[0]==-17 && head[1]==-69 && head[2] ==-65)
+            code = "UTF-8";
+
+        inputStream.close();
+
+        System.out.println(code);
+        return code;
+    }
+
+
 
 
 

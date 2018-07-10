@@ -57,11 +57,32 @@
 <style>
     .picture-show-board{
         position: relative;
-        left: 400px;
+        left: 150px;
         top: 100px;
         background-color: white;
         border-radius:10px;
-        opacity:1;}
+        opacity:1;
+
+        width: 1200px;
+        height: 900px;
+        object-fit: contain;
+
+    }
+</style>
+<style>
+    .text-show-board{
+        position: relative;
+        left: 300px;
+        top: 75px;
+        width: 600px;
+        background-color:white;
+        border-radius:30px;
+        opacity:0.9;
+        border-style: solid;
+        border-color: #122b40;
+        padding: 20px;
+
+    }
 </style>
 <style>
     .table-show-board{
@@ -69,6 +90,8 @@
     top:10px;
 }
 </style>
+
+
 
 <%@ include file="include/navigator.jsp"%>
 <link href="/EasyCloudStorage/css/menu.css" rel="stylesheet"/>
@@ -97,7 +120,7 @@
 
             <c:otherwise>
                 <c:forEach items="${parentDirList}" var="Directory">
-                    <a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" style="color: #4169E1;">${Directory.name}>></a>
+                    <a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}&fileId=0" style="color: #4169E1;">${Directory.name}>></a>
                 </c:forEach>
 
                 ${currentDir.name}
@@ -134,7 +157,7 @@
             <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id="${Directory.dirId}"
             sortType="Directory">
                 <td ><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>
-                <td ><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td>
+                <td ><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}&fileId=0">${Directory.name}</a></td>
                 <td>-</td>
                 <td >${Directory.displayTime}</td>
             </tr>
@@ -143,7 +166,14 @@
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
             <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
                 <td><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
-                <td><a  href="/EasyCloudStorage/homePage?fileId=${NormalFile.fileId}&dirId=0">${NormalFile.name}</a></td>
+                <c:choose>
+                    <c:when test="${NormalFile.type=='image/jpeg'||NormalFile.type=='image/png'||NormalFile.type=='text/plain'}">
+                <td><a  href="/EasyCloudStorage/homePage?fileId=${NormalFile.fileId}&dirId=${currentDir.dirId}">${NormalFile.name}</a></td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>${NormalFile.name}</td>
+                    </c:otherwise>
+                </c:choose>
                 <td>${NormalFile.type}</td>
                 <td>${NormalFile.displayTime}</td>
             </tr>
@@ -176,9 +206,20 @@
 <script src="js/menu.js"></script>
 <script src="js/menuLayer.js"></script>
         </c:when>
-        <c:otherwise>
+        <c:when test="${normalFile.type=='image/jpeg'||normalFile.type=='image/png'}">
+            <button type="button" class="layui-btn layui-btn-normal"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
             <div class="picture-show-board" >
-            <img  src="/${normalFile.realPath}}>
+
+                <img width="80%"  height: auto src="/Data${filePath}">
             </div>
-        </c:otherwise>
+        </c:when>
+        <c:when test="${normalFile.type=='text/plain'}">
+            <button type="button" class="layui-btn layui-btn-normal"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
+            <div class="text-show-board" >
+                <img width="80%"  height: auto src="/Data${filePath}">
+                ${fileContent}
+
+            </div>
+        </c:when>
+
     </c:choose>
