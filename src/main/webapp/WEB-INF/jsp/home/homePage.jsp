@@ -185,15 +185,15 @@
     </c:otherwise>
 </c:choose>
 </div>
-<div  class="testClass" style="text-align: left;display: none">
-    <c:forEach items="${directoryList}" var="Directory">
+<!--div  class="testClass" style="text-align: left">
+    <c:forEach items="${currentDirectories}" var="Directory">
        <li>
            <input type="radio" name="dir" value=${Directory.dirId} title=${Directory.name}>
                 ${Directory.name}
             </input>
        </li>
     </c:forEach>
-</div>
+</div-->
 <ul class="client_menu" id="clientMenu" style="background-color: dodgerblue">
     <li><a href="#" class="demo" onclick="openRenameFileMenu()" data-type="rename">重命名</a></li>
     <li><a href="#" onclick="openDeleteFileMenu()">删除</a></li>
@@ -204,22 +204,22 @@
     <input type="text" name="searchForm.name" />
 </div>
 <script src="js/menu.js"></script>
-<script src="js/menuLayer.js"></script>
-        </c:when>
+
+    </c:when>
         <c:when test="${normalFile.type=='image/jpeg'||normalFile.type=='image/png'}">
             <button type="button" class="layui-btn layui-btn-normal"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
             <div class="picture-show-board" >
-
                 <img width="80%"  height: auto src="/Data${filePath}">
             </div>
         </c:when>
         <c:when test="${normalFile.type=='text/plain'}">
             <button type="button" class="layui-btn layui-btn-normal"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
             <div class="text-show-board" >
-                <img width="80%"  height: auto src="/Data${filePath}">
                 ${fileContent}
-
             </div>
         </c:when>
-
     </c:choose>
+
+</body>
+</html>
+
