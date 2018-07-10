@@ -15,20 +15,20 @@ import java.util.Date;
 public class FileManager {
 
     public static boolean uploadFiles(MultipartFile[] files, HttpServletRequest request, FileService fileService){
-
         boolean flag=true;
-        for (MultipartFile file:files
-             ) {
-            boolean result=uploadOneFile(file,request,fileService);
+        for (MultipartFile file:files) {
+            boolean result=uploadOneFile(file, request, fileService);
             flag &=  result;
         }
+
         return flag;
     }
-    public static String changeName(File parentDir,String str){
+
+    public static String changeName(File parentDir,String str) {
         int i=1;
         int indexOfDot=str.lastIndexOf('.');
         int indexOfNum;
-        if (indexOfDot==-1){
+        if (indexOfDot==-1) {
             str+="("+i+")";
             indexOfNum=str.length()-2;
         }
@@ -44,6 +44,7 @@ public class FileManager {
         }
         return str;
     }
+
     public static String changeSize(long size){
         int count=0;
         while(size>1000){
@@ -70,6 +71,7 @@ public class FileManager {
         }
         return size+postFix;
     }
+
     public static boolean uploadOneFile(MultipartFile file, HttpServletRequest request,FileService fileService){
 
         String name=file.getOriginalFilename();

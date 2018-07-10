@@ -1,12 +1,10 @@
 package com.easycloudstorage.controller.filemodule;
 
 import com.easycloudstorage.pojo.*;
-import com.easycloudstorage.service.TestService;
-
 import com.easycloudstorage.service.filemodule.FileService;
 import com.easycloudstorage.service.filemodule.ShowService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,15 +27,14 @@ public class FileController {
     @Autowired
     private ShowService showService;
 
-    @RequestMapping("test")
-    public String temp3(){
-        return "test/newTest";
+    @RequestMapping("uploadPage")
+    public String uploadPage(){
+        return "upload/uploadPage";
     }
 
     @ResponseBody
-    @RequestMapping(value="/upload", method=RequestMethod.POST)
+    @RequestMapping(value="upload", method=RequestMethod.POST)
     public Result  doUploadFile(@RequestParam("file") MultipartFile[] files, HttpServletRequest request) {
-        System.out.println("function called "+files.length);
         boolean result=FileManager.uploadFiles(files,request,fileService);
         Result res=new Result();
         if (result)
@@ -53,6 +50,7 @@ public class FileController {
         mv.setViewName("rename");
         return mv;
     }
+
     @RequestMapping("renameFilePage")
     public String renameFilePage(@RequestParam("oldFileId")int oldFileId, String newFileName, int dirId)
             throws IOException
