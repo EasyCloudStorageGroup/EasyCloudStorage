@@ -23,6 +23,7 @@ public class OrganizationController {
 
         ModelAndView mv = new ModelAndView();
 
+        //获取organization
         if(!isMember)
             mv.setViewName("organization/home/404");
         else {
@@ -33,6 +34,9 @@ public class OrganizationController {
                 mv.setViewName("organization/home/orgHomePage");
             mv.addObject(organization);
         }
+
+        //获取有权限的文件和文件夹
+        
 
         return mv;
     }

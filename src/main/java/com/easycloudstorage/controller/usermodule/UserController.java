@@ -163,6 +163,6 @@ public class UserController  {
         theUser.setBgUrl(bgUrl);
         userService.updateBgUrl(theUser);
         session.setAttribute("user", theUser);
-        return "home/homePage";
+        return "redirect:homePage";
     }
 }
