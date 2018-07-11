@@ -11,7 +11,7 @@
 
 <%@ include file="../shared/sharedHeader.jsp"%>
 
-<link rel="stylesheet" href="/EasyCloudStorage/css/homePage/homePage.css"/>
+<link rel="stylesheet" href="/EasyCloudStorage/css/homePage/homePage.css?v=1.0"/>
 <link rel="stylesheet" href="/EasyCloudStorage/css/homePage/fileShow.css"/>
 
 <script>
@@ -22,14 +22,15 @@
         var boardHeight = $(document).height() - topNavH;
         $(".file-manager-board").css("width", boardWidth+"px");
         $(".file-manager-board").css("height", boardHeight+"px");
-
         $(window).resize(function() {
             var boardWidth = $(document).width() - leftNavW - 15;
             var boardHeight = $(document).height() - topNavH;
             $(".file-manager-board").css("width", boardWidth+"px");
             $(".file-manager-board").css("height", boardHeight+"px");
         });
-
+        $("body").css("background", "${sessionScope.user.getBgUrl()}")
+        $(".imgShow").css("background", "${sessionScope.user.getBgUrl()}")
+        $(".imgShow").css("background-size","264px 180px");
     })
 </script>
 
@@ -174,7 +175,7 @@
         <c:forEach items="${currentDirectories}" var="Directory">
             <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id="${Directory.dirId}"
             sortType="Directory">
-                <td><input type="checkbox" value="${Directory.realPath}" name="check"></td>
+                <td><input type="checkbox" value="${Directory.dirId}" name="check2"></td>
                 <td ><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>
                 <td ><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td>
                 <td>-</td>
@@ -183,8 +184,8 @@
         </c:forEach>
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
-            <tr class="normalFileClass" id="${NormalFile.realPath}" sortType="${NormalFile.sortType}">
-                <td><input type="checkbox" value="${NormalFile.realPath}" name="check"></td>
+            <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
+                <td><input type="checkbox" value="${NormalFile.fileId}" name="check"></td>
                 <td><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
                 <c:choose>
                     <c:when test="${NormalFile.type=='image/jpeg'||NormalFile.type=='image/png'||NormalFile.type=='text/plain'}">
@@ -239,12 +240,17 @@
 <script type="text/javascript" src="/EasyCloudStorage/jquery/changeSkin/jquery.js"></script>
 <script>
     $("#download_btn").click(function () {
-        var paths = [];
+        var idCollection = [];
+        var idCollection2 = [];
         $("input[name = 'check']:checked").each(function (i) {
-            paths[i] = $(this).val();
+            idCollection[i] = $(this).val();
         });
+        $("input[name = 'check2']:checked").each(function (i) {
+            idCollection2[i] = $(this).val();
+        })
         var data = {
-            "paths[]": paths
+            "idCollection[]":idCollection,
+            "idCollection2[]":idCollection2
         };
         window.location = "download?" + $.param(data);
     })

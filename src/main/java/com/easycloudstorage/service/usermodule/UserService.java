@@ -24,4 +24,6 @@ public class UserService {
     }
 
     public void addDir(File file){userMapper.addDir(file);}
+
+    public void updateBgUrl(User user){userMapper.updateBgUrl(user);}
 }

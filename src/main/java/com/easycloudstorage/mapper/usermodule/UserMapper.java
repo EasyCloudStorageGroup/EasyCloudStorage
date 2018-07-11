@@ -12,4 +12,5 @@ public interface UserMapper {
     void addUser(User user);
     User getUserByAccountId(String accountId);
     void addDir(File file);
+    void updateBgUrl(User user);
 }

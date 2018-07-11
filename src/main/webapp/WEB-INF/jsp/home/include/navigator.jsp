@@ -132,6 +132,12 @@
         $(".imgShow").css("background-size","264px 180px");
     });
     $(".imgList img").click(function () {
-        $("body").css("background", 'url(/EasyCloudStorage/img/changeSkin/'+ (i+1) +'.jpg)');
+        var url = 'url(/EasyCloudStorage/img/changeSkin/'+ (i+1) +'.jpg)';
+        var data = {
+            "bgUrl":  url,
+            "accountId": ${sessionScope.user.getAccountId()}
+        };
+        window.location = "getBgUrl?" + $.param(data);
     });
+
 </script>
