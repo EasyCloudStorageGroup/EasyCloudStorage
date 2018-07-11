@@ -106,7 +106,7 @@
     .music-show-board{
         position: relative;
         left: 380px;
-        top: 460px;
+        top: 560px;
 
     }
 </style>
@@ -259,9 +259,10 @@
         <c:when test="${normalFile.type=='audio/mp3'}">
             <div style="width:auto; height:800px;opacity: 0.85;background-image: url(/EasyCloudStorage/img/home/water.jpg);">
                 <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
-                <img height="300px"  width="300px"  style="position: absolute;left: 380px;top: 200px;opacity: 0.6;" src="/EasyCloudStorage/img/home/music.png">
+                <img height="500px"  width="500px"  style="position: absolute;left: 380px;top: 100px;opacity: 0.8;border-top-left-radius:2em;
+border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
                 <div class="music-show-board" >
-                    <audio src="/Data${filePath}" controls="controls" width="500px"></audio>
+                    <audio style="width: 500px;opacity: 0.8;" src="/Data${filePath}" controls="controls" ></audio>
                 </div>
             </div>
         </c:when>
