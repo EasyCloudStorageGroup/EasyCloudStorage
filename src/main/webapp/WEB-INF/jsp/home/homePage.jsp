@@ -207,17 +207,11 @@
 </c:choose>
 </div>
 
-            
-
 <ul class="client_menu" id="clientMenu" style="background-color: dodgerblue">
     <li><a href="#" class="demo" onclick="openRenameFileMenu()" data-type="rename">重命名</a></li>
     <li><a href="#" onclick="openDeleteFileMenu()">删除</a></li>
     <li><a href="#" onclick="openMoveFileMenu()">移动到</a></li>
 </ul>
-<div style="display: none" id="formTest">
-    <label>重命名为：</label>
-    <input type="text" name="searchForm.name" />
-</div>
 <script src="js/menu.js"></script>
 
     </c:when>
@@ -234,8 +228,6 @@
             </div>
         </c:when>
     </c:choose>
-
-<script src="js/menuLayer.js"></script>
 <script type="text/javascript" src="/EasyCloudStorage/jquery/changeSkin/jquery.js"></script>
 <script>
     $("#download_btn").click(function () {

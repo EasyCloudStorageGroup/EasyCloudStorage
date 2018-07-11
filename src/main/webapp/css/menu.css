@@ -27,3 +27,7 @@
     font-size:20px;
     font-family:Microsoft Yahei;
 }
+
+.fileMoveClass{
+    cursor:pointer;
+}

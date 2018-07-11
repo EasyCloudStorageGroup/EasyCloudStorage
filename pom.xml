@@ -42,7 +42,7 @@
       <artifactId>json-lib</artifactId>
       <version>2.4</version>
 
-      <scope>jdk15</scope>
+      <classifier>jdk15</classifier>
     </dependency>
 
     <!--Mybatis-->
