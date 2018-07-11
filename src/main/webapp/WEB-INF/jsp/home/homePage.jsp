@@ -230,9 +230,6 @@
 </div>
 
 
-
-
-
 <ul class="client_menu" id="clientMenu" style="background-color: dodgerblue">
     <li><a href="#" class="demo" onclick="openRenameFileMenu()" data-type="rename">重命名</a></li>
     <li><a href="#" onclick="openDeleteFileMenu()">删除</a></li>
