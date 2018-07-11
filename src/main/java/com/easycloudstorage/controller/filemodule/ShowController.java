@@ -36,7 +36,7 @@ public class ShowController {
         file=showService.findNormalFileById(fileId,showService.normalFileList());
         String filePath = null;
         StringBuffer fileContent=null;
-        if(file!=null&&(file.getType().equals("image/jpeg")||file.getType().equals("image/png"))){
+        if(file!=null&&(file.getType().equals("image/jpeg")||file.getType().equals("image/png")||file.getType().equals("audio/mp3")||file.getType().equals("video/mp4"))){
         filePath=file.getRealPath();
         filePath=filePath.substring(23);
         }
