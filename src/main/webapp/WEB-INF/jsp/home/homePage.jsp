@@ -117,7 +117,6 @@
                 <div class="directory-show-board">全部文件</div>
             </c:when>
 
-
             <c:otherwise>
                 <c:forEach items="${parentDirList}" var="Directory">
                     <a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}&fileId=0" style="color: #4169E1;">${Directory.name}>></a>
@@ -140,11 +139,13 @@
     <c:otherwise>
 
 <div class="table-show-board">
+    <%--<form action="download" method="post">--%>
     <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo" id="file-manager-table" >
 
 
         <thead>
         <tr>
+            <th><button class="layui-btn layui-btn-normal" type="submit" id="download_btn">下载</button></th>
             <th lay-data="{field:'type', width:50}"></th>
             <th lay-data="{field:'username', width:50}">名称</th>
             <th lay-data="{field:'type', width:50}">类型</th>
@@ -156,6 +157,7 @@
         <c:forEach items="${currentDirectories}" var="Directory">
             <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id="${Directory.dirId}"
             sortType="Directory">
+                <td><input type="checkbox" value="${Directory.realPath}" name="check"></td>
                 <td ><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>
                 <td ><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}&fileId=0">${Directory.name}</a></td>
                 <td>-</td>
@@ -164,7 +166,8 @@
         </c:forEach>
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
-            <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
+            <tr class="normalFileClass" id="${NormalFile.realPath}" sortType="${NormalFile.sortType}">
+                <td><input type="checkbox" value="${NormalFile.realPath}" name="check"></td>
                 <td><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
                 <c:choose>
                     <c:when test="${NormalFile.type=='image/jpeg'||NormalFile.type=='image/png'||NormalFile.type=='text/plain'}">
@@ -181,19 +184,15 @@
 
         </tbody>
     </table>
+
 </div>
     </c:otherwise>
 </c:choose>
 </div>
-<!--div  class="testClass" style="text-align: left">
-    <c:forEach items="${currentDirectories}" var="Directory">
-       <li>
-           <input type="radio" name="dir" value=${Directory.dirId} title=${Directory.name}>
-                ${Directory.name}
-            </input>
-       </li>
-    </c:forEach>
-</div-->
+
+</div>
+
+
 <ul class="client_menu" id="clientMenu" style="background-color: dodgerblue">
     <li><a href="#" class="demo" onclick="openRenameFileMenu()" data-type="rename">重命名</a></li>
     <li><a href="#" onclick="openDeleteFileMenu()">删除</a></li>
@@ -220,6 +219,20 @@
         </c:when>
     </c:choose>
 
+<script src="js/menuLayer.js"></script>
+<script type="text/javascript" src="/EasyCloudStorage/jquery/changeSkin/jquery.js"></script>
+<script>
+    $("#download_btn").click(function () {
+        var paths = [];
+        $("input[name = 'check']:checked").each(function (i) {
+            paths[i] = $(this).val();
+        });
+        var data = {
+            "paths[]": paths
+        };
+        window.location = "download?" + $.param(data);
+    })
+</script>
 </body>
 </html>
 
