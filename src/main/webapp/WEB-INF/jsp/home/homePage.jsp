@@ -159,7 +159,6 @@
                 <c:forEach items="${parentDirList}" var="Directory">
                     <a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" style="color: #4169E1">${Directory.name}>></a>
                 </c:forEach>
-
                 ${currentDir.name}
             </c:otherwise>
         </c:choose>
@@ -250,7 +249,6 @@
             <div style="width:auto; height:800px;opacity: 0.85;background-image: url(/EasyCloudStorage/img/home/water.jpg);">
         <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
         <div class="text-show-board" >
-
                 ${fileContent}
             </div>
         </div>
@@ -261,14 +259,14 @@
                 <img height="500px"  width="500px"  style="position: absolute;left: 380px;top: 100px;opacity: 0.8;border-top-left-radius:2em;
 border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
                 <div class="music-show-board" >
-                    <audio style="width: 500px;opacity: 0.8;" src="/Data${filePath}" controls="controls" ></audio>
+                    <audio autoplay="autoplay" style="width: 500px;opacity: 0.8;" src="/Data${filePath}" controls="controls" ></audio>
                 </div>
             </div>
         </c:when>
         <c:when test="${normalFile.type=='video/mp4'}">
             <div style="width:auto; height:800px;opacity: 0.85;background-image: url(/EasyCloudStorage/img/home/water.jpg);">
         <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
-            <div class="video-show-board"><video src="/Data${filePath}"   width="1000px"  height="600px" controls="controls">
+            <div class="video-show-board"><video  autoplay="autoplay" src="/Data${filePath}"   width="1000px"  height="600px" controls="controls">
             </video></div></div>
         </c:when>
     </c:choose>
