@@ -11,14 +11,45 @@
 <style>
     .fileListBoard > div {
         position: relative;
-        background-color: white;
-        border-radius:3px;
     }
 
+    .fileListBoard-header {
+        height: 55px;
+        background-color: white;
+        border-radius:3px;
+        margin-bottom: 10px;
+    }
+
+    .fileListBoard-content {
+        background-color: white;
+        border-radius:3px;
+        overflow-y: auto;
+    }
 </style>
+
+<script>
+    $(function () {
+        var topNavH = 70;
+        var margin = 10;
+        var orgHeader = 55 + 10;
+        var boardHeight = $(window).height() - topNavH - margin - orgHeader;
+        $(".fileListBoard-content").css("height", boardHeight+"px");
+
+        $(window).resize(function() {
+            var boardHeight = $(window).height() - topNavH - margin - orgHeader;
+            $(".fileListBoard-content").css("height", boardHeight+"px");
+        });
+    });
+</script>
 
 <div class="fileListBoard layui-col-md9">
     <div class="layui-col-md12" >
+        <div class="fileListBoard-header">
 
+        </div>
+
+        <div class="fileListBoard-content">
+
+        </div>
     </div>
 </div>

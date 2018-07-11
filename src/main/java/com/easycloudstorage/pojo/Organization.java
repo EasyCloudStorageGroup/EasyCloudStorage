@@ -8,6 +8,8 @@ public class Organization {
     private String description;
     private String ownerId;
     private List<User> members;
+    private List<Group> groups;
+    private List<User> unGroupedMembers;
 
     public int getOrgId() {
         return orgId;
@@ -47,5 +49,21 @@ public class Organization {
 
     public void setMembers(List<User> members) {
         this.members = members;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+
+    public List<User> getUnGroupedMembers() {
+        return unGroupedMembers;
+    }
+
+    public void setUnGroupedMembers(List<User> unGroupedMembers) {
+        this.unGroupedMembers = unGroupedMembers;
     }
 }

@@ -18,7 +18,7 @@
 
 <%@ include file="include/topNav.jsp"%>
 
-<div class="mainBoard layui-row layui-col-space10">
+<div class="mainBoard layui-row layui-col-space15">
     <%@ include file="include/orgMembers.jsp"%>
     <%@ include file="include/fileList.jsp"%>
 </div>

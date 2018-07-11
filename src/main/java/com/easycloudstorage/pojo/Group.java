@@ -1,10 +1,13 @@
 package com.easycloudstorage.pojo;
 
+import java.util.List;
+
 public class Group {
     private int groupId;
     private String name;
     private String description;
     private int orgId;
+    private List<User> members;
 
     public int getGroupId() {
         return groupId;
@@ -36,5 +39,13 @@ public class Group {
 
     public void setOrgId(int orgId) {
         this.orgId = orgId;
+    }
+
+    public List<User> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<User> members) {
+        this.members = members;
     }
 }

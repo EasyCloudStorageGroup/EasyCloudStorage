@@ -16,15 +16,39 @@
     }
 
     .avatar {
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
+        border-radius:50%;
     }
 
     .orgMembersBoard-header {
         border-bottom: 1.5px solid #f3f3f3;
         padding: 15px 0 15px 20px;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: bold;
+    }
+
+    .org-name {
+        font-size: 14px;
+    }
+
+    .org-members {
+        margin-top: 20px;
+        overflow-y: auto;
+    }
+
+    .un-grouped-member-div {
+        margin-left: 10px;
+        margin-top: 5px;
+    }
+
+    .grouped-member-div {
+        margin-left: 15px;
+        margin-top: 5px;
+    }
+
+    .groups-div {
+        margin-top: 10px;
     }
 </style>
 
@@ -32,40 +56,31 @@
     layui.use('element', function(){
         var element = layui.element;
     });
+
+    $(function () {
+        var topNavH = 70;
+        var margin = 10;
+        var orgHeader = 76;
+        var boardHeight = $(window).height() - topNavH - margin - orgHeader;
+        $(".org-members").css("height", boardHeight+"px");
+
+        $(window).resize(function() {
+            var boardHeight = $(window).height() - topNavH - margin - orgHeader;
+            $(".org-members").css("height", boardHeight+"px");
+        });
+    });
 </script>
 
 
 <div class="orgMembersBoard layui-col-md3">
     <div class="layui-col-md12">
         <div class="orgMembersBoard-header">
-            组织结构
+            组织结构 -- <span class="org-name">${organization.name}</span>
         </div>
 
-        <div>
-            <img src="">
-            ${organization.name}
-        </div>
-
-        <div class="layui-collapse">
-            <c:forEach items="${organization.members}" var="member">
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">${}</h2>
-                    <div class="layui-colla-content layui-show">内容区域</div>
-                </div>
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">李清照</h2>
-                    <div class="layui-colla-content layui-show">内容区域</div>
-                </div>
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">鲁迅</h2>
-                    <div class="layui-colla-content layui-show">内容区域</div>
-                </div>
-            </c:forEach>
-        </div>
-
-
-
-                <div>
+        <div class="org-members">
+            <c:forEach items="${organization.unGroupedMembers}" var="member">
+                <div class="un-grouped-member-div">
                     <c:if test="${member.defaultAvatar==1}">
                         <c:if test="${member.sex=='male'}">
                             <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-male.png">
@@ -78,8 +93,37 @@
                         <img class="avatar" src="/EasyCloudStorage/img/avatar/${member.accountId}.jpg">
                     </c:if>
                         ${member.userName}
+                    <c:if test="${organization.ownerId == member.accountId}">
+                        (创建者)
+                    </c:if>
                 </div>
+            </c:forEach>
 
-
+            <div class="layui-collapse groups-div">
+                <c:forEach items="${organization.groups}" var="group">
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">${group.name}</h2>
+                        <div class="layui-colla-content layui-show">
+                            <c:forEach items="${group.members}" var="member">
+                                <div class="grouped-member-div">
+                                    <c:if test="${member.defaultAvatar==1}">
+                                        <c:if test="${member.sex=='male'}">
+                                            <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-male.png">
+                                        </c:if>
+                                        <c:if test="${member.sex=='female'}">
+                                            <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-female.png">
+                                        </c:if>
+                                    </c:if>
+                                    <c:if test="${member.defaultAvatar==0}">
+                                        <img class="avatar" src="/EasyCloudStorage/img/avatar/${member.accountId}.jpg">
+                                    </c:if>
+                                        ${member.userName}
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
     </div>
 </div>
