@@ -7,7 +7,7 @@ public class File {
     private String name;
     private Date lastMovedTime;
     private String realPath;
-    private int parentDirId = 0;
+    private Integer parentDirId;
     private String ownerId;
     private int orgId;
     private String displayTime;
@@ -36,11 +36,11 @@ public class File {
         this.realPath = realPath;
     }
 
-    public int getParentDirId() {
+    public Integer getParentDirId() {
         return parentDirId;
     }
 
-    public void setParentDirId(int parentDirId) {
+    public void setParentDirId(Integer parentDirId) {
         this.parentDirId = parentDirId;
     }
 

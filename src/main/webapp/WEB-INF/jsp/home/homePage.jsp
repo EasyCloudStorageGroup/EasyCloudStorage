@@ -40,7 +40,7 @@
         top: 60px;
         background-color: white;
         border-radius:10px;
-        overflow: auto;
+
         opacity: 0.9;
     }
 </style>
@@ -49,23 +49,38 @@
         position: relative;
         top: 10px;
         width: 400px;
-        background-color: white;
+
         border-radius:10px;
     }
 </style>
-
+<style type="text/css">
+    a:link {
+        text-decoration: none;
+        color: black;
+    }
+    a:visited {
+        text-decoration: none;
+        color: black;
+    }
+    a:hover {
+        text-decoration: none;
+        color: #007DDB;
+    }
+    a:active {
+        text-decoration: none;
+        color: black;
+    }
+</style>
 <style>
     .picture-show-board{
         position: relative;
-        left: 150px;
-        top: 100px;
-        background-color: white;
-        border-radius:10px;
         opacity:1;
-
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 1200px;
-        height: 900px;
-        object-fit: contain;
+        height: 800px;
+
 
     }
 </style>
@@ -79,7 +94,7 @@
         border-radius:30px;
         opacity:0.9;
         border-style: solid;
-        border-color: #122b40;
+        border-color: #40AFFE;
         padding: 20px;
 
     }
@@ -88,6 +103,8 @@
     .table-show-board{
     position:relative;
     top:10px;
+        overflow: auto;
+        height: 800px;
 }
 </style>
 
@@ -100,10 +117,10 @@
 <div class="file-manager-board">
     <c:choose>
         <c:when test="${empty normalFile}">
-    <a href="#" onclick="openNewDirectoryMenu()"><button class="layui-btn layui-btn-normal">新建文件夹</button></a>
+    <a href="#" onclick="openNewDirectoryMenu()"><button 	class="layui-btn layui-btn-normal" style="margin-left: 20px">新建文件夹</button></a>
 
     <a href="uploadPage">
-        <button class="layui-btn layui-btn-normal">
+        <button 	class="layui-btn layui-btn-normal">
             上传文件
         </button>
     </a>
@@ -111,15 +128,15 @@
     <%@ include file="include/orderNav.jsp"%>
     <%@ include file="include/searchBox.jsp"%>
 
-    <div>
+            <div class="directory-show-board">
         <c:choose>
             <c:when test="${empty parentDirList}">
-                <div class="directory-show-board">全部文件</div>
+              全部文件
             </c:when>
 
             <c:otherwise>
                 <c:forEach items="${parentDirList}" var="Directory">
-                    <a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}&fileId=0" style="color: #4169E1;">${Directory.name}>></a>
+                    <a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" style="color: #4169E1">${Directory.name}>></a>
                 </c:forEach>
 
                 ${currentDir.name}
@@ -159,7 +176,7 @@
             sortType="Directory">
                 <td><input type="checkbox" value="${Directory.realPath}" name="check"></td>
                 <td ><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>
-                <td ><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}&fileId=0">${Directory.name}</a></td>
+                <td ><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td>
                 <td>-</td>
                 <td >${Directory.displayTime}</td>
             </tr>
@@ -171,7 +188,7 @@
                 <td><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
                 <c:choose>
                     <c:when test="${NormalFile.type=='image/jpeg'||NormalFile.type=='image/png'||NormalFile.type=='text/plain'}">
-                <td><a  href="/EasyCloudStorage/homePage?fileId=${NormalFile.fileId}&dirId=${currentDir.dirId}">${NormalFile.name}</a></td>
+                <td><a  href="/EasyCloudStorage/homePage?fileId=${NormalFile.fileId}">${NormalFile.name}</a></td>
                     </c:when>
                     <c:otherwise>
                         <td>${NormalFile.name}</td>
@@ -190,7 +207,6 @@
 </c:choose>
 </div>
 
-</div>
 
 
 <ul class="client_menu" id="clientMenu" style="background-color: dodgerblue">
@@ -206,13 +222,13 @@
 
     </c:when>
         <c:when test="${normalFile.type=='image/jpeg'||normalFile.type=='image/png'}">
-            <button type="button" class="layui-btn layui-btn-normal"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
+            <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
             <div class="picture-show-board" >
-                <img width="80%"  height: auto src="/Data${filePath}">
+                <img height="70%"  width: auto   src="/Data${filePath}">
             </div>
         </c:when>
         <c:when test="${normalFile.type=='text/plain'}">
-            <button type="button" class="layui-btn layui-btn-normal"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
+            <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
             <div class="text-show-board" >
                 ${fileContent}
             </div>

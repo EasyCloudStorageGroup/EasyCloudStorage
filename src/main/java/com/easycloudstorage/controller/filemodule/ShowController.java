@@ -31,7 +31,7 @@ public class ShowController {
 
     @RequestMapping("homePage")
 
-    public ModelAndView show(int dirId, int fileId,HttpSession session) {
+    public ModelAndView show(Integer dirId, Integer fileId,HttpSession session) {
         NormalFile file;
         file=showService.findNormalFileById(fileId,showService.normalFileList());
         String filePath = null;
@@ -59,7 +59,7 @@ public class ShowController {
             User user = (User) session.getAttribute("user");
 
 
-            if (dirId == 0) {//如果是第一次进入该函数，该函数为用户的根目录，此时dirID为空，先找到用户的根目录
+            if (dirId == null) {//如果是第一次进入该函数，该函数为用户的根目录，此时dirID为空，先找到用户的根目录
 
                 rootDirectory = showService.rootDirectory(user, showService.directoryList()); //找到用户的根目录
 
@@ -85,7 +85,7 @@ public class ShowController {
                 List<Directory> temp = new ArrayList<Directory>();
                 for (int i = 0; i < parentDirList.size(); i++) {
                     tem = parentDirList.get(i);
-                    if (parentDir != null && parentDir.getDirId() == tem.getDirId()) {
+                    if (parentDir != null && parentDir.getDirId() .equals(tem.getDirId()) ) {
                         position = i;
                         for (int j = 0; j < position; j++) {
                             temp.add(parentDirList.get(j));

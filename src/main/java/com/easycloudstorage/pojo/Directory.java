@@ -1,13 +1,13 @@
 package com.easycloudstorage.pojo;
 
 public class Directory extends File {
-    private int dirId;
+    private Integer dirId;
 
-    public int getDirId() {
+    public Integer getDirId() {
         return dirId;
     }
 
-    public void setDirId(int dirId) {
+    public void setDirId(Integer dirId) {
         this.dirId = dirId;
     }
 }
