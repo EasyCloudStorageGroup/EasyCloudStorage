@@ -90,7 +90,9 @@
         position: relative;
         left: 300px;
         top: 75px;
-        width: 600px;
+        width: 40%;
+        height:75%;
+        overflow: auto;
         background-color:white;
         border-radius:30px;
         opacity:0.9;
@@ -100,6 +102,24 @@
 
     }
 </style>
+<style>
+    .music-show-board{
+        position: relative;
+        left: 380px;
+        top: 460px;
+
+    }
+</style>
+<style>
+    .video-show-board{
+        position: relative;
+        left: 100px;
+        top: 50px;
+
+    }
+</style>
+
+
 <style>
     .table-show-board{
     position:relative;
@@ -158,37 +178,38 @@
 
 <div class="table-show-board">
     <%--<form action="download" method="post">--%>
-    <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo" id="file-manager-table" >
+    <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo" id="file-manager-table"  >
 
 
         <thead>
         <tr>
-            <th><button class="layui-btn layui-btn-normal" type="submit" id="download_btn">下载</button></th>
-            <th lay-data="{field:'type', width:50}"></th>
-            <th lay-data="{field:'username', width:50}">名称</th>
-            <th lay-data="{field:'type', width:50}">类型</th>
-            <th lay-data="{field:'joinTime', width:50}">最后修改时间</th>
+            <th lay-data="{checkbox:true}" style="width: 60px">下载</th>
+            <th lay-data="{field:'type'}"style="width: 100px"></th>
+            <th lay-data="{field:'username'"style="width: 350px">名称</th>
+            <th lay-data="{field:'type'}"style="width: 150px">类型</th>
+            <th lay-data="{field:'joinTime'}"style="width: 150px">最后修改时间</th>
         </tr>
         </thead>
 
         <tbody>
         <c:forEach items="${currentDirectories}" var="Directory">
-            <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id="${Directory.dirId}"
-            sortType="Directory">
-                <td><input type="checkbox" value="${Directory.dirId}" name="check2"></td>
-                <td ><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>
-                <td ><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td>
+
+                <td><input type="checkbox" value="${Directory.realPath}" name="check"></td>
+                <td><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>
+                <td><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td>
+
                 <td>-</td>
                 <td >${Directory.displayTime}</td>
             </tr>
         </c:forEach>
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
-            <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
-                <td><input type="checkbox" value="${NormalFile.fileId}" name="check"></td>
+
+                <td><input type="checkbox" value="${NormalFile.realPath}" name="check"></td>
+
                 <td><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
                 <c:choose>
-                    <c:when test="${NormalFile.type=='image/jpeg'||NormalFile.type=='image/png'||NormalFile.type=='text/plain'}">
+                    <c:when test="${NormalFile.type=='image/jpeg'||NormalFile.type=='image/png'||NormalFile.type=='text/plain'||NormalFile.type=='audio/mp3'||NormalFile.type=='video/mp4'}">
                 <td><a  href="/EasyCloudStorage/homePage?fileId=${NormalFile.fileId}">${NormalFile.name}</a></td>
                     </c:when>
                     <c:otherwise>
@@ -208,6 +229,10 @@
 </c:choose>
 </div>
 
+
+
+
+
 <ul class="client_menu" id="clientMenu" style="background-color: dodgerblue">
     <li><a href="#" class="demo" onclick="openRenameFileMenu()" data-type="rename">重命名</a></li>
     <li><a href="#" onclick="openDeleteFileMenu()">删除</a></li>
@@ -223,10 +248,24 @@
             </div>
         </c:when>
         <c:when test="${normalFile.type=='text/plain'}">
-            <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
-            <div class="text-show-board" >
+        <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
+        <div class="text-show-board" >
                 ${fileContent}
-            </div>
+        </div>
+        </c:when>
+        <c:when test="${normalFile.type=='audio/mp3'}">
+        <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
+           <img height="300px"  width="300px"  style="position: absolute;left: 380px;top: 200px;" src="/EasyCloudStorage/img/home/mp3.png">
+
+        <div class="music-show-board" >
+            <audio src="/Data${filePath}" controls="controls" width="500px"></audio>
+
+        </div>
+        </c:when>
+        <c:when test="${normalFile.type=='video/mp4'}">
+        <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
+            <div class="video-show-board"><video src="/Data${filePath}"   width="1000px"  height="600px" controls="controls">
+            </video></div>
         </c:when>
     </c:choose>
 <script type="text/javascript" src="/EasyCloudStorage/jquery/changeSkin/jquery.js"></script>
