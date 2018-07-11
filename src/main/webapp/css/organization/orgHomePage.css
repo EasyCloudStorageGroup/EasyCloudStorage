@@ -1,0 +1,15 @@
+
+body {
+    background-image: url("/EasyCloudStorage/img/home/bg.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.mainBoard {
+    position: relative;
+    top: 25px;
+    width: 90%;
+    margin: 0 auto;
+}

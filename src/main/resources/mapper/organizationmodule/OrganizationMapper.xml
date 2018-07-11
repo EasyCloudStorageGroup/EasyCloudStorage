@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycloudstorage.mapper.organizationmodule.OrganizationMapper">
+
+    <resultMap type="Organization" id="OrganizationBean">
+        <id column="orgId" property="orgId"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="ownerId" property="ownerId"/>
+        <!-- 一对多的关系 -->
+        <!-- property: 指的是集合属性的值, ofType：指的是集合中元素的类型 -->
+        <collection property="members" ofType="User">
+            <id column="accountId" property="accountId"/>
+            <result column="userName" property="userName"/>
+            <result column="password" property="password"/>
+            <result column="sex" property="sex"/>
+            <result column="phoneNumber" property="phoneNumber"/>
+            <result column="defaultAvatar" property="defaultAvatar"/>
+        </collection>
+    </resultMap>
+
+    <select id="getByOrgId" resultMap="OrganizationBean" parameterType="int">
+        select o.orgId, o.name, o.description, o.ownerId,
+          u.accountId, u.userName, u.password, u.sex, u.phoneNumber, u.defaultAvatar
+          from Organization o left join UsersOrgs uo on o.orgId = uo.orgId
+          left join User u on uo.accountId = u.accountId where o.orgId = #{orgId};
+    </select>
+</mapper>
