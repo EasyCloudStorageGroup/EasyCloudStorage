@@ -19,7 +19,7 @@ function menuEvent(event){
     clientMenu.style.top = event.clientY + 'px';
     clientMenu.style.visibility = 'visible';
     clientMenu.id=this.id;
-    clientMenu.objName=this.children[1].innerText;
+    clientMenu.objName=this.children[2].innerText;
     clientMenu.objClass=this.className;
     return false;
 }

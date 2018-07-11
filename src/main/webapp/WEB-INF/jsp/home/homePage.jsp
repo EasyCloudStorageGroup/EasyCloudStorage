@@ -183,7 +183,7 @@
         </c:forEach>
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
-            <tr class="normalFileClass" id="${NormalFile.realPath}" sortType="${NormalFile.sortType}">
+            <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
                 <td><input type="checkbox" value="${NormalFile.realPath}" name="check"></td>
                 <td><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
                 <c:choose>
