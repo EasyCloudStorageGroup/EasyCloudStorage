@@ -4,6 +4,8 @@ import com.easycloudstorage.pojo.*;
 import com.easycloudstorage.service.filemodule.FileService;
 import com.easycloudstorage.service.filemodule.ShowService;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,7 @@ import java.io.File;
 import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class FileController {
@@ -47,6 +50,14 @@ public class FileController {
     @RequestMapping("rename")
     public ModelAndView list() {
         ModelAndView mv = new ModelAndView();
+        JSONObject object = new JSONObject();
+        object.put("a", "aaaaaa");
+        object.put("b", 111111);
+        JSONObject b = new JSONObject();
+        b.put("ccc", 1);b.put("bbb","ffffefa");
+        object.put("obh", b);
+        System.out.println("in get all and json is:");
+        System.out.println(object.toString());
         mv.setViewName("rename");
         return mv;
     }
@@ -210,8 +221,26 @@ public class FileController {
         Directory movetoDir=fileService.selectDirectory(moveToId);
         NormalFile normalFile=fileService.selectNormalFile(fileId);
 
+        List<Directory> allDirectories = showService.directoryList();
+        int parentDirId = movetoDir.getDirId();
+        String normalFileName = normalFile.getName();
+        if(fileAlreadyExist(parentDirId, normalFileName))
+        {
+            for(int i=1;i<1000;i++)//1000，最多后缀1000,
+            {
+                if(!fileAlreadyExist(dirId, normalFileName.substring(0,normalFileName.lastIndexOf("."))+"("+i+")"
+                        +normalFileName.substring(normalFileName.lastIndexOf(".")))) {
+                    normalFileName = normalFileName.substring(0,normalFileName.lastIndexOf("."))+"("+i+")"
+                            +normalFileName.substring(normalFileName.lastIndexOf("."));//这一串处理后缀名
+                    normalFile.setName(normalFileName);
+                    break;
+                }
+            }
+        }
+
         File file=new File(normalFile.getRealPath());
-        File moveToFile=new File(movetoDir.getRealPath()+"\\"+file.getName());
+        File moveToFile=new File(movetoDir.getRealPath()+"\\"+normalFile.getName());
+        file.renameTo(moveToFile);
 
         //if(!moveToFile.getParentFile().exists())    moveToFile.getParentFile().mkdirs();
 
@@ -225,20 +254,38 @@ public class FileController {
             return "redirect:homePage?dirId="+dirId;
     }
     @RequestMapping("moveDirectoryPage")
-    public String moveDirectory(@RequestParam("fileId")int fileId, int moveToId, int dirId)
+    public String moveDirectory(@RequestParam("fileId")int fileId, int moveToId, int dirId,HttpSession session)
             throws IOException
     {
-        Directory movetoDir=fileService.selectDirectory(moveToId);
-        Directory srcDir=fileService.selectDirectory(fileId);
+        if(!(fileId == moveToId))
+        {
+            User user=(User)session.getAttribute("user");
+            List<Directory> directories= showService.directoryList();
+            ShowService showService = new ShowService();
+            Directory userRootDir = showService.rootDirectory(user, directories);
+            Directory movetoDir=fileService.selectDirectory(moveToId);
+            Directory srcDir=fileService.selectDirectory(fileId);
+            if(dirId == 0 && userRootDir!=null)//根目录
+                dirId=(userRootDir).getDirId();
+            if(fileAlreadyExist(dirId, srcDir.getName()))
+            {
+                for(int i=1;i<1000;i++)//1000，最多后缀1000,
+                {
+                    if(!fileAlreadyExist(dirId, srcDir.getName()+"("+i+")")) {
+                        srcDir.setName(srcDir.getName()+"("+i+")");
+                        break;
+                    }
+                }
+            }
 
-        File file=new File(srcDir.getRealPath());
-        File moveToFile=new File(movetoDir.getRealPath()+"\\"+file.getName());
+            File file=new File(srcDir.getRealPath());
+            File moveToFile=new File(movetoDir.getRealPath()+"\\"+srcDir.getName());
+            file.renameTo(moveToFile);
 
-        srcDir.setParentDirId(movetoDir.getDirId());
-        srcDir.setRealPath(moveToFile.getAbsolutePath());
-        fileService.updateDirectory(srcDir);
-
-        //if(!moveToFile.getParentFile().exists())    moveToFile.getParentFile().mkdirs();
+            srcDir.setParentDirId(movetoDir.getDirId());
+            srcDir.setRealPath(moveToFile.getAbsolutePath());
+            fileService.updateDirectory(srcDir);
+        }
 
         if(dirId == 0)
             return "redirect:homePage?dirId=0";
@@ -246,6 +293,38 @@ public class FileController {
             return "redirect:homePage?dirId="+dirId;
     }
 
+    @RequestMapping("getAllDirectories")
+    @ResponseBody
+    public JSONObject allDirectories(HttpSession session)
+    {
+        User user = (User)session.getAttribute("user");
+        List<Directory> directories = showService.directoryList();
+        Directory root = showService.rootDirectory(user, directories);
+        JSONObject object = getJsonObjectOfDirById(root.getDirId());
+        System.out.println(object.toString());
+        return object;
+    }
+
+    private JSONObject getJsonObjectOfDirById(int dirId)
+    {
+        JSONObject object = new JSONObject();
+        List<Directory> directories = showService.directoryList();
+        Directory curDir = showService.findDirectoryById(dirId, directories);
+        List<Directory> childrenDir = showService.showDirectory(dirId, directories);
+        object.put("dirId", ""+curDir.getDirId());
+        object.put("name", curDir.getName());
+
+        JSONArray children = new JSONArray();
+        if(!childrenDir.isEmpty()) {
+            for (Directory directory : childrenDir)
+                children.add(getJsonObjectOfDirById(directory.getDirId()));
+            object.put("childrenDir", children);
+        }
+        else
+            object.put("childrenDir", (Object)null);
+
+        return object;
+    }
     private boolean fileAlreadyExist(int parentDirId, String fileName)
     {
         List<Directory> allDirectories = showService.directoryList();
