@@ -51,4 +51,8 @@
           left join User u1 on ug.accountId = u1.accountId
 		  where o.orgId = #{orgId};
     </select>
+
+    <select id="isMember" resultType="int">
+        select count(*) from UsersOrgs where accountId = #{0} and orgId = #{1};
+    </select>
 </mapper>

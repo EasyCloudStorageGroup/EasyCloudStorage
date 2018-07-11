@@ -15,7 +15,7 @@
 
     .fileListBoard-header {
         height: 55px;
-        background-color: white;
+        background-color: #f3f3f3;
         border-radius:3px;
         margin-bottom: 10px;
     }

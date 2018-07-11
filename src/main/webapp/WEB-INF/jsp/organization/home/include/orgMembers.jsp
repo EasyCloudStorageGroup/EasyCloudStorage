@@ -96,6 +96,9 @@
                     <c:if test="${organization.ownerId == member.accountId}">
                         (创建者)
                     </c:if>
+                    <c:if test="${member.accountId == user.accountId}">
+                        (我)
+                    </c:if>
                 </div>
             </c:forEach>
 
@@ -118,6 +121,12 @@
                                         <img class="avatar" src="/EasyCloudStorage/img/avatar/${member.accountId}.jpg">
                                     </c:if>
                                         ${member.userName}
+                                    <c:if test="${organization.ownerId == member.accountId}">
+                                        (创建者)
+                                    </c:if>
+                                    <c:if test="${member.accountId == user.accountId}">
+                                        (我)
+                                    </c:if>
                                 </div>
                             </c:forEach>
                         </div>

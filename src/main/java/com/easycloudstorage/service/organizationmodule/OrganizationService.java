@@ -40,4 +40,11 @@ public class OrganizationService {
 
         return unGroupedMembers;
     }
+
+    public boolean isMember(String accountId, int orgId) {
+        if(organizationMapper.isMember(accountId, orgId) > 0)
+            return true;
+        else
+            return false;
+    }
 }
