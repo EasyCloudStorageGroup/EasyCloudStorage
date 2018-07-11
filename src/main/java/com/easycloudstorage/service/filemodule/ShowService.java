@@ -143,6 +143,42 @@ public class ShowService {
         return null;
     }
 
+    public List<NormalFile> findFilesByType(String type,User user,List<NormalFile> normalFileList,Directory rootDirectory)
+    {
+        NormalFile tem;
+        List<NormalFile> result=new ArrayList<NormalFile>();
+
+            switch (type){
+                case "Picture":
+                    for(int i=0;i<normalFileList.size();i++) {
+                        tem = normalFileList.get(i);
+            if (tem.getOwnerId().equals(user.getAccountId())&&(tem.getType().equals("image/jpeg")||tem.getType().equals("image/png")||tem.getType().equals("image/jpg")||tem.getType().equals("image/tiff")))
+                result.add(tem);}
+            break;
+                case "Video":
+                    for(int i=0;i<normalFileList.size();i++) {
+                    tem = normalFileList.get(i);
+                    if (tem.getOwnerId().equals(user.getAccountId())&&(tem.getType().equals("video/mp4")))
+                        result.add(tem);}
+                    break;
+                case"Music":
+                    for(int i=0;i<normalFileList.size();i++) {
+                        tem = normalFileList.get(i);
+                        if (tem.getOwnerId().equals(user.getAccountId())&&(tem.getType().equals("audio/mp3")))
+                            result.add(tem);}
+                    break;
+                default:
+                    for(int i=0;i<normalFileList.size();i++) {
+                        tem = normalFileList.get(i);
+                        if (tem.getOwnerId().equals(user.getAccountId())&&!tem.getType().equals("image/jpeg")&&!tem.getType().equals("image/png")&&!tem.getType().equals("image/jpg")&&!tem.getType().equals("video/mp4")&&!tem.getType().equals("audio/mp3")&&!tem.getType().equals("image/tiff"))
+                            result.add(tem);}
+                            break;
+        }
+        return result;
+
+
+    }
+
    public StringBuffer readFile(String filePath) throws Exception {
         StringBuffer fileContent = new StringBuffer();
         File file = new File(filePath);
@@ -193,7 +229,7 @@ public class ShowService {
     public void orderNormalFileList(List<NormalFile> nfs, String orderBy) {
         if(orderBy == null)
             orderBy = "name";
-
+if(nfs!=null)
         for(int i = 0; i < nfs.size()-1; i++) {
             for(int j = 0; j < nfs.size()-i-1; j++) {
                 if(orderBy.equals("name")) {
@@ -227,7 +263,7 @@ public class ShowService {
     public void orderDirectoryList(List<Directory> ds, String orderBy) {
         if(orderBy == null)
             orderBy = "name";
-
+if(ds!=null)
         for(int i = 0; i < ds.size()-1; i++) {
             for(int j = 0; j < ds.size()-i-1; j++) {
                 if(orderBy.equals("name")) {
@@ -273,3 +309,5 @@ public class ShowService {
     }
 
 }
+
+

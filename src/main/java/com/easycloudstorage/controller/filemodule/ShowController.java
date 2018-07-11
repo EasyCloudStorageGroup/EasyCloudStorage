@@ -31,7 +31,7 @@ public class ShowController {
 
     @RequestMapping("homePage")
 
-    public ModelAndView show(Integer dirId, Integer fileId,HttpSession session) {
+    public ModelAndView show(Integer dirId, Integer fileId,HttpSession session,String type) {
         NormalFile file;
         file=showService.findNormalFileById(fileId,showService.normalFileList());
         String filePath = null;
@@ -48,9 +48,9 @@ public class ShowController {
             e.printStackTrace();
         }
         }
-        List<Directory> directoryList;
-        List<NormalFile> normalFileList;
-        List<Directory> parentDirList;
+        List<Directory> directoryList=null;
+        List<NormalFile> normalFileList=null;
+        List<Directory> parentDirList=null;
 
             Directory rootDirectory = null;//当前目录
 
@@ -59,50 +59,53 @@ public class ShowController {
             User user = (User) session.getAttribute("user");
 
 
-            if (dirId == null) {//如果是第一次进入该函数，该函数为用户的根目录，此时dirID为空，先找到用户的根目录
+    if (dirId == null) {//如果是第一次进入该函数，该函数为用户的根目录，此时dirID为空，先找到用户的根目录
 
-                rootDirectory = showService.rootDirectory(user, showService.directoryList()); //找到用户的根目录
+        rootDirectory = showService.rootDirectory(user, showService.directoryList()); //找到用户的根目录
 
-                dirId = rootDirectory.getDirId();
+        dirId = rootDirectory.getDirId();
+    }
+    if(type==null) {
+
+    directoryList = showService.showDirectory(dirId, showService.directoryList());//当前目录下的子目录，即根目录下的第一层目录
+
+    normalFileList = showService.showNormalFile(dirId, showService.normalFileList());//当前目录下的文件,即根目录下的文件
+
+    parentDirList = (List<Directory>) session.getAttribute("parentDirList");
+
+    Directory tem;
+
+    int position;
+
+    if (parentDirList == null) {
+        parentDirList = new ArrayList<Directory>();
+    } else {
+
+        parentDir = showService.findParentDir(dirId, showService.directoryList());//找到父目录
+
+        List<Directory> temp = new ArrayList<Directory>();
+        for (int i = 0; i < parentDirList.size(); i++) {
+            tem = parentDirList.get(i);
+            if (parentDir != null && parentDir.getDirId().equals(tem.getDirId())) {
+                position = i;
+                for (int j = 0; j < position; j++) {
+                    temp.add(parentDirList.get(j));
+                }
+                parentDirList = temp;
+                break;
             }
 
-            directoryList = showService.showDirectory(dirId, showService.directoryList());//当前目录下的子目录，即根目录下的第一层目录
-
-            normalFileList = showService.showNormalFile(dirId, showService.normalFileList());//当前目录下的文件,即根目录下的文件
-
-            parentDirList = (List<Directory>) session.getAttribute("parentDirList");
-
-            Directory tem;
-
-            int position;
-
-            if (parentDirList == null) {
-                parentDirList = new ArrayList<Directory>();
-            } else {
-
-                parentDir = showService.findParentDir(dirId, showService.directoryList());//找到父目录
-
-                List<Directory> temp = new ArrayList<Directory>();
-                for (int i = 0; i < parentDirList.size(); i++) {
-                    tem = parentDirList.get(i);
-                    if (parentDir != null && parentDir.getDirId() .equals(tem.getDirId()) ) {
-                        position = i;
-                        for (int j = 0; j < position; j++) {
-                            temp.add(parentDirList.get(j));
-                        }
-                        parentDirList = temp;
-                        break;
-                    }
-
-                }
-                parentDirList.add(parentDir);
-                if (parentDirList.get(0) != null)
-                    parentDirList.get(0).setName("全部文件");
-                if (parentDir == null) {
-                    parentDirList = new ArrayList<Directory>();
-                }
-            }
-
+        }
+        parentDirList.add(parentDir);
+        if (parentDirList.get(0) != null)
+            parentDirList.get(0).setName("全部文件");
+        if (parentDir == null) {
+            parentDirList = new ArrayList<Directory>();
+        }
+    }
+}else {
+        normalFileList=showService.findFilesByType(type,user,showService.normalFileList(),rootDirectory);
+}
 
         Directory currentDir=showService.findDirectoryById(dirId,showService.directoryList());
 
@@ -113,6 +116,7 @@ public class ShowController {
         session.setAttribute("parentDirList", parentDirList);
         session.setAttribute("currentDir",currentDir);
         session.setAttribute("fileContent",fileContent);
+        session.setAttribute("type",type);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("home/homePage");
         return mv;
