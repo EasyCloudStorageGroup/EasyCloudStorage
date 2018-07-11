@@ -49,7 +49,7 @@
     .directory-show-board {
         position: relative;
         top: 10px;
-        width: 400px;
+
 
         border-radius:10px;
     }
@@ -239,9 +239,11 @@
 
     </c:when>
         <c:when test="${normalFile.type=='image/jpeg'||normalFile.type=='image/png'}">
+            <div style="width:auto; height:800px;opacity: 0.85;background-image: url(/EasyCloudStorage/img/home/water.jpg);">
             <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
             <div class="picture-show-board" >
                 <img height="70%"  width: auto   src="/Data${filePath}">
+            </div>
             </div>
         </c:when>
         <c:when test="${normalFile.type=='text/plain'}">
@@ -264,11 +266,13 @@ border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
             </div>
         </c:when>
         <c:when test="${normalFile.type=='video/mp4'}">
+            <div style="width:auto; height:800px;opacity: 0.85;background-image: url(/EasyCloudStorage/img/home/water.jpg);">
         <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
             <div class="video-show-board"><video src="/Data${filePath}"   width="1000px"  height="600px" controls="controls">
-            </video></div>
+            </video></div></div>
         </c:when>
     </c:choose>
+
 <script type="text/javascript" src="/EasyCloudStorage/jquery/changeSkin/jquery.js"></script>
 <script>
     $("#download_btn").click(function () {
