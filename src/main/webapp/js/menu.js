@@ -2,6 +2,7 @@ var clientMenu = document.getElementById('clientMenu');
 var table = document.getElementById('1008');
 var dirClass=document.getElementsByClassName("dirClass");
 var normalFileClass=document.getElementsByClassName("normalFileClass");
+var fileMoveClickedId;
 
 function menuEvent(event){
     /*if(event.clientX + 242 > screen.availWidth){
@@ -18,7 +19,7 @@ function menuEvent(event){
     clientMenu.style.top = event.clientY + 'px';
     clientMenu.style.visibility = 'visible';
     clientMenu.id=this.id;
-    clientMenu.objName=this.children[1].innerText;
+    clientMenu.objName=this.children[2].innerText;
     clientMenu.objClass=this.className;
     return false;
 }
@@ -108,21 +109,49 @@ function openMoveFileMenu()
     var dirId;
     if(result!=null&&result.length>1) dirId=result[1];
     else dirId=0;
-    //var test = $('.testClass').clone();
-    //$(".testClass").css("display","");
-    var test = document.getElementsByClassName("testClass")[0].outerHTML
-    layui.use('layer',function () {
-        var $ = layui.jquery, layer = layui.layer;
 
-        layer.open({
-            type: 1,
-            title: '移动到：',
-            content: test
-        }, function (pass, index) {
-            alert("ff");
-        });
+    $.ajax({
+        type:"get",
+        async:false,
+        url:"getAllDirectories",
+        contentType:"application/json;charset=utf-8",
+        success: function(data){
+            var div = generetaContent(data);
+
+            layui.use('layer',function () {
+                var $ = layui.jquery, layer = layui.layer;
+                layer.prompt({
+                    type: 1,
+                    title: '移动到：',
+                    area: '800px',
+                    content:div.outerHTML,
+                    yes:function (index, layero) {
+                        layer.close(index)
+                        if(clientMenu.objClass=="normalFileClass")
+                            window.location.href=encodeURI(encodeURI("moveFilePage?fileId="+clientMenu.id+"&moveToId="+fileMoveClickedId+"&dirId="+dirId));
+                        else if(clientMenu.objClass=="dirClass")
+                            window.location.href=encodeURI(encodeURI("moveDirectoryPage?fileId="+clientMenu.id+"&moveToId="+fileMoveClickedId+"&dirId="+dirId));
+                    },
+                    cancel:function (index, layero) {
+                        layer.close(index)
+                    },
+                    end:function () {
+                        fileMoveClickedId=undefined
+                    }
+                })
+            });
+        }
     });
 }
+$(document).on("click",".fileMoveClass",function () {
+    click(this);
+})
+$(document).on("mouseover",".fileMoveClass",function () {
+    mouseOver(this);
+})
+$(document).on("mouseout",".fileMoveClass",function () {
+    mouseOut(this);
+})
 
 function init(){
     //for(var child=0;child<table.childNodes.length;child++)
@@ -133,6 +162,67 @@ function init(){
         normalFileClass[a].oncontextmenu=menuEvent;
     document.body.onclick=hiddenMenu;
     clientMenu.oncontextmenu = defaultMenu;
+}
+
+function generetaContent(data)
+{
+    var div = document.createElement("div");
+    //div.style.width="200px";
+    div.style.height="300px";
+    div.style.overflow = "auto";
+    generateDirLi(div, data.dirId, data.name, 0, data);
+
+    return div;
+}
+
+function generateDirLi(parent, dirId, name, deep, data)
+{
+
+    var li = document.createElement("li");
+    li.id = dirId;
+    li.className="fileMoveClass"
+    li.style.paddingLeft=15*deep+"px";
+    li.onclick = function(){
+        click();
+    };
+    li.click=function () { alert("ggg") }
+    if(deep==0)
+        li.innerText = "全部文件"
+    else
+        li.innerText = name;
+    parent.appendChild(li);
+    for(var i =0; data.childrenDir!= undefined&&i<data.childrenDir.length;i++)
+        generateDirLi(li, data.childrenDir[i].dirId, data.childrenDir[i].name, deep+1, data.childrenDir[i])
+}
+
+function click(file)
+{
+    var allFileMoveClasses = ($(document))[0].getElementsByClassName("fileMoveClass")
+    for(var i=0;i<allFileMoveClasses.length;i++)
+        allFileMoveClasses[i].style.backgroundColor=""
+    file.style.backgroundColor="#1E9FFF"
+    fileMoveClickedId = file.id;
+}
+
+function mouseOver(file)
+{
+    var allFileMoveClasses = ($(document))[0].getElementsByClassName("fileMoveClass")
+    for(var i=0;i<allFileMoveClasses.length;i++)
+        if(allFileMoveClasses[i].id == fileMoveClickedId)
+            allFileMoveClasses[i].style.backgroundColor="#1E9FFF"
+        else
+            allFileMoveClasses[i].style.backgroundColor=""
+    file.style.backgroundColor="70DB93"
+}
+
+function mouseOut(file)
+{
+    var allFileMoveClasses = ($(document))[0].getElementsByClassName("fileMoveClass")
+    for(var i=0;i<allFileMoveClasses.length;i++)
+        if(allFileMoveClasses[i].id == fileMoveClickedId)
+            allFileMoveClasses[i].style.backgroundColor="#1E9FFF"
+        else
+            allFileMoveClasses[i].style.backgroundColor=""
 }
 
 init();
