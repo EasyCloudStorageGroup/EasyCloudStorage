@@ -29,17 +29,47 @@
         </a>
     </div>
     <ul class="layui-nav layui-nav-tree layui-nav-side left-navigator">
-        <li class="layui-nav-item layui-this"><a href="homePage?dirId=0&fileId=0">全部文件</a></li>
 
-        <li class="layui-nav-item" sortType="Picture"><a>图片</a></li>
-        <li class="layui-nav-item" sortType="Vedio"><a>视频</a></li>
-        <li class="layui-nav-item" sortType="Music"><a>音乐</a></li>
-        <li class="layui-nav-item" sortType="Other"><a>其它</a></li>
+        <c:choose>
+            <c:when test="${empty type}">
+                <li class="layui-nav-item layui-this"><a href="homePage">全部文件</a></li>
+            </c:when>
+            <c:otherwise><li class="layui-nav-item"><a href="homePage">全部文件</a></li></c:otherwise>
+        </c:choose>
+
+        <c:choose>
+            <c:when test="${type=='Picture'}">
+                  <li class="layui-nav-item layui-this"><a href="homePage?type=Picture">图片</a></li>
+            </c:when>
+            <c:otherwise> <li class="layui-nav-item"><a href="homePage?type=Picture">图片</a></li></c:otherwise>
+        </c:choose>
+
+        <c:choose>
+            <c:when test="${type=='Video'}">
+                <li class="layui-nav-item layui-this"><a href="homePage?type=Video">视频</a></li>
+            </c:when>
+            <c:otherwise> <li class="layui-nav-item"><a href="homePage?type=Video">视频</a></li></c:otherwise>
+        </c:choose>
+
+        <c:choose>
+            <c:when test="${type=='Music'}">
+                <li class="layui-nav-item layui-this"><a href="homePage?type=Music">音乐</a></li>
+            </c:when>
+            <c:otherwise>  <li class="layui-nav-item"><a href="homePage?type=Music">音乐</a></li></c:otherwise>
+        </c:choose>
+
+        <c:choose>
+            <c:when test="${type=='Other'}">
+                <li class="layui-nav-item layui-this"><a href="homePage?type=Other">其它</a></li>
+            </c:when>
+            <c:otherwise>  <li class="layui-nav-item"><a href="homePage?type=Other">其它</a></li></c:otherwise>
+        </c:choose>
+
 
     </ul>
 
     <ul class="layui-nav top-left-navigator">
-        <li class="layui-nav-item layui-this"><a href="homePage?dirId=0&fileId=0">网盘</a></li>
+        <li class="layui-nav-item layui-this"><a href="homePage">网盘</a></li>
         <li class="layui-nav-item"><a>其它</a></li>
     </ul>
 

@@ -50,7 +50,7 @@ public class ShowService {
         Directory tem=new Directory();
         for(int i=0;i<directoryList.size();i++) {
             tem = directoryList.get(i);
-            if (tem.getParentDirId() == 0 && tem.getOwnerId().equals(user.getAccountId()))
+            if (tem.getParentDirId() == null && tem.getOwnerId().equals(user.getAccountId()))
             {
                 return tem;
             }
@@ -60,13 +60,13 @@ public class ShowService {
 /*
 * 该方法找到当前目录下的所有子目录
 * */
-    public List<Directory> showDirectory(int currentDirId, List<Directory> directoryList){
+    public List<Directory> showDirectory(Integer currentDirId, List<Directory> directoryList){
         Directory tem=new Directory();
         List<Directory> result=new ArrayList<Directory>();
         for(int i=0;i<directoryList.size();i++) {
             tem = directoryList.get(i);
 
-            if (tem.getParentDirId()!=0&&tem.getParentDirId() == currentDirId)
+            if (tem.getParentDirId()!=null&&tem.getParentDirId().equals(currentDirId))
                 result.add(tem);
         }
         return result;
@@ -75,12 +75,12 @@ public class ShowService {
 /*
 * 该方法找到当前目录下的所有非目录文件
 * */
-    public List<NormalFile> showNormalFile(int currentDirId, List<NormalFile> normalFileList){
+    public List<NormalFile> showNormalFile(Integer currentDirId, List<NormalFile> normalFileList){
        NormalFile tem=new NormalFile();
         List<NormalFile> result=new ArrayList<NormalFile>();
         for(int i=0;i<normalFileList.size();i++) {
             tem = normalFileList.get(i);
-            if (tem.getParentDirId()!=0&&tem.getParentDirId() == currentDirId)
+            if (tem.getParentDirId()!=null&&tem.getParentDirId().equals(currentDirId))
                 result.add(tem);
         }
         return result;
@@ -89,7 +89,7 @@ public class ShowService {
  * 根据dirID找到他的父目录
  */
 
-    public  Directory findParentDir(int dirId,List<Directory> directoryList)//找到该dir的父目录
+    public  Directory findParentDir(Integer dirId,List<Directory> directoryList)//找到该dir的父目录
     {
 
         Directory currentDir=new Directory();
@@ -98,12 +98,12 @@ public class ShowService {
 
         for(int i=0;i<directoryList.size();i++) {//找到该dirId的dir对象
             currentDir = directoryList.get(i);
-            if (currentDir.getDirId() == dirId)//通过Id找到了该对象
+            if (currentDir.getDirId() .equals(dirId))//通过Id找到了该对象
                 break;
         }
     for(int i=0;i<directoryList.size();i++) {//找到该dirId的dir对象
         parentDir = directoryList.get(i);
-        if (currentDir.getParentDirId()!=0&&currentDir.getParentDirId() == parentDir.getDirId())//通过Id找到了该对象
+        if (currentDir.getParentDirId()!=null&&currentDir.getParentDirId() .equals(parentDir.getDirId()) )//通过Id找到了该对象
             return parentDir;
         }
     return null;
@@ -114,14 +114,14 @@ public class ShowService {
 * */
 
 
-    public Directory findDirectoryById(int dirId,List<Directory> directoryList)
+    public Directory findDirectoryById(Integer dirId,List<Directory> directoryList)
 
     {
         Directory currentDir;
         for(int i=0;i<directoryList.size();i++)
         {
             currentDir=directoryList.get(i);
-            if(dirId!=0&&dirId == currentDir.getDirId())
+            if(dirId!=null&&dirId .equals(currentDir.getDirId()) )
                 return currentDir;
 
         }
@@ -130,17 +130,53 @@ public class ShowService {
     /*
      * 根据fileID找到该ID的file对象
      * */
-    public NormalFile findNormalFileById(int fileId,List<NormalFile> normalFileList)
+    public NormalFile findNormalFileById(Integer fileId,List<NormalFile> normalFileList)
     {
         NormalFile file;
         for(int i=0;i<normalFileList.size();i++)
         {
             file=normalFileList.get(i);
-            if(fileId!=0&&fileId==(file.getFileId()))
+            if(fileId!=null&&fileId.equals(file.getFileId()))
                 return file;
 
         }
         return null;
+    }
+
+    public List<NormalFile> findFilesByType(String type,User user,List<NormalFile> normalFileList,Directory rootDirectory)
+    {
+        NormalFile tem;
+        List<NormalFile> result=new ArrayList<NormalFile>();
+
+            switch (type){
+                case "Picture":
+                    for(int i=0;i<normalFileList.size();i++) {
+                        tem = normalFileList.get(i);
+            if (tem.getOwnerId().equals(user.getAccountId())&&(tem.getType().equals("image/jpeg")||tem.getType().equals("image/png")||tem.getType().equals("image/jpg")||tem.getType().equals("image/tiff")))
+                result.add(tem);}
+            break;
+                case "Video":
+                    for(int i=0;i<normalFileList.size();i++) {
+                    tem = normalFileList.get(i);
+                    if (tem.getOwnerId().equals(user.getAccountId())&&(tem.getType().equals("video/mp4")))
+                        result.add(tem);}
+                    break;
+                case"Music":
+                    for(int i=0;i<normalFileList.size();i++) {
+                        tem = normalFileList.get(i);
+                        if (tem.getOwnerId().equals(user.getAccountId())&&(tem.getType().equals("audio/mp3")))
+                            result.add(tem);}
+                    break;
+                default:
+                    for(int i=0;i<normalFileList.size();i++) {
+                        tem = normalFileList.get(i);
+                        if (tem.getOwnerId().equals(user.getAccountId())&&!tem.getType().equals("image/jpeg")&&!tem.getType().equals("image/png")&&!tem.getType().equals("image/jpg")&&!tem.getType().equals("video/mp4")&&!tem.getType().equals("audio/mp3")&&!tem.getType().equals("image/tiff"))
+                            result.add(tem);}
+                            break;
+        }
+        return result;
+
+
     }
 
    public StringBuffer readFile(String filePath) throws Exception {
@@ -193,7 +229,7 @@ public class ShowService {
     public void orderNormalFileList(List<NormalFile> nfs, String orderBy) {
         if(orderBy == null)
             orderBy = "name";
-
+if(nfs!=null)
         for(int i = 0; i < nfs.size()-1; i++) {
             for(int j = 0; j < nfs.size()-i-1; j++) {
                 if(orderBy.equals("name")) {
@@ -227,7 +263,7 @@ public class ShowService {
     public void orderDirectoryList(List<Directory> ds, String orderBy) {
         if(orderBy == null)
             orderBy = "name";
-
+if(ds!=null)
         for(int i = 0; i < ds.size()-1; i++) {
             for(int j = 0; j < ds.size()-i-1; j++) {
                 if(orderBy.equals("name")) {
@@ -273,3 +309,5 @@ public class ShowService {
     }
 
 }
+
+

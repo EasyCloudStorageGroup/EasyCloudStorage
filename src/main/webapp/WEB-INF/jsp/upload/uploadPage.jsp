@@ -4,7 +4,7 @@
 <%@ include file="../shared/sharedHeader.jsp"%>
 
 <div class="layui-upload">
-    <a href="javascript:history.go(-1)">
+    <a href="javascript:" onclick="self.location=document.referrer;">
     <button type="button" class="layui-btn layui-btn-normal" id="return" style="background-color: #a94442; position:relative;left:0%; margin: 10px">返回</button>
     </a>
     <button type="button" class="layui-btn layui-btn-normal" id="testList" style="position:relative;left:35%; margin: 10px">选择多文件</button>
