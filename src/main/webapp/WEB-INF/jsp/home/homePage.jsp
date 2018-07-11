@@ -11,7 +11,7 @@
 
 <%@ include file="../shared/sharedHeader.jsp"%>
 
-<link rel="stylesheet" href="/EasyCloudStorage/css/homePage/homePage.css"/>
+<link rel="stylesheet" href="/EasyCloudStorage/css/homePage/homePage.css?v=1.0"/>
 <link rel="stylesheet" href="/EasyCloudStorage/css/homePage/fileShow.css"/>
 
 <script>
@@ -22,13 +22,13 @@
         var boardHeight = $(document).height() - topNavH;
         $(".file-manager-board").css("width", boardWidth+"px");
         $(".file-manager-board").css("height", boardHeight+"px");
-
         $(window).resize(function() {
             var boardWidth = $(document).width() - leftNavW - 15;
             var boardHeight = $(document).height() - topNavH;
             $(".file-manager-board").css("width", boardWidth+"px");
             $(".file-manager-board").css("height", boardHeight+"px");
         });
+        $("body").css("background", "${sessionScope.user.getBgUrl()}")
 
     })
 </script>

@@ -156,4 +156,13 @@ public class UserController  {
 
         return "redirect:checkout";
     }
+
+    @RequestMapping("/getBgUrl")
+    public String getBgUrl(@RequestParam("bgUrl") String bgUrl, @RequestParam("accountId") String accountId, HttpSession session){
+        User theUser = userService.getUserByAccountId(accountId);
+        theUser.setBgUrl(bgUrl);
+        userService.updateBgUrl(theUser);
+        session.setAttribute("user", theUser);
+        return "home/homePage";
+    }
 }
