@@ -87,12 +87,12 @@
                     <c:forEach items="${orgList}" var="Organization">
 
                         <div style="float: left;width: 11%;height: 16%;margin: 4%">
-                            <a href="">
+                            <a href="http://www.baidu.com">
                                 <img src="/EasyCloudStorage/img/organization/org.png" width="100%" height="100%"/>
                             </a>
                                 <p align="center">${Organization.name}</p>
                         </div>
-
+,
                     </c:forEach>
 
         </c:otherwise>

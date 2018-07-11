@@ -5,6 +5,7 @@
 
 <div class="layui-upload">
     <a href="javascript:" onclick="self.location=document.referrer;">
+
     <button type="button" class="layui-btn layui-btn-normal" id="return" style="background-color: #a94442; position:relative;left:0%; margin: 10px">返回</button>
     </a>
     <button type="button" class="layui-btn layui-btn-normal" id="testList" style="position:relative;left:35%; margin: 10px">选择多文件</button>
@@ -24,7 +25,24 @@
 </div>
 
 <script>
-    
+
+    var xhrOnProgress=function(fun) {
+        xhrOnProgress.onprogress = fun; //绑定监听
+        //使用闭包实现监听绑
+        return function() {
+            //通过$.ajaxSettings.xhr();获得XMLHttpRequest对象
+            var xhr = $.ajaxSettings.xhr();
+            //判断监听函数是否为函数
+            if (typeof xhrOnProgress.onprogress !== 'function')
+                return xhr;
+            //如果有监听函数并且xhr对象支持绑定时就把监听函数绑定上去
+            if (xhrOnProgress.onprogress && xhr.upload) {
+                xhr.upload.onprogress = xhrOnProgress.onprogress;
+            }
+            return xhr;
+        }
+    }
+
     layui.use('upload', function() {
         var upload = layui.upload;
         //多文件列表示例
@@ -34,10 +52,15 @@
             , url: '/EasyCloudStorage/upload'
             , accept: 'file'
             , multiple: true
-            , auto: false
+            , auto: true
+            ,drag:true
+            ,xhr:xhrOnProgress
+            ,progress:function (value) {
+                element.progress('demo',value+'%')
+            }
             , bindAction: '#testListAction'
             , choose: function (obj) {
-                var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                //var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
                 //读取本地文件
                 obj.preview(function (index, file, result) {
                     var tr = $(['<tr id="upload-' + index + '">'
