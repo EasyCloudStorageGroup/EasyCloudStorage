@@ -75,7 +75,7 @@
 <style>
     .picture-show-board{
         position: relative;
-        opacity:1;
+
         display: flex;
         justify-content: center;
         align-items: center;
@@ -248,19 +248,22 @@
             </div>
         </c:when>
         <c:when test="${normalFile.type=='text/plain'}">
+            <div style="width:auto; height:800px;opacity: 0.85;background-image: url(/EasyCloudStorage/img/home/water.jpg);">
         <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
         <div class="text-show-board" >
+
                 ${fileContent}
+            </div>
         </div>
         </c:when>
         <c:when test="${normalFile.type=='audio/mp3'}">
-        <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
-           <img height="300px"  width="300px"  style="position: absolute;left: 380px;top: 200px;" src="/EasyCloudStorage/img/home/mp3.png">
-
-        <div class="music-show-board" >
-            <audio src="/Data${filePath}" controls="controls" width="500px"></audio>
-
-        </div>
+            <div style="width:auto; height:800px;opacity: 0.85;background-image: url(/EasyCloudStorage/img/home/water.jpg);">
+                <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
+                <img height="300px"  width="300px"  style="position: absolute;left: 380px;top: 200px;opacity: 0.6;" src="/EasyCloudStorage/img/home/music.png">
+                <div class="music-show-board" >
+                    <audio src="/Data${filePath}" controls="controls" width="500px"></audio>
+                </div>
+            </div>
         </c:when>
         <c:when test="${normalFile.type=='video/mp4'}">
         <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
