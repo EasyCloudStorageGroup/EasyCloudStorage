@@ -1,9 +1,8 @@
 package com.easycloudstorage.service.organizationmodule;
 
 import com.easycloudstorage.mapper.organizationmodule.OrganizationMapper;
-import com.easycloudstorage.pojo.Group;
-import com.easycloudstorage.pojo.Organization;
-import com.easycloudstorage.pojo.User;
+import com.easycloudstorage.pojo.*;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +14,17 @@ public class OrganizationService {
     @Autowired
     private OrganizationMapper organizationMapper;
 
+    public List<Organization> list(){return organizationMapper.orgList();}
+
+    public void addOrg(Organization org){organizationMapper.addOrg(org); }
+
     public Organization getByOrgId(int orgId) {
         Organization organization = organizationMapper.getByOrgId(orgId);
         organization.setUnGroupedMembers(getUnGroupedMembers(organization));
 
         return organization;
     }
+    public Organization getOrgByName(String name){return organizationMapper.getOrgByName(name);}
 
     public List<User> getUnGroupedMembers(Organization organization) {
         List<User> unGroupedMembers = new ArrayList<>();
@@ -40,6 +44,8 @@ public class OrganizationService {
 
         return unGroupedMembers;
     }
+
+    public void addDir(Directory file){organizationMapper.addDir(file);}
 
     public boolean isMember(String accountId, int orgId) {
         if(organizationMapper.isMember(accountId, orgId) > 0)

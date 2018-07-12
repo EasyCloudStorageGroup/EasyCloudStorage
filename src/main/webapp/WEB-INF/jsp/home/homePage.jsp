@@ -42,7 +42,7 @@
         background-color: white;
         border-radius:10px;
 
-        opacity: 0.9;
+        opacity: 0.95;
     }
 </style>
 <style>
@@ -50,8 +50,6 @@
         position: relative;
         top: 10px;
         font-size: 16px;
-
-
         border-radius:10px;
     }
 </style>
@@ -76,31 +74,39 @@
 <style>
     .picture-show-board{
         position: relative;
-
         display: flex;
         justify-content: center;
-        align-items: center;
+
         width: 1200px;
-        height: 800px;
-
-
+        height: 900px;
+    }
+</style>
+<style>
+    .none-notice-board{
+        position: relative;
+        display: flex;
+        justify-content: center;
+        top: 200px;
+        width: 1200px;
+        height: 900px;
     }
 </style>
 <style>
     .text-show-board{
         position: relative;
         left: 300px;
-        top: 75px;
+        top: 60px;
         width: 40%;
-        height:75%;
+        height:70%;
         overflow: auto;
         background-color:white;
-        border-radius:30px;
+
+        border-bottom-left-radius: 20px;
+        border-top-left-radius: 20px;
         opacity:0.9;
         border-style: solid;
         border-color: #40AFFE;
         padding: 20px;
-
     }
 </style>
 <style>
@@ -108,7 +114,6 @@
         position: relative;
         left: 380px;
         top: 560px;
-
     }
 </style>
 <style>
@@ -116,7 +121,6 @@
         position: relative;
         left: 100px;
         top: 50px;
-
     }
 </style>
 <style>
@@ -125,28 +129,42 @@
     top:10px;
         overflow: auto;
         height: 800px;
+        opacity: 0.95;
 }
 </style>
+
 
 
 
 <%@ include file="include/navigator.jsp"%>
 <link href="/EasyCloudStorage/css/menu.css" rel="stylesheet"/>
 
-
+<!--homePage右下角大部分的展示内容-->
 <div class="file-manager-board">
+<!--该choose选择是展示目录信息还是文件具体内容-->
     <c:choose>
+        <%-- 首先是目录信息--%>
         <c:when test="${empty normalFile}">
-    <a href="#" onclick="openNewDirectoryMenu()"><button 	class="layui-btn layui-btn-normal" style="margin-left: 20px">新建文件夹</button></a>
+             <a href="#" onclick="openNewDirectoryMenu()"><button 	class="layui-btn layui-btn-normal" style="margin-left: 20px">新建文件夹</button></a>
 
-            <div class="site-demo-button" id="layerDemo" style="float: left;margin-left: 1%">
-        <button class="layui-btn site-demo-button" data-method="setTop">上传文件</button>
-            </div>
+
+                <div class="site-demo-button" id="layerDemo" style="float: left;margin-left: 1%">
+                  <button class="layui-btn site-demo-button" data-method="setTop">上传文件</button>
+                </div>
+
+            <a href="/EasyCloudStorage/toCreatePage">
+                <button 	class="layui-btn layui-btn-normal">
+                    新建组织
+                </button>
+            </a>
+
 
     <%@ include file="include/orderNav.jsp"%>
     <%@ include file="include/searchBox.jsp"%>
 
      <div class="directory-show-board">
+
+         <%-- 目录信息的两种展示方式，分为不存在父目录，和存在父目录两种情况--%>
         <c:choose>
             <c:when test="${empty parentDirList}">
               全部文件
@@ -162,21 +180,17 @@
 
 
     <script src="/EasyCloudStorage/js/homePage/fileShow.js" charset="utf-8"></script>
-
+            <%--文件夹的展示情况，存在为空或者不为空两种情况--%>
 <c:choose>
     <c:when test="${empty currentDirectories&&empty currentNormalFiles}">
-
-        <div class="picture-show-board" ><img src="/EasyCloudStorage/img/home/smile.PNG" width="400px" height="320px"/>
-            <h2>当前没有任何文件哦,赶紧上传一个吧！</h2></div>
-
+        <div class="none-notice-board" ><img src="/EasyCloudStorage/img/home/smile.PNG" width="400px" height="320px"/>
+            <h2>当前没有任何文件哦,赶紧上传一个吧！</h2>
+        </div>
     </c:when>
+
     <c:otherwise>
-
 <div class="table-show-board">
-    <%--<form action="download" method="post">--%>
-    <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo" id="file-manager-table"  >
-
-
+    <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo" id="file-manager-table" style="table-layout: fixed"  >
         <thead>
         <tr>
             <th style="width: 50px;"><button class="layui-btn layui-btn-normal" type="submit" id="download_btn" >下载</button></th>
@@ -186,34 +200,38 @@
             <th lay-data="{field:'joinTime'}"style="width: 150px">最后修改时间</th>
         </tr>
         </thead>
-
+            <%--文件夹不为空的情况下，优先展示其中的子文件夹--%>
         <tbody>
         <c:forEach items="${currentDirectories}" var="Directory">
             <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id="${Directory.dirId}" sortType="Directory">
-                <td><input type="checkbox" value="${Directory.dirId}" name="check2"></td>
-                <td><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>
-                <td><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td>
-
-                <td>-</td>
-                <td >${Directory.displayTime}</td>
+                <td><input type="checkbox" value="${Directory.dirId}" name="check2"></td>   <%--多选框 --%>
+                <td><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>   <%-- 文件夹图片--%>
+                <td><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td> <%-- 文件名，以及跳转的点击接口--%>
+                <td>-</td>           <%-- 文件夹类型，由于不存在所以写为"-"--%>
+                <td >${Directory.displayTime}</td>    <%-- 文件的最后一次改动时间--%>
             </tr>
         </c:forEach>
+            <%-- 文件夹不为空的情况下，之后展示其中的普通文件--%>
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
             <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
-                <td><input type="checkbox" value="${NormalFile.fileId}" name="check"></td>
-
-                <td><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
+                <td><input type="checkbox" value="${NormalFile.fileId}" name="check"></td>    <!--下载的多选框-->
+                <td><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>        <!--文件图片-->
+                <!--该choose决定了文件是否可以接着跳转查看详细信息，目前支持txt，jpg，MP3等格式的预览-->
                 <c:choose>
+                    <%-- 以下文件类型能接着跳转查看详细信息--%>
+
                     <c:when test="${NormalFile.type=='image/jpeg'||NormalFile.type=='image/png'||NormalFile.type=='text/plain'||NormalFile.type=='audio/mp3'||NormalFile.type=='video/mp4'}">
                 <td><a  href="/EasyCloudStorage/homePage?fileId=${NormalFile.fileId}">${NormalFile.name}</a></td>
                     </c:when>
+                    <%-- 其他文件只能看到文件名，无法点击--%>
+
                     <c:otherwise>
                         <td>${NormalFile.name}</td>
                     </c:otherwise>
                 </c:choose>
-                <td>${NormalFile.type}</td>
-                <td>${NormalFile.displayTime}</td>
+                <td>${NormalFile.type}</td>     <!--文件类型-->
+                <td>${NormalFile.displayTime}</td>     <!--文件最后改动时间-->
             </tr>
         </c:forEach>
 
@@ -232,41 +250,57 @@
     <li><a href="#" onclick="openMoveFileMenu()">移动到</a></li>
 </ul>
 <script src="js/menu.js"></script>
-
     </c:when>
+        <%-- 这是具体的文件详细信息--%>
+        <%--图片展示 --%>
+
         <c:when test="${normalFile.type=='image/jpeg'||normalFile.type=='image/png'}">
-            <div style="width:auto; height:800px;opacity: 0.85;background-image: url(/EasyCloudStorage/img/home/water.jpg);">
+
+
             <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
+
             <div class="picture-show-board" >
+
                 <img height="70%"  width: auto   src="/Data${filePath}">
             </div>
-            </div>
+
+
         </c:when>
+        <%-- 文本展示--%>
+
         <c:when test="${normalFile.type=='text/plain'}">
-            <div style="width:auto; height:800px;opacity: 0.85;background-image: url(/EasyCloudStorage/img/home/water.jpg);">
+
         <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
         <div class="text-show-board" >
+
                 ${fileContent}
             </div>
-        </div>
+
+            <%--mp3展示 --%>
         </c:when>
         <c:when test="${normalFile.type=='audio/mp3'}">
-            <div style="width:auto; height:800px;opacity: 0.85;background-image: url(/EasyCloudStorage/img/home/water.jpg);">
+
                 <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
-                <img height="500px"  width="500px"  style="position: absolute;left: 380px;top: 100px;opacity: 0.8;border-top-left-radius:2em;
+                <img height="500px"  width="500px"  style="position: absolute;left: 380px;top: 100px;opacity: 0.95;border-top-left-radius:2em;
 border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
                 <div class="music-show-board" >
-                    <audio autoplay="autoplay" style="width: 500px;opacity: 0.8;" src="/Data${filePath}" controls="controls" ></audio>
+
+                    <audio autoplay="autoplay" style="width: 500px;opacity: 0.95;" src="/Data${filePath}" controls="controls" ></audio>
                 </div>
+
+        </c:when>
+        <%--mp4展示 --%>
+
+        <c:when test="${normalFile.type=='video/mp4'}">
+
+        <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
+            <div class="video-show-board">
+
+                <video  autoplay="autoplay" src="/Data${filePath}"   width="1000px"  height="600px" controls="controls"/>
             </div>
         </c:when>
-        <c:when test="${normalFile.type=='video/mp4'}">
-            <div style="width:auto; height:800px;opacity: 0.85;background-image: url(/EasyCloudStorage/img/home/water.jpg);">
-        <button type="button" class="layui-btn layui-btn-normal" style="margin-left: 3px"><a href="javascript:" onclick="self.location=document.referrer;">返回</a> </button>
-            <div class="video-show-board"><video  autoplay="autoplay" src="/Data${filePath}"   width="1000px"  height="600px" controls="controls">
-            </video></div></div>
-        </c:when>
     </c:choose>
+<!--table-show-board所有展示内容结束-->
 
 <script type="text/javascript" src="/EasyCloudStorage/jquery/changeSkin/jquery.js"></script>
 <script>

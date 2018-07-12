@@ -50,7 +50,7 @@ public class ShowService {
         Directory tem=new Directory();
         for(int i=0;i<directoryList.size();i++) {
             tem = directoryList.get(i);
-            if (tem.getParentDirId() == null && tem.getOwnerId().equals(user.getAccountId()))
+            if (tem.getParentDirId() == null &&user.getAccountId() .equals(tem.getOwnerId()))
             {
                 return tem;
             }
