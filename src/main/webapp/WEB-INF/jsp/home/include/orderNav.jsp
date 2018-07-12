@@ -12,7 +12,7 @@
 <style>
     .button-board {
         position: absolute;
-        right: 20px;
+        right: 1%;
         top: 0px;
 
         background-color: white;
