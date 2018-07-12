@@ -5,12 +5,13 @@ public class NormalFile extends File {
     private String type;
     private String size;
     private String sortType;
+    private NorFileAuthority norFileAuthority;
 
     public Integer getFileId() {
         return fileId;
     }
 
-    public void setFileId(int fileId) {
+    public void setFileId(Integer fileId) {
         this.fileId = fileId;
     }
 
@@ -28,6 +29,14 @@ public class NormalFile extends File {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public NorFileAuthority getNorFileAuthority() {
+        return norFileAuthority;
+    }
+
+    public void setNorFileAuthority(NorFileAuthority norFileAuthority) {
+        this.norFileAuthority = norFileAuthority;
     }
 
     public String getSortType(){

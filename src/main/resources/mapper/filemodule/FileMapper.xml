@@ -49,4 +49,17 @@
         insert into directory ( `name`, `lastMovedTime`, `parentDirId`, `ownerId`, `realPath`) values(#{name},#{lastMovedTime},
         #{parentDirId},#{ownerId},#{realPath});
     </insert>
+
+    <!--组织模块-->
+    <resultMap id="DirectoryWithAuthority" type="Directory">
+        <id column="dirId" property="dirId"/>
+        <result column="name" property="name"/>
+        <result column="lastMovedTime" property="lastMovedTime"/>
+        <result column="realPath" property="realPath"/>
+        <result column="parentDirId" property="parentDirId"/>
+        <result column="ownerId" property="ownerId"/>
+        <result column="orgId" property="orgId"/>
+
+    </resultMap>
+
 </mapper>

@@ -11,6 +11,7 @@ public class File {
     private String ownerId;
     private int orgId;
     private String displayTime;
+    private Directory parentDir;
 
     public String getName() {
         return name;
@@ -68,4 +69,12 @@ public class File {
     }
 
     public String getDisplayTime(){return displayTime;}
+
+    public Directory getParentDir() {
+        return parentDir;
+    }
+
+    public void setParentDir(Directory parentDir) {
+        this.parentDir = parentDir;
+    }
 }
