@@ -118,8 +118,6 @@
 
     }
 </style>
-
-
 <style>
     .table-show-board{
     position:relative;
@@ -192,7 +190,7 @@
 
         <tbody>
         <c:forEach items="${currentDirectories}" var="Directory">
-
+            <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id="${Directory.dirId}" sortType="Directory">
                 <td><input type="checkbox" value="${Directory.realPath}" name="check"></td>
                 <td><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>
                 <td><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td>
@@ -203,7 +201,7 @@
         </c:forEach>
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
-
+            <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
                 <td><input type="checkbox" value="${NormalFile.realPath}" name="check"></td>
 
                 <td><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
