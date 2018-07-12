@@ -23,7 +23,7 @@
 
 <div class="navigator">
     <div class="navigator-logo">
-        <a href="homePage?dirId=0">
+        <a href="homePage">
             <img src="/EasyCloudStorage/img/home/logo.png">
             轻松云存储
         </a>

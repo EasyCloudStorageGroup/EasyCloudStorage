@@ -49,6 +49,7 @@
     .directory-show-board {
         position: relative;
         top: 10px;
+        font-size: 16px;
 
 
         border-radius:10px;
@@ -146,21 +147,20 @@
 
     <%@ include file="include/orderNav.jsp"%>
     <%@ include file="include/searchBox.jsp"%>
-
-            <div class="directory-show-board">
+     <div class="directory-show-board">
         <c:choose>
             <c:when test="${empty parentDirList}">
               全部文件
             </c:when>
-
             <c:otherwise>
                 <c:forEach items="${parentDirList}" var="Directory">
                     <a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" style="color: #4169E1">${Directory.name}>></a>
                 </c:forEach>
                 ${currentDir.name}
+
             </c:otherwise>
         </c:choose>
-    </div>
+     </div>
 
     <script src="/EasyCloudStorage/js/homePage/fileShow.js" charset="utf-8"></script>
 
@@ -180,8 +180,8 @@
 
         <thead>
         <tr>
-            <th lay-data="{checkbox:true}" style="width: 60px">下载</th>
-            <th lay-data="{field:'type'}"style="width: 100px"></th>
+            <th style="width: 50px;"><button class="layui-btn layui-btn-normal" type="submit" id="download_btn" >下载</button></th>
+            <th lay-data="{field:'type'}"style="width: 10px"></th>
             <th lay-data="{field:'username'"style="width: 350px">名称</th>
             <th lay-data="{field:'type'}"style="width: 150px">类型</th>
             <th lay-data="{field:'joinTime'}"style="width: 150px">最后修改时间</th>
@@ -191,7 +191,7 @@
         <tbody>
         <c:forEach items="${currentDirectories}" var="Directory">
             <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id="${Directory.dirId}" sortType="Directory">
-                <td><input type="checkbox" value="${Directory.realPath}" name="check"></td>
+                <td><input type="checkbox" value="${Directory.dirId}" name="check2"></td>
                 <td><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>
                 <td><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td>
 
@@ -202,7 +202,7 @@
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
             <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
-                <td><input type="checkbox" value="${NormalFile.realPath}" name="check"></td>
+                <td><input type="checkbox" value="${NormalFile.fileId}" name="check"></td>
 
                 <td><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
                 <c:choose>
