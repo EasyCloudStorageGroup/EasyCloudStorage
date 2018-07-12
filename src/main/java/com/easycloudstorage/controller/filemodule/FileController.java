@@ -66,7 +66,7 @@ public class FileController {
     }
 
     @RequestMapping("renameFilePage")
-    public String renameFilePage(@RequestParam("oldFileId")int oldFileId, String newFileName, int dirId)
+    public String renameFilePage(@RequestParam("oldFileId")Integer oldFileId, String newFileName, Integer dirId)
             throws IOException
     {
         newFileName = URLDecoder.decode(newFileName, "utf-8").replaceAll("%25","%")
@@ -107,13 +107,13 @@ public class FileController {
         normalFile.setRealPath(newFile.getAbsolutePath());
         fileService.updateNormalFile(normalFile);
 
-        if(dirId == 0)
-            return "redirect:homePage?dirId=0";
+        if(dirId ==null)
+            return "redirect:homePage";
         else
             return "redirect:homePage?dirId="+dirId;
     }
     @RequestMapping("renameDirectoryPage")
-    public String renameDirectoryPage(@RequestParam("oldFileId")int oldFileId, String newFileName,int dirId)
+    public String renameDirectoryPage(@RequestParam("oldFileId")Integer oldFileId, String newFileName,Integer dirId)
             throws IOException
     {
         newFileName = URLDecoder.decode(newFileName, "utf-8").replaceAll("%25","%")//处理特殊字符
@@ -145,8 +145,8 @@ public class FileController {
         directory.setRealPath(newFile.getAbsolutePath());
         fileService.updateDirectory(directory);
 
-        if(dirId == 0)
-            return "redirect:homePage?dirId=0";
+        if(dirId == null)
+            return "redirect:homePage";
         else
             return "redirect:homePage?dirId="+dirId;
     }
@@ -189,7 +189,7 @@ public class FileController {
     }
 
     @RequestMapping("deleteFilePage")
-    public String deleteFile(int fileId, int dirId)throws IOException
+    public String deleteFile(Integer fileId, Integer dirId)throws IOException
     {
         NormalFile normalFile=fileService.selectNormalFile(fileId);
 
@@ -197,14 +197,14 @@ public class FileController {
         fileService.deleteNormalFile(normalFile);
         file.delete();
 
-        if(dirId == 0)
-            return "redirect:homePage?dirId=0";
+        if(dirId == null)
+            return "redirect:homePage";
         else
             return "redirect:homePage?dirId="+dirId;
     }
 
     @RequestMapping("deleteDirectoryPage")
-    public String deleteDirectory(int fileId, int dirId)throws IOException
+    public String deleteDirectory(Integer fileId, Integer dirId)throws IOException
     {System.out.println("in dir delete  and pid="+fileId);
         Directory directory=fileService.selectDirectory(fileId);
         File file=new File(directory.getRealPath());
@@ -212,13 +212,13 @@ public class FileController {
 
         fileService.deleteDirectory(directory);
 
-        if(dirId == 0)
-            return "redirect:homePage?dirId=0";
+        if(dirId == null)
+            return "redirect:homePage";
         else
             return "redirect:homePage?dirId="+dirId;
     }
     @RequestMapping("moveFilePage")
-    public String moveFile(@RequestParam("fileId")int fileId, int moveToId, int dirId)
+    public String moveFile(@RequestParam("fileId")Integer fileId, Integer moveToId, Integer dirId)
             throws IOException
     {
         Directory movetoDir=fileService.selectDirectory(moveToId);
@@ -251,16 +251,16 @@ public class FileController {
         normalFile.setRealPath(moveToFile.getAbsolutePath());
         fileService.updateNormalFile(normalFile);
 
-        if(dirId == 0)
-            return "redirect:homePage?dirId=0";
+        if(dirId == null)
+            return "redirect:homePage";
         else
             return "redirect:homePage?dirId="+dirId;
     }
     @RequestMapping("moveDirectoryPage")
-    public String moveDirectory(@RequestParam("fileId")int fileId, int moveToId, int dirId,HttpSession session)
+    public String moveDirectory(@RequestParam("fileId")Integer fileId, Integer moveToId, Integer dirId,HttpSession session)
             throws IOException
     {
-        if(!(fileId == moveToId))
+        if(!(fileId .equals(moveToId)))
         {
             User user=(User)session.getAttribute("user");
             List<Directory> directories= showService.directoryList();
@@ -290,8 +290,8 @@ public class FileController {
             fileService.updateDirectory(srcDir);
         }
 
-        if(dirId == 0)
-            return "redirect:homePage?dirId=0";
+        if(dirId == null)
+            return "redirect:homePage";
         else
             return "redirect:homePage?dirId="+dirId;
     }
@@ -308,7 +308,7 @@ public class FileController {
         return object;
     }
 
-    private JSONObject getJsonObjectOfDirById(int dirId)
+    private JSONObject getJsonObjectOfDirById(Integer dirId)
     {
         JSONObject object = new JSONObject();
         List<Directory> directories = showService.directoryList();
@@ -328,7 +328,7 @@ public class FileController {
 
         return object;
     }
-    private boolean fileAlreadyExist(int parentDirId, String fileName)
+    private boolean fileAlreadyExist(Integer parentDirId, String fileName)
     {
         List<Directory> allDirectories = showService.directoryList();
         List<Directory> directoriesOfDir = showService.showDirectory(parentDirId, allDirectories);
