@@ -3,21 +3,20 @@
 
 <%@ include file="../shared/sharedHeader.jsp"%>
 <script src=""></script>
-
 <div class="layui-upload">
-    <a href="javascript:" onclick="self.location=document.referrer;">
 
-    <button type="button" class="layui-btn layui-btn-normal" id="return" style="background-color: #a94442; position:relative;left:0%; margin: 10px">返回</button>
-    </a>
-    <input type="file" name="" multiple class="" id="fileUpload" style="position:relative;left:35%; margin: 10px" onchange="fileSelected()"/>
-    <button type="button" class="layui-btn" id="startUpload" style="position:relative;left: 40%; margin: 10px">开始上传</button>
+    <div>
+    <input type="file" multiple class="" id="fileUpload" style="position:relative; margin: 10px;float: left"  onchange="fileSelected()"/>
+    <button type="button" class="layui-btn" id="startUpload" style="position:relative; margin: 10px;float: left">开始上传</button>
+    </div>
+
     <div class="layui-upload-list">
         <table class="layui-table" id="tableId">
             <thead>
-            <tr><th>文件名</th>
-                <th>大小</th>
-                <th>状态</th>
-                <th>操作</th>
+            <tr ><th style="width: 40%;height: 10%">文件名</th>
+                <th style="width: 15%;height: 10%">大小</th>
+                <th style="width: 25%;height: 10%">状态</th>
+                <th style="width: 20%;height: 10%">操作</th>
             </tr></thead>
             <tbody id="demoList"></tbody>
         </table>
@@ -27,6 +26,14 @@
 
 <script>
 
+    var id=0;
+    var items=new Array()
+    var date=new Array()
+    var loaded=new Array()
+
+    function getId() {
+        return id++;
+    }
     function checkSize(sizeByte) {
         var level=0;
         while (sizeByte>1000){
@@ -45,62 +52,102 @@
         }
     }
 
+    function tableClear(table) {
+        var row=table.rows.length
+        for (var i=row-1;i>0;--i) table.deleteRow(1)
+    }
     function fileSelected() {
+        var table=document.getElementById("tableId")
         var files=document.getElementById("fileUpload");
         if (files) {
-            var table=document.getElementById("tableId")
-            for (var i=0;i<files.files.length;++i) {
+            var fileLength=files.files.length
+            var tableLength=table.rows.length
+            for (var i=0;i<fileLength;++i) {
 
-                var row=table.insertRow(i+1)
+                var row=table.insertRow(i+tableLength)
                 var cell1=row.insertCell(0)
                 var cell2=row.insertCell(1)
                 var cell3=row.insertCell(2)
+                var cell4=row.insertCell(3)
                 cell1.innerHTML=files.files[i].name
                 cell2.innerHTML=checkSize(files.files[i].size)
                 cell3.innerHTML="等待传输"
-                cell3.id="file"+i
-                //uploadFile(i)
+                var a=getId()
+                items[a]=new Object()
+                items[a].isOn=false
+                items[a].index=i+tableLength
+                items[a].fileIndex=i
+                var o = document.createElement('input');
+                o.type = 'button';
+                o.value = '删除';
+                o.addEventListener('click',function (ev) {
+                    var a= parseInt(this.parentNode.parentNode.childNodes[2].id)
+                    var index=items[a].index
+                    table.deleteRow(index)
+                    for (var i=0;i<items.length;++i){
+                        if (items[i].index>index)
+                            --(items[i].index)
+                    }
+                    items[a].XHR.abort()
+                })
+                cell4.appendChild(o)
+                cell3.id=a.toString()
+
             }
         }
     }
 
     $("#startUpload").click(function () {
         var files=document.getElementById("fileUpload");
-        for (var i=0;i<files.files.length;++i) {
+        var table=document.getElementById("tableId")
+        for (var i=1;i<table.rows.length;++i) {
             uploadFile(i)
         }
     })
 
 
-    function uploadFile(index) {
+    function uploadFile(i) {
 
+        var table=document.getElementById("tableId")
+        var index=parseInt(table.rows[i].cells[2].id)//int 类型的id
+        if (items[index].isOn)return
+        items[index].isOn=true
+        date[index]=new Date()
+        loaded[index]=0
+
+        var currentDate=new Date()
         var fd = new FormData();
 
-        fd.append("file",document.getElementById("fileUpload").files[index])
+        fd.append("file",document.getElementById("fileUpload").files[items[index].fileIndex])
 
         var xhr = new XMLHttpRequest();
+        items[index].XHR=xhr
 
         xhr.upload.onprogress=function (eve) {
                 if (eve.lengthComputable) {
                 var percentComplete = Math.round(eve.loaded * 100 / eve.total);
+                var time=(new Date().getTime()-date[index].getTime())/1000
+                    date[index]=new Date()
+                    var amount=eve.loaded-loaded[index]
+                    loaded[index]=eve.loaded
+                    if (0==time)return
+                var speed=amount/time
 
-                document.getElementById("file"+index).innerHTML = percentComplete.toString() + "%";
+                document.getElementById(index.toString()).innerHTML = percentComplete.toString() + "%"+"("+checkSize(speed)+"/s"+")";
 
             }else {
-                document.getElementById("file"+index).innerHTML = "unable to compute";
+                document.getElementById(index.toString()).innerHTML = "unable to compute";
             }
         };
 
-        xhr.addEventListener("load", function (ev) {
-            document.getElementById('file'+index).innerHTML = "传输完成";
+        xhr.upload.addEventListener("load", function (ev) {
+            document.getElementById(index.toString()).innerHTML = "传输完成";
+            items[index].isOn=false
         }, false);
 
-        xhr.addEventListener("error", function (ev) {
-            document.getElementById('file'+currentId).innerHTML = "传输失败";
-        }, false);
-
-        xhr.addEventListener("abort", function (ev) {
-
+        xhr.upload.addEventListener("error", function (ev) {
+            document.getElementById(index.toString()).innerHTML = "传输失败";
+            items[index].isOn=false
         }, false);
 
         xhr.open("POST", "/EasyCloudStorage/upload",true);
@@ -110,68 +157,4 @@
     }
 
 
-
-    // layui.use('upload', function() {
-    //     var upload = layui.upload;
-    //     //多文件列表示例
-    //     var demoListView = $('#demoList')
-    //         , uploadListIns = upload.render({
-    //         elem: '#testList'
-    //         , url: '/EasyCloudStorage/upload'
-    //         , accept: 'file'
-    //         , multiple: true
-    //         , auto: true
-    //         ,drag:true
-    //         ,xhr:xhrOnProgress
-    //         ,progress:function (value) {
-    //             element.progress('demo',value+'%')
-    //         }
-    //         , bindAction: '#testListAction'
-    //         , choose: function (obj) {
-    //             //var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
-    //             //读取本地文件
-    //             obj.preview(function (index, file, result) {
-    //                 var tr = $(['<tr id="upload-' + index + '">'
-    //                     , '<td>' + file.name + '</td>'
-    //                     , '<td>' + (file.size / 1014).toFixed(1) + 'kb</td>'
-    //                     , '<td>等待上传</td>'
-    //                     , '<td>'
-    //                     , '<button class="layui-btn layui-btn-mini demo-reload layui-hide">重传</button>'
-    //                     , '<button class="layui-btn layui-btn-mini layui-btn-danger demo-delete">删除</button>'
-    //                     , '</td>'
-    //                     , '</tr>'].join(''));
-    //
-    //                 //单个重传
-    //                 tr.find('.demo-reload').on('click', function () {
-    //                     obj.upload(index, file);
-    //                 });
-    //
-    //                 //删除
-    //                 tr.find('.demo-delete').on('click', function () {
-    //                     delete files[index]; //删除对应的文件
-    //                     tr.remove();
-    //                     uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
-    //                 });
-    //
-    //                 demoListView.append(tr);
-    //             });
-    //         }
-    //         , done: function (res, index, upload) {
-    //             if (res.code == 0) { //上传成功
-    //                 var tr = demoListView.find('tr#upload-' + index)
-    //                     , tds = tr.children();
-    //                 tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
-    //                 tds.eq(3).html(''); //清空操作
-    //                 return delete this.files[index]; //删除文件队列已经上传成功的文件
-    //             }
-    //             this.error(index, upload);
-    //         }
-    //         , error: function (index, upload) {
-    //             var tr = demoListView.find('tr#upload-' + index)
-    //                 , tds = tr.children();
-    //             tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
-    //             tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
-    //         }
-    //     });
-    // })
 </script>
