@@ -106,17 +106,23 @@ function openDeleteFileMenu()
                 $.ajax({
                     type: "get",
                     async: true,
-                    url: encodeURI(encodeURI("deleteFilePage?fileId="+nodeCollection[i].id+"&dirId="+dirId))
+                    url: encodeURI(encodeURI("deleteFilePage?fileId="+nodeCollection[i].id+"&dirId="+dirId)),
+                    success:function () {
+                        window.location.reload(true)
+                    }
                 })//window.location.href=encodeURI(encodeURI("deleteFilePage?fileId="+nodeCollection[i].id+"&dirId="+dirId));
             else if(nodeCollection[i].className=="dirClass")
                 $.ajax({
                     type: "get",
                     async: true,
-                    url: encodeURI(encodeURI("deleteDirectoryPage?fileId="+nodeCollection[i].id+"&dirId="+dirId))
+                    url: encodeURI(encodeURI("deleteDirectoryPage?fileId="+nodeCollection[i].id+"&dirId="+dirId)),
+                    success:function () {
+                        window.location.reload(true)
+                    }
                 })//window.location.href=encodeURI(encodeURI("deleteDirectoryPage?fileId="+nodeCollection[i].id+"&dirId="+dirId));
         }
         layer.msg("删除成功",{time:5000});
-        window.location.href=dirId ==0 ?"homePage":"homePage?dirId="+dirId;
+        //window.location.reload(true)
     });
     });
 }
