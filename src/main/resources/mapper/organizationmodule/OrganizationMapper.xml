@@ -71,4 +71,9 @@
     <select id="getOrgByName" resultType="Organization" parameterType="String">
         select * from organization where name = #{0}
     </select>
+
+    <insert id = "addMember" parameterType="">
+        insert into directory(name, lastMovedTime, parentDirId, realPath, orgId) values (#{name}, #{lastMovedTime}, NULL,#{realPath},#{orgId})
+    </insert>
+
 </mapper>
