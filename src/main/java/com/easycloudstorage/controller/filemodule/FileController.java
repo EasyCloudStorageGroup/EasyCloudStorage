@@ -4,9 +4,10 @@ import com.easycloudstorage.pojo.*;
 import com.easycloudstorage.service.filemodule.FileService;
 import com.easycloudstorage.service.filemodule.ShowService;
 
+import com.easycloudstorage.service.organizationmodule.AuthorityService;
+import com.easycloudstorage.service.organizationmodule.OrganizationService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import com.easycloudstorage.service.orgModule.OrgService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,16 +22,18 @@ import java.io.File;
 import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class FileController {
 
     @Autowired
     private FileService fileService;
-
     @Autowired
     private ShowService showService;
+    @Autowired
+    private AuthorityService authorityService;
+    @Autowired
+    private OrganizationService organizationService;
 
     @RequestMapping("uploadPage")
     public String uploadPage(){
@@ -40,8 +43,7 @@ public class FileController {
     @ResponseBody
     @RequestMapping(value="upload", method=RequestMethod.POST)
     public Result  doUploadFile(@RequestParam("file") MultipartFile[] files, HttpServletRequest request) {
-        System.out.println("upload called");
-        boolean result=FileManager.uploadFiles(files,request,fileService);
+        boolean result=FileManager.uploadFiles(files,request,fileService, authorityService, organizationService);
         Result res=new Result();
         if (result)
         res.setCode(0);

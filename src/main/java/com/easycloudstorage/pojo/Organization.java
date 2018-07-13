@@ -3,7 +3,7 @@ package com.easycloudstorage.pojo;
 import java.util.List;
 
 public class Organization {
-    private int orgId;
+    private Integer orgId;
     private String name;
     private String description;
     private String ownerId;
@@ -11,11 +11,11 @@ public class Organization {
     private List<Group> groups;
     private List<User> unGroupedMembers;
 
-    public int getOrgId() {
+    public Integer getOrgId() {
         return orgId;
     }
 
-    public void setOrgId(int orgId) {
+    public void setOrgId(Integer orgId) {
         this.orgId = orgId;
     }
 

@@ -1,23 +1,22 @@
 package com.easycloudstorage.pojo;
 
 import com.easycloudstorage.service.filemodule.FileService;
-import org.springframework.http.HttpRequest;
+import com.easycloudstorage.service.organizationmodule.AuthorityService;
+import com.easycloudstorage.service.organizationmodule.OrganizationService;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Date;
 
 public class FileManager {
 
-    public static boolean uploadFiles(MultipartFile[] files, HttpServletRequest request, FileService fileService){
+    public static boolean uploadFiles(MultipartFile[] files, HttpServletRequest request, FileService fileService,
+                                      AuthorityService authorityService, OrganizationService organizationService){
         boolean flag=true;
         for (MultipartFile file:files) {
-            boolean result=uploadOneFile(file, request, fileService);
+            boolean result=uploadOneFile(file, request, fileService, authorityService, organizationService);
             flag &=  result;
         }
 
@@ -72,7 +71,8 @@ public class FileManager {
         return size+postFix;
     }
 
-    public static boolean uploadOneFile(MultipartFile file, HttpServletRequest request,FileService fileService){
+    public static boolean uploadOneFile(MultipartFile file, HttpServletRequest request, FileService fileService,
+                                        AuthorityService authorityService, OrganizationService organizationService) {
 
         String name=file.getOriginalFilename();
         HttpSession session=request.getSession();
@@ -84,6 +84,7 @@ public class FileManager {
         uploadFile.setType(file.getContentType());
         uploadFile.setLastMovedTime(new Date());
         uploadFile.setOwnerId(dir.getOwnerId());
+        uploadFile.setOrgId(dir.getOrgId());
         uploadFile.setParentDirId(dir.getDirId());
         uploadFile.setRealPath(dir.getRealPath()+"\\"+name);
 
@@ -98,6 +99,25 @@ public class FileManager {
             temp = new File(userDir,name);
             uploadFile.setName(name);
             fileService.insertFile(uploadFile);
+
+            /*如果是组织文件上传，那么需要插入对应的权限*/
+            if(uploadFile.getOrgId() != null) {
+                User user = (User) session.getAttribute("user");
+                NorFileAuthority norFileAuthority = new NorFileAuthority();
+                norFileAuthority.setFileId(uploadFile.getFileId());
+                norFileAuthority.setAccountId(user.getAccountId());
+                norFileAuthority.setAuthority(Authority.VISIBLE_DOWNLOADABLE_EDITABLE);
+                norFileAuthority.setOrgId(uploadFile.getOrgId());
+                authorityService.addNorFileAuthority(norFileAuthority);
+
+                /*如果当前用户不是组织拥有者，那么需要给拥有者加上权限*/
+                String ownerId = organizationService.getOwnerId(uploadFile.getOrgId());
+                if(!ownerId.equals(user.getAccountId())) {
+                    norFileAuthority.setAccountId(ownerId);
+                    authorityService.addNorFileAuthority(norFileAuthority);
+                }
+            }
+
             file.transferTo(temp);
         } catch (Exception e){
             e.printStackTrace();

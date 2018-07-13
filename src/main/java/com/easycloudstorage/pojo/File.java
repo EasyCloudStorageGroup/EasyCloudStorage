@@ -9,7 +9,7 @@ public class File {
     private String realPath;
     private Integer parentDirId;
     private String ownerId;
-    private int orgId;
+    private Integer orgId;
     private String displayTime;
     private Directory parentDir;
 
@@ -53,11 +53,11 @@ public class File {
         this.ownerId = ownerId;
     }
 
-    public int getOrgId() {
+    public Integer getOrgId() {
         return orgId;
     }
 
-    public void setOrgId(int orgId) {
+    public void setOrgId(Integer orgId) {
         this.orgId = orgId;
     }
 

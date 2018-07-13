@@ -258,6 +258,13 @@
     <div class="layui-col-md12" >
         <div class="fileListBoard-header">
             <div class="layui-btn-container">
+                <div class="site-demo-button" id="layerDemo" style="float: left;margin-left: 1%">
+                    <button class="layui-btn site-demo-button" data-method="setTop">上传文件</button>
+                </div>
+
+                <script src="/EasyCloudStorage/js/FileManager/upload.js">
+                </script>
+
                 <button class="layui-btn layui-btn-primary layui-btn-sm" id="upload-but">
                     <i class="layui-icon">&#xe62f;</i>上传
                 </button>

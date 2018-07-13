@@ -56,6 +56,10 @@
         select * from organization;
     </select>
 
+    <select id="getOwnerId" resultType="java.lang.String">
+        select ownerId from Organization where orgId = #{orgId}
+    </select>
+
     <insert id ="addOrg" parameterType="Organization">
         insert into organization(name, description, ownerId) values (#{name}, #{description}, #{ownerId})
     </insert>

@@ -1,13 +1,13 @@
 package com.easycloudstorage.pojo;
 
 public class NorFileAuthority extends Authority {
-    private int fileId;
+    private Integer fileId;
 
-    public int getFileId() {
+    public Integer getFileId() {
         return fileId;
     }
 
-    public void setFileId(int fileId) {
+    public void setFileId(Integer fileId) {
         this.fileId = fileId;
     }
 }

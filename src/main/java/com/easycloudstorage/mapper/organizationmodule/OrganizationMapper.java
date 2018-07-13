@@ -41,5 +41,6 @@ public interface OrganizationMapper {
 
     void removeGpMember(String accountId,int groupId);//将组员移出该分组
 
-
+    /*得到组织拥有者id*/
+    String getOwnerId(Integer orgId);
 }

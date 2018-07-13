@@ -2,15 +2,15 @@ package com.easycloudstorage.pojo;
 
 public class Authority {
     private String accountId;
-    private int orgId;
+    private Integer orgId;
     private int authority;
 
     public static int VISIBLE_DOWNLOADABLE = 1;
     public static int VISIBLE_EDITABLE = 2;
     public static int VISIBLE_NEWABLE = 3;
 
-    public static int VISIBLE_DOWNLOADABLE_EDITABLE = 4;
-    public static int VISIBLE_EDITABLE_NEWABLE = 5;
+    public static int VISIBLE_DOWNLOADABLE_EDITABLE = 4;        //文件最高权限
+    public static int VISIBLE_EDITABLE_NEWABLE = 5;             //文件夹最高权限
 
     public String getAccountId() {
         return accountId;
@@ -20,11 +20,11 @@ public class Authority {
         this.accountId = accountId;
     }
 
-    public int getOrgId() {
+    public Integer getOrgId() {
         return orgId;
     }
 
-    public void setOrgId(int orgId) {
+    public void setOrgId(Integer orgId) {
         this.orgId = orgId;
     }
 

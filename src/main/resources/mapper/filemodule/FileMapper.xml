@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.easycloudstorage.mapper.filemodule.FileMapper">
-    <insert id="insertFile" parameterType="com.easycloudstorage.pojo.NormalFile">
-        INSERT INTO `easycloudstorage`.`normalfile` (`name`, `lastMovedTime`, `realPath`, `type`, `size`, `parentDirId`, `ownerId`)
-        VALUES (#{name},#{lastMovedTime}, #{realPath}, #{type},#{size}, #{parentDirId},#{ownerId});
+    <insert id="insertFile" parameterType="com.easycloudstorage.pojo.NormalFile" useGeneratedKeys="true" keyProperty="fileId">
+        INSERT INTO `easycloudstorage`.`normalfile` (`name`, `lastMovedTime`, `realPath`, `type`, `size`, `parentDirId`, `ownerId`, `orgId`)
+        VALUES (#{name},#{lastMovedTime}, #{realPath}, #{type},#{size}, #{parentDirId}, #{ownerId}, #{orgId});
     </insert>
 
     <select id="selectNormalFile" resultType="NormalFile">

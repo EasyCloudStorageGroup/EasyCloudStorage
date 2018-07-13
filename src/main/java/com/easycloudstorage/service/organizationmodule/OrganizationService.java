@@ -102,6 +102,7 @@ public class OrganizationService {
 
     public void removeGpMember(String accountId,int groupId){organizationMapper.removeGpMember(accountId,groupId);}
 
-
-
+    public String getOwnerId(Integer orgId) {
+        return organizationMapper.getOwnerId(orgId);
+    }
 }
