@@ -45,9 +45,9 @@
         delete from directory where dirId=#{dirId};
     </delete>
 
-    <insert id="newDirectory" parameterType="Directory">
-        insert into directory ( `name`, `lastMovedTime`, `parentDirId`, `ownerId`, `realPath`) values(#{name},#{lastMovedTime},
-        #{parentDirId},#{ownerId},#{realPath});
+    <insert id="newDirectory" parameterType="Directory" useGeneratedKeys="true" keyProperty="dirId">
+        insert into directory ( `name`, `lastMovedTime`, `parentDirId`, `ownerId`, `realPath`, `orgId`)
+            values(#{name},#{lastMovedTime}, #{parentDirId}, #{ownerId}, #{realPath}, #{orgId});
     </insert>
 
     <!--组织模块-->

@@ -294,28 +294,8 @@ border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
 <!--table-show-board所有展示内容结束-->
 
 <script type="text/javascript" src="/EasyCloudStorage/jquery/changeSkin/jquery.js"></script>
-<script>
+<script src="js/FileManager/download.js"></script>
 
-
-    $("#download_btn").click(function () {
-        var idCollection = [];
-        var idCollection2 = [];
-        $("input[name = 'check']:checked").each(function (i) {
-            idCollection[i] = $(this).val();
-        });
-        $("input[name = 'check2']:checked").each(function (i) {
-            idCollection2[i] = $(this).val();
-        })
-
-       if(!(idCollection.length === 0 && idCollection2.length === 0)) {
-           var data = {
-               "idCollection[]": idCollection,
-               "idCollection2[]": idCollection2
-           };
-           window.location = "download?" + $.param(data);
-       }
-    })
-</script>
 <%--王浩宇添加--%>
 <script src="/EasyCloudStorage/layui/lay/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->

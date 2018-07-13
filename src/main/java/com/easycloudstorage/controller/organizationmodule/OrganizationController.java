@@ -64,7 +64,7 @@ public class OrganizationController {
             while(unVisitedDirs.size() != 0)
             {
                 Directory nowDir = unVisitedDirs.get(index);
-                if(nowDir.getDirId() == dirId) {
+                if(nowDir.getDirId().equals(dirId)) {
                     session.setAttribute("currentDir", nowDir);
                     return;
                 }

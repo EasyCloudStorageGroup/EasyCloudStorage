@@ -177,15 +177,42 @@ public class FileController {
         File file=new File(directory.getRealPath()+"\\"+newFileName);
         file.mkdir();
 
+        Directory currentDir = (Directory) session.getAttribute("currentDir");    //当前目录
         Directory newDir=new Directory();
         newDir.setName(newFileName);
         newDir.setLastMovedTime(new Date());
-        newDir.setParentDirId(dirId);
-        newDir.setOwnerId(user.getAccountId());
+        newDir.setParentDirId(currentDir.getDirId());
+        newDir.setOwnerId(currentDir.getOwnerId());
         newDir.setRealPath(file.getAbsolutePath());
+        newDir.setOrgId(currentDir.getOrgId());
         fileService.newDirectory(newDir);
 
-        return "redirect:homePage?dirId="+dirId;
+        /*
+         * 判断是组织还是个人
+         * 如果是组织，需要插入文件权限
+         */
+        if(currentDir.getOwnerId() != null)
+            return "redirect:homePage?dirId="+dirId;
+        else {
+            DirAuthority dirAuthority = new DirAuthority();
+            dirAuthority.setDirId(newDir.getDirId());
+            dirAuthority.setAccountId(user.getAccountId());
+            dirAuthority.setOrgId(currentDir.getOrgId());
+            dirAuthority.setAuthority(Authority.VISIBLE_EDITABLE_NEWABLE);
+            authorityService.addDirAuthority(dirAuthority);
+
+             /*如果当前用户不是组织拥有者，那么需要给拥有者加上权限*/
+            String ownerId = organizationService.getOwnerId(currentDir.getOrgId());
+            if(!ownerId.equals(user.getAccountId())) {
+                dirAuthority.setAccountId(ownerId);
+                authorityService.addDirAuthority(dirAuthority);
+            }
+
+            if(currentDir.getParentDirId() == null)
+                return "redirect:orgHomePage";
+            else
+                return "redirect:orgHomePage?dirId="+currentDir.getDirId();
+        }
     }
 
     @RequestMapping("deleteFilePage")

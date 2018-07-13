@@ -4,8 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.easycloudstorage.mapper.organizationmodule.AuthorityMapper">
+    <!--新建文件权限-->
     <insert id="addNorFileAuthority" parameterType="NorFileAuthority">
         insert into NorFileAuthority (accountId, fileId, orgId, authority)
           values(#{accountId}, #{fileId}, #{orgId}, #{authority});
+    </insert>
+    
+    <!--新建文件夹权限-->
+    <insert id="addDirAuthority" parameterType="DirAuthority">
+        insert into DirAuthority (accountId, dirId, orgId, authority)
+          values (#{accountId}, #{dirId}, #{orgId}, #{authority});
     </insert>
 </mapper>

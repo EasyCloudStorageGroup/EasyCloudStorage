@@ -122,10 +122,14 @@
             }
         });
 
-        if(selectedDirNum > 0 || isFileUnDownloadable)
+        if(selectedDirNum > 0 || isFileUnDownloadable) {
             $("#download-but").addClass("layui-btn-disabled");
-        else
+            $("#download-but").attr("disabled", "disabled");
+        }
+        else {
             $("#download-but").removeClass("layui-btn-disabled");
+            $("#download-but").removeAttr("disabled")
+        }
     }
 
     /*决定删除按钮是否禁用*/
@@ -152,10 +156,15 @@
             }
         });
 
-        if(isFileUnDeletable)
+        if(isFileUnDeletable) {
             $("#delete-but").addClass("layui-btn-disabled");
-        else
+            $("#delete-but").attr("disabled", "disabled");
+        }
+        else {
             $("#delete-but").removeClass("layui-btn-disabled");
+            $("#delete-but").removeAttr("disabled");
+        }
+
     }
 
     /*决定重命名按钮是否禁用*/
@@ -164,10 +173,14 @@
 
         var authority = $(".file-selected .nor-file-block, .file-selected .dir-block").attr("authority");
 
-        if(selectedNum > 1 || !fileEditable(authority))
+        if(selectedNum > 1 || !fileEditable(authority)) {
             $("#rename-but").addClass("layui-btn-disabled");
-        else
+            $("#rename-but").attr("disabled", "disabled");
+        }
+        else {
             $("#rename-but").removeClass("layui-btn-disabled");
+            $("#rename-but").removeAttr("disabled");
+        }
     }
 
     layui.use('form', function(){
@@ -247,6 +260,7 @@
         if("${organization.ownerId == user.accountId}" == "false") {
             if("${currentDir.dirAuthority == null or not currentDir.dirAuthority.newable}" == "true") {
                 $("#upload-but, #new-but").addClass("layui-btn-disabled");
+                $("#upload-but, #new-but").attr("disabled", "true");
             }
         }
 
@@ -258,17 +272,18 @@
     <div class="layui-col-md12" >
         <div class="fileListBoard-header">
             <div class="layui-btn-container">
-                <div class="site-demo-button" id="layerDemo" style="float: left;margin-left: 1%">
-                    <button class="layui-btn site-demo-button" data-method="setTop">上传文件</button>
-                </div>
+                <span class="site-demo-button" id="layerDemo">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" id="upload-but" data-method="setTop">
+                        <i class="layui-icon">&#xe62f;</i>上传
+                    </button>
+                </span>
 
                 <script src="/EasyCloudStorage/js/FileManager/upload.js">
                 </script>
 
-                <button class="layui-btn layui-btn-primary layui-btn-sm" id="upload-but">
-                    <i class="layui-icon">&#xe62f;</i>上传
-                </button>
-                <button class="layui-btn layui-btn-primary layui-btn-sm" id="new-but">
+                <script src="js/menu.js"></script>
+
+                <button class="layui-btn layui-btn-primary layui-btn-sm" id="new-but" onclick="openNewDirectoryMenu()">
                     <i class="layui-icon">&#xe608;</i>新建文件夹
                 </button>
 
@@ -276,6 +291,9 @@
                     <button class="layui-btn layui-btn-primary layui-btn-sm" id="download-but">
                         <i class="layui-icon">&#xe601;</i>下载
                     </button>
+
+                    <script src="js/FileManager/download.js"></script>
+
                     <button class="layui-btn layui-btn-primary layui-btn-sm" id="delete-but">
                         <i class="layui-icon">&#xe640;</i>删除
                     </button>
@@ -297,7 +315,7 @@
                                 </div>
                                 <div class="dir-name" title="${childDir.name}">${childDir.name}</div>
                                 <div class="file-select">
-                                    <input type="checkbox" name="file-select" lay-skin="primary">
+                                    <input type="checkbox" name="check2" lay-skin="primary" value="${childDir.dirId}">
                                 </div>
                             </div>
                         </div>
@@ -311,7 +329,7 @@
                                 </div>
                                 <div class="nor-file-name" title="${childNorFile.name}">${childNorFile.name}</div>
                                 <div class="file-select">
-                                    <input type="checkbox" name="file-select" lay-skin="primary">
+                                    <input type="checkbox" name="check" lay-skin="primary" value="${childNorFile.fileId}">
                                 </div>
                             </div>
                         </div>
