@@ -266,6 +266,41 @@
 
         $(".layui-btn-container .layui-btn-group").hide();
     });
+    
+    function deleteFiles() {
+        var idCollection = [];
+        var idCollection2 = [];
+        var dirId = ${currentDir.dirId}
+        $("input[name = 'check']:checked").each(function (i) {
+            idCollection[i] = $(this).val();
+        });
+        $("input[name = 'check2']:checked").each(function (i) {
+            idCollection2[i] = $(this).val();
+        })
+
+        for(var i=0; i<idCollection.length; i++) {
+            $.ajax({
+                type: "get",
+                async: true,
+                url: encodeURI(encodeURI("deleteFilePage?fileId="+idCollection[i]+"&dirId="+dirId)),
+                success:function () {
+                    window.location.reload(true)
+                }
+            })
+        }
+        for(var i = 0; i<idCollection2.length; i++) {
+            $.ajax({
+                type: "get",
+                async: true,
+                url: encodeURI(encodeURI("deleteDirectoryPage?fileId="+idCollection2[i]+"&dirId="+dirId)),
+                success:function () {
+                    window.location.reload(true)
+                }
+            })
+        }
+
+        layer.msg("删除成功",{time:5000});
+    }
 </script>
 
 <div class="fileListBoard layui-col-md9">
@@ -294,7 +329,7 @@
 
                     <script src="js/FileManager/download.js"></script>
 
-                    <button class="layui-btn layui-btn-primary layui-btn-sm" id="delete-but">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" id="delete-but" onclick="deleteFiles()">
                         <i class="layui-icon">&#xe640;</i>删除
                     </button>
                     <button class="layui-btn layui-btn-primary layui-btn-sm" id="rename-but">

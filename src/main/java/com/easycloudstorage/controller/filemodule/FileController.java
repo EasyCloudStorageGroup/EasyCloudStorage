@@ -216,7 +216,7 @@ public class FileController {
     }
 
     @RequestMapping("deleteFilePage")
-    public String deleteFile(Integer fileId, Integer dirId)throws IOException
+    public String deleteFile(Integer fileId, Integer dirId, HttpSession session)throws IOException
     {
         NormalFile normalFile=fileService.selectNormalFile(fileId);
 
@@ -224,10 +224,19 @@ public class FileController {
         fileService.deleteNormalFile(normalFile);
         file.delete();
 
-        if(dirId == 0)
-            return "redirect:homePage";
-        else
-            return "redirect:homePage?dirId="+dirId;
+        if(normalFile.getOrgId() != null) {
+            if(dirId == 0)
+                return "redirect:homePage";
+            else
+                return "redirect:homePage?dirId="+dirId;
+        }
+        else {
+            Directory currentDir = (Directory) session.getAttribute("currentDir");
+            if(currentDir.getParentDirId() == null)
+                return "redirect:orgHomePage";
+            else
+                return "redirect:orgHomePage?dirId="+currentDir.getDirId();
+        }
     }
 
     @RequestMapping("deleteDirectoryPage")
