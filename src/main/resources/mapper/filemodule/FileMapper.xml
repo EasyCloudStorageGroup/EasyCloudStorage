@@ -60,6 +60,45 @@
         <result column="ownerId" property="ownerId"/>
         <result column="orgId" property="orgId"/>
 
+        <association property="dirAuthority" javaType="DirAuthority">
+            <result column="accountId" property="accountId"/>
+            <result column="dirId" property="dirId"/>
+            <result column="orgId" property="orgId"/>
+            <result column="authority" property="authority"/>
+        </association>
     </resultMap>
+    
+    <select id="getVisibleDirectories" resultMap="DirectoryWithAuthority">
+        select d.dirId, d.name, d.lastMovedTime, d.realPath, d.parentDirId, d.ownerId, d.orgId,
+          da.accountId, da.authority
+          from Directory d left join DirAuthority da on d.dirId = da.dirId
+          where da.accountId = #{0} and d.orgId = #{1};
+    </select>
+
+    <resultMap id="NorFilesWithAuthority" type="NormalFile">
+        <id column="fileId" property="fileId"/>
+        <result column="name" property="name"/>
+        <result column="lastMovedTime" property="lastMovedTime"/>
+        <result column="realPath" property="realPath"/>
+        <result column="type" property="type"/>
+        <result column="size" property="size"/>
+        <result column="parentDirId" property="parentDirId"/>
+        <result column="ownerId" property="ownerId"/>
+        <result column="orgId" property="orgId"/>
+
+        <association property="norFileAuthority" javaType="NorFileAuthority">
+            <result column="accountId" property="accountId"/>
+            <result column="fileId" property="fileId"/>
+            <result column="orgId" property="orgId"/>
+            <result column="authority" property="authority"/>
+        </association>
+    </resultMap>
+
+    <select id="getVisibleNorFiles" resultMap="NorFilesWithAuthority">
+        select nf.fileId, nf.name, nf.lastMovedTime, nf.realPath, nf.type, nf.size, nf.parentDirId, nf.ownerId, nf.orgId,
+        nfa.accountId, nfa.authority
+        from NormalFile nf left join NorFileAuthority nfa on nf.fileId = nfa.fileId
+        where nfa.accountId = #{0} and nf.orgId = #{1};
+    </select>
 
 </mapper>

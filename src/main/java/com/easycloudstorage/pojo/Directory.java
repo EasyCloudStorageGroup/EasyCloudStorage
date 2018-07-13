@@ -6,7 +6,8 @@ import java.util.List;
 public class Directory extends File {
     private Integer dirId;
     private DirAuthority dirAuthority;
-    private List<File> childFiles = new ArrayList<>();
+    private List<Directory> childDirectories = new ArrayList<>();
+    private List<NormalFile> childNorFiles = new ArrayList<>();
 
     public Integer getDirId() {
         return dirId;
@@ -24,11 +25,19 @@ public class Directory extends File {
         this.dirAuthority = dirAuthority;
     }
 
-    public List<File> getChildFiles() {
-        return childFiles;
+    public List<Directory> getChildDirectories() {
+        return childDirectories;
     }
 
-    public void setChildFiles(List<File> childFiles) {
-        this.childFiles = childFiles;
+    public void setChildDirectories(List<Directory> childDirectories) {
+        this.childDirectories = childDirectories;
+    }
+
+    public List<NormalFile> getChildNorFiles() {
+        return childNorFiles;
+    }
+
+    public void setChildNorFiles(List<NormalFile> childNorFiles) {
+        this.childNorFiles = childNorFiles;
     }
 }

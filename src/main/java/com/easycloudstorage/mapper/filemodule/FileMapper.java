@@ -26,4 +26,9 @@ public interface FileMapper {
     void deleteDirectory(Directory directory);
 
     void newDirectory(Directory directory);
+
+    //组织模块
+    List<Directory> getVisibleDirectories(String accountId, int orgId);
+
+    List<NormalFile> getVisibleNorFiles(String accountId, int orgId);
 }

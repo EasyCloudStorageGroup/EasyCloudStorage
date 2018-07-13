@@ -61,4 +61,50 @@ public class FileService {
     {
         fileMapper.newDirectory(directory);
     }
+
+    //组织模块
+    public Directory makeVisibleFileSys(String accountId, int orgId) {
+        List<Directory> visibleDirectories = fileMapper.getVisibleDirectories(accountId, orgId);
+        List<NormalFile> visibleNorFiles = fileMapper.getVisibleNorFiles(accountId, orgId);
+
+        for(NormalFile normalFile : visibleNorFiles) {
+            int pDirId = normalFile.getParentDirId();
+            for(Directory directory : visibleDirectories) {
+                if(pDirId == directory.getDirId()) {
+                    normalFile.setParentDir(directory);
+                    directory.getChildNorFiles().add(normalFile);
+                }
+            }
+        }
+        for(Directory directory1 : visibleDirectories) {
+            int pDirId = directory1.getParentDirId();
+            for(Directory directory2 : visibleDirectories) {
+                if(pDirId == directory2.getDirId()) {
+                    directory1.setParentDir(directory2);
+                    directory2.getChildDirectories().add(directory1);
+                }
+            }
+        }
+
+        Directory root = new Directory();
+        root.setDirId(null);
+        root.setName("root");
+
+        for(Directory directory : visibleDirectories) {
+            if(directory.getParentDir() == null)
+            {
+                root.getChildDirectories().add(directory);
+                directory.setParentDir(root);
+            }
+        }
+        for(NormalFile normalFile : visibleNorFiles) {
+            if(normalFile.getParentDir() == null)
+            {
+                root.getChildNorFiles().add(normalFile);
+                normalFile.setParentDir(root);
+            }
+        }
+
+        return root;
+    }
 }
