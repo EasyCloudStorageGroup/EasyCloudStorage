@@ -52,24 +52,71 @@
 		  where o.orgId = #{orgId};
     </select>
 
-    <select id="isMember" resultType="int">
-        select count(*) from UsersOrgs where accountId = #{0} and orgId = #{1};
+    <select id="orgList" resultType="Organization">
+        select * from organization;
     </select>
 
     <insert id ="addOrg" parameterType="Organization">
         insert into organization(name, description, ownerId) values (#{name}, #{description}, #{ownerId})
     </insert>
 
-    <select id="orgList" resultType="Organization">
-        select * from organization;
+    <delete id="deleteOrg" parameterType="String">
+        DELETE FROM organization WHERE orgId=#{0};
+    </delete>
+
+    <select id="isMember" resultType="int">
+        select count(*) from UsersOrgs where accountId = #{0} and orgId = #{1};
     </select>
 
     <insert id = "addDir" parameterType="Directory">
         insert into directory(name, lastMovedTime, parentDirId, realPath, orgId) values (#{name}, #{lastMovedTime}, NULL,#{realPath},#{orgId})
     </insert>
 
+
     <select id="getOrgByName" resultType="Organization" parameterType="String">
         select * from organization where name = #{0}
     </select>
+
+    <insert id = "addMember" parameterType="String">
+        insert into usersorgs(accountId,orgId) values (#{0}, #{1})
+    </insert>
+
+    <select id="isUser" resultType="int">
+        select count(*) from user where accountId = #{0};
+    </select>
+
+    <delete id="removeMember" parameterType="String">
+        DELETE FROM usersorgs WHERE accountId=#{0} and orgId=#{1};
+    </delete>
+
+
+    <select id="groupList" resultType="Group">
+        select * from _group;
+    </select>
+
+    <insert id ="addGroup" parameterType="Group">
+        insert into _group(name, description, orgId) values (#{name}, #{description}, #{orgId})
+    </insert>
+
+    <delete id="deleteGroup" parameterType="String">
+        DELETE FROM _group WHERE groupId=#{0};
+    </delete>
+
+    <select id="getByGroupId" resultType="Group" parameterType="String">
+        select * from _group where groupId = #{0}
+    </select>
+
+    <select id="getGroupByName" resultType="Group" parameterType="String">
+        select * from _group where name = #{0}
+    </select>
+
+    <insert id = "distributeMember" parameterType="String">
+        insert into usersgroups(accountId,groupId) values (#{0}, #{1})
+    </insert>
+
+    <delete id="removeGpMember" parameterType="String">
+        DELETE FROM usersgroups WHERE accountId=#{0} and groupId=#{1};
+    </delete>
+
 
 </mapper>

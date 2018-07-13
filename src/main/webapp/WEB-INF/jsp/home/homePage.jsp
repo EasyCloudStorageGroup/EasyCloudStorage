@@ -83,12 +83,11 @@
 </style>
 <style>
     .none-notice-board{
-        position: relative;
-        display: flex;
-        justify-content: center;
+        position: absolute;
+        left: 150px;
         top: 200px;
-        width: 1200px;
-        height: 900px;
+        width: 800px;
+        height: auto;
     }
 </style>
 <style>
@@ -133,9 +132,6 @@
 }
 </style>
 
-
-
-
 <%@ include file="include/navigator.jsp"%>
 <link href="/EasyCloudStorage/css/menu.css" rel="stylesheet"/>
 
@@ -151,13 +147,6 @@
                 <div class="site-demo-button" id="layerDemo" style="float: left;margin-left: 1%">
                   <button class="layui-btn site-demo-button" data-method="setTop">上传文件</button>
                 </div>
-
-            <a href="/EasyCloudStorage/toCreatePage">
-                <button 	class="layui-btn layui-btn-normal">
-                    新建组织
-                </button>
-            </a>
-
 
     <%@ include file="include/orderNav.jsp"%>
     <%@ include file="include/searchBox.jsp"%>
@@ -183,7 +172,9 @@
             <%--文件夹的展示情况，存在为空或者不为空两种情况--%>
 <c:choose>
     <c:when test="${empty currentDirectories&&empty currentNormalFiles}">
-        <div class="none-notice-board" ><img src="/EasyCloudStorage/img/home/smile.png" width="400px" height="320px"/>
+
+        <div class="none-notice-board" ><img src="/EasyCloudStorage/img/home/smile.PNG" style="width:400px;height: 400px;" />
+
             <h2>当前没有任何文件哦,赶紧上传一个吧！</h2>
         </div>
     </c:when>
@@ -285,7 +276,7 @@
 border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
                 <div class="music-show-board" >
 
-                    <audio autoplay="autoplay" style="width: 500px;opacity: 0.95;" src="/Data${filePath}" controls="controls" ></audio>
+                    <audio loop="loop" autoplay="autoplay" style="width: 500px;opacity: 0.95;" src="/Data${filePath}" controls="controls" ></audio>
                 </div>
 
         </c:when>

@@ -12,8 +12,17 @@
 <%@ include file="../shared/sharedHeader.jsp"%>
 
 <link rel="stylesheet" href="/EasyCloudStorage/css/homePage/homePage.css"/>
+<link rel="stylesheet" href="/EasyCloudStorage/css/homePage/navigator.css"/>
 <%--><link rel="stylesheet" href="/EasyCloudStorage/css/homePage/fileShow.css"/>--%>
-
+<style>
+    .none-notice-board{
+        position: absolute;
+        left: 400px;
+        top: 150px;
+        width: 800px;
+        height: auto;
+    }
+</style>
 <script>
         $(function() {
             var leftNavW = 200;
@@ -48,29 +57,34 @@
     }
 </style>
 
+<%@ include file="include/navigator.jsp"%>
 
-<%@ include file="include/orgNavigator.jsp"%>
 <link href="/EasyCloudStorage/css/menu.css" rel="stylesheet"/>
 
 
 <div class="file-manager-board">
 
+    <a href="/EasyCloudStorage/toCreatePage">
+        <button 	class="layui-btn layui-btn-normal" style="position: absolute;left: 50px">
+            新建组织
+        </button>
+    </a>
+
     <c:choose>
         <c:when test="${empty orgList}">
 
-            <div class="empty-notice-board" ><img src="/EasyCloudStorage/img/home/smile.PNG" width="400px" height="320px"/>
+            <div class="none-notice-board" ><img src="/EasyCloudStorage/img/home/smile.PNG" width="400px" height="400px"/>
                 <h2>您还没有加入任何组织哦</h2></div>
         </c:when>
         <c:otherwise>
                     <c:forEach items="${orgList}" var="Organization">
 
                         <div style="float: left;width: 11%;height: 16%;margin: 4%">
-                            <a href="http://www.baidu.com">
-                                <img src="/EasyCloudStorage/img/organization/org.png" width="100%" height="100%"/>
+                            <a href="/EasyCloudStorage/enterOrganization?orgId=${Organization.orgId}">
+                                <img src="/EasyCloudStorage/img/home/org.png" width="80%" height="80%"/>
                             </a>
                                 <p align="center">${Organization.name}</p>
                         </div>
-,
                     </c:forEach>
 
         </c:otherwise>

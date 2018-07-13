@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: VULCAN
-  Date: 2018/7/12
-  Time: 15:48
+  Date: 2018/7/13
+  Time: 10:32
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8"
@@ -25,42 +25,30 @@
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3 form-box">
                     <div class="form-top">
-                        <h1 align="center">创建组织</h1>
+                        <h1 align="center">邀请成员</h1>
                         <span id="warning"></span>
                         <h3 align="center"><font color="red">${error}</font></h3>
+                        <h3 align="center"><font color="#00bfff">${message}</font></h3>
                     </div>
                     <div class="form-bottom">
-                        <form action="create" method="post">
+                        <form action="invite" method="post">
+
                             <div class="form-group">
-                                <label class="sr-only" for="form-username">name</label>
-                                <input type="text" name="name" class="form-username form-control" id="form-username" placeholder="请输入组织名">
+                                <label class="sr-only" for="form-phoneNumber">accountId</label>
+                                <input type="text" id="form-phoneNumber" name = "accountId" class="form-phoneNumber form-control" placeholder="请输入用户ID">
                             </div>
-                            <div class="form-group">
-                                <label class="sr-only" for="form-phoneNumber">description</label>
-                                <input type="text" id="form-phoneNumber" name = "description" class="form-phoneNumber form-control" placeholder="请输入简介">
-                            </div>
-                            <div><a href="toInvite"><button type="submit" class="btn">创建组织并邀请成员</button></a></div>
+                            <div><button type="submit" class="btn">继续邀请</button></div>
                         </form>
                         <p></p>
-                        <form action="toOrgPage" method="get">
-                            <div><button type="submit" class="btn">取消创建</button></div>
-                        </form>
+                        <a href="/EasyCloudStorage/enterOrganization?orgId=${orgId}">
+                            <div><button type="submit" class="btn" style="width: 505px;">进入主页</button></div>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script>
-    function check() {
-        password1 = document.getElementById("form-pssword").value;
-        password2 = document.getElementById("form-password2").value;
-        if(password2 != password1){
-            document.getElementById("warning").innerHTML = "两次输入密码不一致";
-        }
-
-    }
-</script>
 <script src="/EasyCloudStorage/jquery/jsForLogin/jquery-1.11.1.min.js"></script>
 <script src="/EasyCloudStorage/bootstrap/js/bootstrap.min.js"></script>
 <script src="/EasyCloudStorage/jquery/jsForLogin/jquery.backstretch.min.js"></script>
