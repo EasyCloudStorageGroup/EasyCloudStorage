@@ -96,15 +96,22 @@ public class OrganizationController {
     public String toCreatePage(){
         return "organization/create/createPage";
     }
-    @RequestMapping(value = "/toHomePage", method = RequestMethod.GET)
-    public String toHomePage(){
-        return "home/homePage";
+
+    @RequestMapping(value = "/toInvite", method = RequestMethod.GET)
+    public String toInvite(){
+        return "organization/create/inviteMember";
+    }
+
+    @RequestMapping(value = "/toOrgPage", method = RequestMethod.GET)
+    public String toOrgPage(){
+        return "home/organizationPage";
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ModelAndView register(@RequestParam("name")String name, @RequestParam("description")String description,HttpSession session){
+    public ModelAndView create(@RequestParam("name")String name, @RequestParam("description")String description,HttpSession session){
         ModelAndView mv = new ModelAndView();
         List<Organization> orgList = organizationService.list();
+
         int repeatFlag = 0;
 
         for(Organization org:orgList){
@@ -112,6 +119,7 @@ public class OrganizationController {
                 repeatFlag++;
             }
         }
+        Organization org=null;
         //避免输入为空
         if("".equals(name) || "".equals(description)){
             mv.setViewName("checkout/register");
@@ -121,20 +129,20 @@ public class OrganizationController {
         else{
             //用户名重复
             if(repeatFlag != 0){
-                mv.setViewName("checkout/register");
-                String error = "组织名重复";
+                mv.setViewName("organization/create/createPage");
+                String error = "已被注册的组织名";
                 mv.addObject("error", error);
             }
             //均符合规范向数据库中添加用户
             else{
                 User user=new User();
                 user=(User)session.getAttribute("user");
-                Organization org = new Organization();
+                org= new Organization();
                 org.setName(name);
                 org.setOwnerId(user.getAccountId());
                 org.setDescription(description);
                 organizationService.addOrg(org);
-                mv.setViewName("home/homePage");
+                mv.setViewName("organization/create/inviteMember");
                 org=organizationService.getOrgByName(org.getName());
                 CreateDirForOrg co=new CreateDirForOrg();
                 String userRootDir = co.createDirForOrg(org);
@@ -145,12 +153,68 @@ public class OrganizationController {
                 file.setRealPath(userRootDir);
                 file.setOrgId(org.getOrgId());
                 organizationService.addDir(file);
+                organizationService.addMember(user.getAccountId(),org.getOrgId());
+            }
+            //mv.setViewName("checkout/register");
+        }
+        if(org!=null)
+        session.setAttribute("orgId",org.getOrgId());
+        return mv;
+    }
+
+    @RequestMapping(value = "/invite", method = RequestMethod.POST)
+    public ModelAndView invite(@RequestParam("accountId")String accountId,HttpSession session){
+        ModelAndView mv = new ModelAndView();
+        int orgId=(int)session.getAttribute("orgId");
+        boolean flag=organizationService.isMember(accountId,orgId);
+        boolean flag2=organizationService.isUser(accountId);
+        //避免输入为空
+        if("".equals(accountId)){
+            mv.setViewName("organization/create/inviteMember");
+            String error = "输入为空";
+            mv.addObject("error", error);
+        }
+        else{
+            //用户名重复
+            if(flag==true){
+                mv.setViewName("organization/create/inviteMember");
+                String error = "该成员已经在组织内";
+                mv.addObject("error", error);
+            }
+            else if(flag2==false){
+                mv.setViewName("organization/create/inviteMember");
+                String error = "无该用户";
+                mv.addObject("error", error);
+            }
+            //均符合规范向数据库中添加用户
+            else{
+                String message="邀请成功";
+                mv.addObject("message", message);
+                mv.setViewName("organization/create/inviteMember");
+                organizationService.addMember(accountId,orgId);
             }
             //mv.setViewName("checkout/register");
         }
         return mv;
     }
 
+    @RequestMapping("orgnizationPage")
+    public ModelAndView orgList(String type,HttpSession session){
+        User user=(User) session.getAttribute("user");
+
+        session.setAttribute("navigatorType","orgPage");
+
+        if(type==null)
+            type="all";
+
+        List<Organization> orgList=organizationService.findMyOrgByType(user,organizationService.list(),type);
+
+        session.setAttribute("orgList",orgList);
+
+        ModelAndView mv = new ModelAndView("home/organizationPage");
+
+        return mv;
+    }
 
 
 }

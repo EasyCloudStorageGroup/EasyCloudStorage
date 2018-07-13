@@ -9,7 +9,7 @@ import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageDecoder;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
-import com.easycloudstorage.service.orgModule.OrgService;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,8 +30,6 @@ import java.util.List;
 public class ShowController {
     @Autowired
     private ShowService showService;
-    @Autowired
-    private OrgService orgService;
 
     @RequestMapping("homePage")
     public ModelAndView show(Integer dirId, Integer fileId,HttpSession session,String type) {
@@ -111,7 +109,7 @@ public class ShowController {
 }
 
         Directory currentDir=showService.findDirectoryById(dirId,showService.directoryList());
-
+        session.setAttribute("navigatorType","homePage");
         session.setAttribute("normalFile",file);
         session.setAttribute("currentNormalFiles", normalFileList);
         session.setAttribute("currentDirectories", directoryList);

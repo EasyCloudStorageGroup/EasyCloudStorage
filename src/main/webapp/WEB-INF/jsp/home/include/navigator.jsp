@@ -29,7 +29,8 @@
         </a>
     </div>
     <ul class="layui-nav layui-nav-tree layui-nav-side left-navigator">
-
+<c:choose>
+    <c:when test="${navigatorType=='homePage'}">
         <c:choose>
             <c:when test="${empty type}">
                 <li class="layui-nav-item layui-this"><a href="homePage">全部文件</a></li>
@@ -64,12 +65,37 @@
             </c:when>
             <c:otherwise>  <li class="layui-nav-item"><a href="homePage?type=Other">其它</a></li></c:otherwise>
         </c:choose>
+    </c:when>
 
+    <c:when test="${navigatorType=='orgPage'}">
+        <c:choose>
+            <c:when test="${type=='all'}">
+                <li class="layui-nav-item layui-this"><a href="orgnizationPage?type=all">全部组织</a></li>
+            </c:when>
+            <c:otherwise> <li class="layui-nav-item"><a href="orgnizationPage?type=all">全部组织</a></li></c:otherwise>
+        </c:choose>
 
+        <c:choose>
+            <c:when test="${type=='owner'}">
+                <li class="layui-nav-item layui-this"><a href="orgnizationPage?type=owner">我创建的组织</a></li>
+            </c:when>
+            <c:otherwise> <li class="layui-nav-item"><a href="orgnizationPage?type=owner">我创建的组织</a></li></c:otherwise>
+        </c:choose>
+
+        <c:choose>
+            <c:when test="${type=='join'}">
+                <li class="layui-nav-item layui-this"><a href="orgnizationPage?type=join">我加入的组织</a></li>
+            </c:when>
+            <c:otherwise>  <li class="layui-nav-item"><a href="orgnizationPage?type=join">我加入的组织</a></li></c:otherwise>
+        </c:choose>
+
+    </c:when>
+
+</c:choose>
     </ul>
 
     <ul class="layui-nav top-left-navigator">
-    <li class="layui-nav-item"><a href="homePage?dirId=0">网盘</a></li>
+    <li class="layui-nav-item"><a href="homePage">网盘</a></li>
         <li class="layui-nav-item"><a href="orgnizationPage" id="orgnizationButton">组织</a></li>
     </ul>
 
