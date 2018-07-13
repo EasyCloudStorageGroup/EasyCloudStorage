@@ -25,9 +25,9 @@
 <style>
     .search-box {
         position: absolute;
-        width: 400px;
-        top:0px;
+        margin-right:57%;
         left: 30%;
+        width: 400px;
     }
 
     .search-box .search-box-input {
