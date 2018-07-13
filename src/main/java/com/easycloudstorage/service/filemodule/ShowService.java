@@ -50,7 +50,7 @@ public class ShowService {
         Directory tem=new Directory();
         for(int i=0;i<directoryList.size();i++) {
             tem = directoryList.get(i);
-            if (tem.getParentDirId() == null && tem.getOwnerId().equals(user.getAccountId()))
+            if (tem.getParentDirId() == null &&user.getAccountId() .equals(tem.getOwnerId()))
             {
                 return tem;
             }
@@ -147,30 +147,30 @@ public class ShowService {
     {
         NormalFile tem;
         List<NormalFile> result=new ArrayList<NormalFile>();
-
+if(normalFileList.size()>0)
             switch (type){
                 case "Picture":
                     for(int i=0;i<normalFileList.size();i++) {
                         tem = normalFileList.get(i);
-            if (tem.getOwnerId().equals(user.getAccountId())&&(tem.getType().equals("image/jpeg")||tem.getType().equals("image/png")||tem.getType().equals("image/jpg")||tem.getType().equals("image/tiff")))
+            if (user.getAccountId().equals(tem.getOwnerId())&&(tem.getType().equals("image/jpeg")||tem.getType().equals("image/png")||tem.getType().equals("image/jpg")||tem.getType().equals("image/tiff")))
                 result.add(tem);}
             break;
                 case "Video":
                     for(int i=0;i<normalFileList.size();i++) {
                     tem = normalFileList.get(i);
-                    if (tem.getOwnerId().equals(user.getAccountId())&&(tem.getType().equals("video/mp4")))
+                    if (user.getAccountId().equals(tem.getOwnerId())&&(tem.getType().equals("video/mp4")))
                         result.add(tem);}
                     break;
                 case"Music":
                     for(int i=0;i<normalFileList.size();i++) {
                         tem = normalFileList.get(i);
-                        if (tem.getOwnerId().equals(user.getAccountId())&&(tem.getType().equals("audio/mp3")))
+                        if (user.getAccountId().equals(tem.getOwnerId())&&(tem.getType().equals("audio/mp3")))
                             result.add(tem);}
                     break;
                 default:
                     for(int i=0;i<normalFileList.size();i++) {
                         tem = normalFileList.get(i);
-                        if (tem.getOwnerId().equals(user.getAccountId())&&!tem.getType().equals("image/jpeg")&&!tem.getType().equals("image/png")&&!tem.getType().equals("image/jpg")&&!tem.getType().equals("video/mp4")&&!tem.getType().equals("audio/mp3")&&!tem.getType().equals("image/tiff"))
+                        if (user.getAccountId().equals(tem.getOwnerId())&&!tem.getType().equals("image/jpeg")&&!tem.getType().equals("image/png")&&!tem.getType().equals("image/jpg")&&!tem.getType().equals("video/mp4")&&!tem.getType().equals("audio/mp3")&&!tem.getType().equals("image/tiff"))
                             result.add(tem);}
                             break;
         }

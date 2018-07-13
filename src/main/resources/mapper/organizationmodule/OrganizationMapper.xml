@@ -55,4 +55,25 @@
     <select id="isMember" resultType="int">
         select count(*) from UsersOrgs where accountId = #{0} and orgId = #{1};
     </select>
+
+    <insert id ="addOrg" parameterType="Organization">
+        insert into organization(name, description, ownerId) values (#{name}, #{description}, #{ownerId})
+    </insert>
+
+    <select id="orgList" resultType="Organization">
+        select * from organization;
+    </select>
+
+    <insert id = "addDir" parameterType="Directory">
+        insert into directory(name, lastMovedTime, parentDirId, realPath, orgId) values (#{name}, #{lastMovedTime}, NULL,#{realPath},#{orgId})
+    </insert>
+
+    <select id="getOrgByName" resultType="Organization" parameterType="String">
+        select * from organization where name = #{0}
+    </select>
+
+    <insert id = "addMember" parameterType="">
+        insert into directory(name, lastMovedTime, parentDirId, realPath, orgId) values (#{name}, #{lastMovedTime}, NULL,#{realPath},#{orgId})
+    </insert>
+
 </mapper>

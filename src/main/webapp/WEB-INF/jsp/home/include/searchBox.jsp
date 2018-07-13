@@ -24,9 +24,10 @@
 
 <style>
     .search-box {
-        width: 450px;
         position: absolute;
-        left: 450px;
+        margin-right:57%;
+        left: 30%;
+        width: 400px;
     }
 
     .search-box .search-box-input {
@@ -41,7 +42,7 @@
     </div>
 
     <a href="searchFiles" class="search-box-but-link">
-        <button class="layui-btn layui-btn-radius layui-btn-primary search-box-but">
+        <button class="layui-btn layui-btn-radius layui-btn-primary search-box-but" style="position: absolute;margin-left: 5px ;">
             搜索
         </button>
     </a>
