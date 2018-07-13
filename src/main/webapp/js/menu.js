@@ -1,11 +1,10 @@
 var clientMenu = document.getElementById('clientMenu');
-var table = document.getElementById('1008');
 var dirClass=document.getElementsByClassName("dirClass");
 var normalFileClass=document.getElementsByClassName("normalFileClass");
 var fileMoveClickedId;
 
 function menuEvent(event){
-    /*if(event.clientX + 242 > screen.availWidth){
+    if(event.clientX + 242 > screen.availWidth){
         clientMenu.style.left = event.clientX - 242 + 'px';
     }else{
         clientMenu.style.left = event.clientX + 'px';
@@ -14,7 +13,7 @@ function menuEvent(event){
         clientMenu.style.top = event.clientY - 122 + 'px';
     }else{
         clientMenu.style.top = event.clientY + 'px';
-    }*/
+    }
     clientMenu.style.left = event.clientX + 'px';
     clientMenu.style.top = event.clientY + 'px';
     clientMenu.style.visibility = 'visible';
@@ -154,8 +153,6 @@ $(document).on("mouseout",".fileMoveClass",function () {
 })
 
 function init(){
-    //for(var child=0;child<table.childNodes.length;child++)
-        //table.oncontextmenu=menuEvent;
     for(var a =0; a<dirClass.length;a++)
         dirClass[a].oncontextmenu=menuEvent;
     for(var a =0; a<normalFileClass.length;a++)
@@ -167,7 +164,6 @@ function init(){
 function generetaContent(data)
 {
     var div = document.createElement("div");
-    //div.style.width="200px";
     div.style.height="300px";
     div.style.overflow = "auto";
     generateDirLi(div, data.dirId, data.name, 0, data);
