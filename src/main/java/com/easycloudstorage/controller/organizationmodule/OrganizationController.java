@@ -78,6 +78,24 @@ public class OrganizationController {
         session.removeAttribute("currentDir");
     }
 
+    /*得到当前目录的父目录，包括当前目录*/
+    public List<Directory> getDirNav(HttpSession session) {
+        Directory currentDir = (Directory) session.getAttribute("currentDir");
+        List<Directory> parentDirs = new ArrayList<>();
+
+        parentDirs.add(currentDir);
+        while(currentDir.getParentDir() != null) {
+            parentDirs.add(0, currentDir.getParentDir());
+            currentDir = currentDir.getParentDir();
+        }
+        //使根目录名为“全部文件”
+        Directory root = new Directory();
+        root.setName("全部文件");
+        parentDirs.set(0, root);
+
+        return parentDirs;
+    }
+
     @RequestMapping("orgHomePage")
     public ModelAndView orgHomePage(Integer dirId, HttpSession session) {
         int orgId = (Integer) session.getAttribute("orgId");
@@ -88,6 +106,9 @@ public class OrganizationController {
         mv.addObject("organization", organization);
 
         toTheDir(dirId, session);
+
+        List<Directory> dirNav = getDirNav(session);
+        session.setAttribute("dirNav", dirNav);
 
         return mv;
     }

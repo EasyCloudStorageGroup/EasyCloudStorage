@@ -301,6 +301,39 @@
 
         layer.msg("删除成功",{time:5000});
     }
+
+    function renameFile()
+    {
+        var dirId = 0;
+
+        layui.use('layer',function () {
+            var $ = layui.jquery, layer = layui.layer;
+
+            var selectedName = $("input[name = 'check']:checked, input[name = 'check2']:checked");
+            layer.prompt({
+                formType: 0,
+                title: '重命名为：',
+                area:'500px',
+                value:selectedName.attr("fileName")
+            }, function(value, index, elem){
+                value = value.replace(/\%/g,"%25").replace(/\#/g,"%23").replace(/\&/g,"%26").replace(/\+/g,"%2B");//特殊字符处理
+                layer.close(index);
+                if(selectedName.attr("name")=="check")
+                    window.location.href=encodeURI(encodeURI("renameFilePage?oldFileId="+selectedName.val()+"&newFileName="+value+"&dirId="+dirId));
+                else if(selectedName.attr("name")=="check2")
+                    window.location.href=encodeURI(encodeURI("renameDirectoryPage?oldFileId="+selectedName.val()+"&newFileName="+value+"&dirId="+dirId));
+                layer.msg("重命名成功")
+            });
+
+        });
+    }
+
+    //使用layui  element 模块
+    $(function () {
+        layui.use('element', function(){
+            var element = layui.element;
+        });
+    })
 </script>
 
 <div class="fileListBoard layui-col-md9">
@@ -332,7 +365,7 @@
                     <button class="layui-btn layui-btn-primary layui-btn-sm" id="delete-but" onclick="deleteFiles()">
                         <i class="layui-icon">&#xe640;</i>删除
                     </button>
-                    <button class="layui-btn layui-btn-primary layui-btn-sm" id="rename-but">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" id="rename-but" onclick="renameFile()">
                         <i class="layui-icon">&#xe642;</i>重命名
                     </button>
                 </div>
@@ -341,6 +374,7 @@
 
         <form class="layui-form">
             <div class="fileListBoard-content">
+                <%@ include file="dirNav.jsp"%>
                 <div class="fileListBoard-content-list">
                     <c:forEach items="${currentDir.childDirectories}" var="childDir">
                         <div class="file-hover-div">
@@ -350,7 +384,7 @@
                                 </div>
                                 <div class="dir-name" title="${childDir.name}">${childDir.name}</div>
                                 <div class="file-select">
-                                    <input type="checkbox" name="check2" lay-skin="primary" value="${childDir.dirId}">
+                                    <input type="checkbox" name="check2" lay-skin="primary" value="${childDir.dirId}" fileName="${childDir.name}">
                                 </div>
                             </div>
                         </div>
@@ -364,7 +398,7 @@
                                 </div>
                                 <div class="nor-file-name" title="${childNorFile.name}">${childNorFile.name}</div>
                                 <div class="file-select">
-                                    <input type="checkbox" name="check" lay-skin="primary" value="${childNorFile.fileId}">
+                                    <input type="checkbox" name="check" lay-skin="primary" value="${childNorFile.fileId}" fileName="${childNorFile.name}">
                                 </div>
                             </div>
                         </div>

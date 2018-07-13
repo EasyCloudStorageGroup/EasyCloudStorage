@@ -66,7 +66,8 @@ public class FileController {
     }
 
     @RequestMapping("renameFilePage")
-    public String renameFilePage(@RequestParam("oldFileId")Integer oldFileId, String newFileName, Integer dirId)
+    public String renameFilePage(@RequestParam("oldFileId")Integer oldFileId, String newFileName, Integer dirId,
+                                 HttpSession session)
             throws IOException
     {
         newFileName = URLDecoder.decode(newFileName, "utf-8").replaceAll("%25","%")
@@ -107,13 +108,24 @@ public class FileController {
         normalFile.setRealPath(newFile.getAbsolutePath());
         fileService.updateNormalFile(normalFile);
 
-        if(dirId == 0)
-            return "redirect:homePage";
-        else
-            return "redirect:homePage?dirId="+dirId;
+        if(normalFile.getOrgId() == null) {
+            if(dirId == 0)
+                return "redirect:homePage";
+            else
+                return "redirect:homePage?dirId="+dirId;
+        }
+        else {
+            Directory currentDir = (Directory) session.getAttribute("currentDir");
+            if(currentDir.getParentDirId() == null)
+                return "redirect:orgHomePage";
+            else
+                return "redirect:orgHomePage?dirId="+currentDir.getDirId();
+        }
     }
+
     @RequestMapping("renameDirectoryPage")
-    public String renameDirectoryPage(@RequestParam("oldFileId")Integer oldFileId, String newFileName,Integer dirId)
+    public String renameDirectoryPage(@RequestParam("oldFileId")Integer oldFileId, String newFileName,Integer dirId,
+                                      HttpSession session)
             throws IOException
     {
         newFileName = URLDecoder.decode(newFileName, "utf-8").replaceAll("%25","%")//处理特殊字符
@@ -145,11 +157,21 @@ public class FileController {
         directory.setRealPath(newFile.getAbsolutePath());
         fileService.updateDirectory(directory);
 
-        if(dirId == 0)
-            return "redirect:homePage";
-        else
-            return "redirect:homePage?dirId="+dirId;
+        if(directory.getOrgId() == null) {
+            if(dirId == 0)
+                return "redirect:homePage";
+            else
+                return "redirect:homePage?dirId="+dirId;
+        }
+        else {
+            Directory currentDir = (Directory) session.getAttribute("currentDir");
+            if(currentDir.getParentDirId() == null)
+                return "redirect:orgHomePage";
+            else
+                return "redirect:orgHomePage?dirId="+currentDir.getDirId();
+        }
     }
+
     @RequestMapping("newDirPage")
     public String newDirectory(@RequestParam("dirId")int dirId, String newFileName,HttpSession session)
             throws UnsupportedEncodingException
@@ -224,23 +246,11 @@ public class FileController {
         fileService.deleteNormalFile(normalFile);
         file.delete();
 
-        if(normalFile.getOrgId() != null) {
-            if(dirId == 0)
-                return "redirect:homePage";
-            else
-                return "redirect:homePage?dirId="+dirId;
-        }
-        else {
-            Directory currentDir = (Directory) session.getAttribute("currentDir");
-            if(currentDir.getParentDirId() == null)
-                return "redirect:orgHomePage";
-            else
-                return "redirect:orgHomePage?dirId="+currentDir.getDirId();
-        }
+        return "success";
     }
 
     @RequestMapping("deleteDirectoryPage")
-    public String deleteDirectory(Integer fileId, Integer dirId)throws IOException
+    public String deleteDirectory(Integer fileId, Integer dirId, HttpSession session)throws IOException
     {System.out.println("in dir delete  and pid="+fileId);
         Directory directory=fileService.selectDirectory(fileId);
         File file=new File(directory.getRealPath());
@@ -248,10 +258,7 @@ public class FileController {
 
         fileService.deleteDirectory(directory);
 
-        if(dirId == 0)
-            return "redirect:homePage";
-        else
-            return "redirect:homePage?dirId="+dirId;
+        return "success";
     }
     @RequestMapping("moveFilePage")
     public String moveFile(@RequestParam("fileId")Integer fileId, Integer moveToId, Integer dirId)
