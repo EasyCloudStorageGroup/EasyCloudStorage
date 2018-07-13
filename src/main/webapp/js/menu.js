@@ -1,26 +1,28 @@
 var clientMenu = document.getElementById('clientMenu');
-var table = document.getElementById('1008');
 var dirClass=document.getElementsByClassName("dirClass");
 var normalFileClass=document.getElementsByClassName("normalFileClass");
 var fileMoveClickedId;
+var nodeCollection = [];
 
 function menuEvent(event){
-    /*if(event.clientX + 242 > screen.availWidth){
-        clientMenu.style.left = event.clientX - 242 + 'px';
+    if(event.clientX + 120 > screen.availWidth){
+        clientMenu.style.left = event.clientX - 120 + 'px';
     }else{
         clientMenu.style.left = event.clientX + 'px';
     }
-    if(event.clentY + 122 > screen.availHeight){
-        clientMenu.style.top = event.clientY - 122 + 'px';
+    if(event.clentY + 150 > screen.availHeight){
+        clientMenu.style.top = event.clientY - 150 + 'px';
     }else{
         clientMenu.style.top = event.clientY + 'px';
-    }*/
+    }
     clientMenu.style.left = event.clientX + 'px';
     clientMenu.style.top = event.clientY + 'px';
     clientMenu.style.visibility = 'visible';
     clientMenu.id=this.id;
     clientMenu.objName=this.children[2].innerText;
     clientMenu.objClass=this.className;
+    this.children[0].children[0].checked= true
+
     return false;
 }
 
@@ -88,18 +90,40 @@ function openDeleteFileMenu()
     var dirId;
     if(result!=null&&result.length>1) dirId=result[1];
     else dirId=0;
+    $("input[name = 'check']").each(function (i) {
+        if(this.checked==true)
+            nodeCollection[i] = this.parentElement.parentElement;
+    });
     layui.use('layer',function () {
         var $ = layui.jquery, layer = layui.layer;
 
-        layer.confirm('确定删除文件？',{
+        layer.confirm('确定删除选中文件？',{
         btn:['确定','取消']
     },function () {
-        layer.msg("删除成功",{time:6000});
-        if(clientMenu.objClass=="normalFileClass")
-            window.location.href=encodeURI(encodeURI("deleteFilePage?fileId="+clientMenu.id+"&dirId="+dirId));
-        else if(clientMenu.objClass=="dirClass")
-        window.location.href=encodeURI(encodeURI("deleteDirectoryPage?fileId="+clientMenu.id+"&dirId="+dirId));
-        });
+        for(var i=0;i<nodeCollection.length;i++)
+        {
+            if(nodeCollection[i].className=="normalFileClass")
+                $.ajax({
+                    type: "get",
+                    async: true,
+                    url: encodeURI(encodeURI("deleteFilePage?fileId="+nodeCollection[i].id+"&dirId="+dirId)),
+                    success:function () {
+                        window.location.reload(true)
+                    }
+                })//window.location.href=encodeURI(encodeURI("deleteFilePage?fileId="+nodeCollection[i].id+"&dirId="+dirId));
+            else if(nodeCollection[i].className=="dirClass")
+                $.ajax({
+                    type: "get",
+                    async: true,
+                    url: encodeURI(encodeURI("deleteDirectoryPage?fileId="+nodeCollection[i].id+"&dirId="+dirId)),
+                    success:function () {
+                        window.location.reload(true)
+                    }
+                })//window.location.href=encodeURI(encodeURI("deleteDirectoryPage?fileId="+nodeCollection[i].id+"&dirId="+dirId));
+        }
+        layer.msg("删除成功",{time:5000});
+        //window.location.reload(true)
+    });
     });
 }
 
@@ -154,8 +178,6 @@ $(document).on("mouseout",".fileMoveClass",function () {
 })
 
 function init(){
-    //for(var child=0;child<table.childNodes.length;child++)
-        //table.oncontextmenu=menuEvent;
     for(var a =0; a<dirClass.length;a++)
         dirClass[a].oncontextmenu=menuEvent;
     for(var a =0; a<normalFileClass.length;a++)
@@ -167,7 +189,6 @@ function init(){
 function generetaContent(data)
 {
     var div = document.createElement("div");
-    //div.style.width="200px";
     div.style.height="300px";
     div.style.overflow = "auto";
     generateDirLi(div, data.dirId, data.name, 0, data);

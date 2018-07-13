@@ -107,7 +107,7 @@ public class FileController {
         normalFile.setRealPath(newFile.getAbsolutePath());
         fileService.updateNormalFile(normalFile);
 
-        if(dirId ==null)
+        if(dirId == 0)
             return "redirect:homePage";
         else
             return "redirect:homePage?dirId="+dirId;
@@ -145,7 +145,7 @@ public class FileController {
         directory.setRealPath(newFile.getAbsolutePath());
         fileService.updateDirectory(directory);
 
-        if(dirId == null)
+        if(dirId == 0)
             return "redirect:homePage";
         else
             return "redirect:homePage?dirId="+dirId;
@@ -197,7 +197,7 @@ public class FileController {
         fileService.deleteNormalFile(normalFile);
         file.delete();
 
-        if(dirId == null)
+        if(dirId == 0)
             return "redirect:homePage";
         else
             return "redirect:homePage?dirId="+dirId;
@@ -212,7 +212,7 @@ public class FileController {
 
         fileService.deleteDirectory(directory);
 
-        if(dirId == null)
+        if(dirId == 0)
             return "redirect:homePage";
         else
             return "redirect:homePage?dirId="+dirId;
@@ -251,7 +251,7 @@ public class FileController {
         normalFile.setRealPath(moveToFile.getAbsolutePath());
         fileService.updateNormalFile(normalFile);
 
-        if(dirId == null)
+        if(dirId == 0)
             return "redirect:homePage";
         else
             return "redirect:homePage?dirId="+dirId;
@@ -270,7 +270,7 @@ public class FileController {
             Directory srcDir=fileService.selectDirectory(fileId);
             if(dirId == 0 && userRootDir!=null)//根目录
                 dirId=(userRootDir).getDirId();
-            if(fileAlreadyExist(dirId, srcDir.getName()))
+            if(fileAlreadyExist(moveToId, srcDir.getName()))
             {
                 for(int i=1;i<1000;i++)//1000，最多后缀1000,
                 {
@@ -290,7 +290,7 @@ public class FileController {
             fileService.updateDirectory(srcDir);
         }
 
-        if(dirId == null)
+        if(dirId == 0)
             return "redirect:homePage";
         else
             return "redirect:homePage?dirId="+dirId;

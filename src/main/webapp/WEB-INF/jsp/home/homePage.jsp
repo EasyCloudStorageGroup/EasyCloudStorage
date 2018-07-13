@@ -183,7 +183,7 @@
             <%--文件夹的展示情况，存在为空或者不为空两种情况--%>
 <c:choose>
     <c:when test="${empty currentDirectories&&empty currentNormalFiles}">
-        <div class="none-notice-board" ><img src="/EasyCloudStorage/img/home/smile.PNG" width="400px" height="320px"/>
+        <div class="none-notice-board" ><img src="/EasyCloudStorage/img/home/smile.png" width="400px" height="320px"/>
             <h2>当前没有任何文件哦,赶紧上传一个吧！</h2>
         </div>
     </c:when>
@@ -244,8 +244,8 @@
 </div>
 
 
-<ul class="client_menu" id="clientMenu" style="background-color: dodgerblue">
-    <li><a href="#" class="demo" onclick="openRenameFileMenu()" data-type="rename">重命名</a></li>
+<ul class="client_menu" id="clientMenu" style="background-color: #f0f0f0">
+    <li><a href="#" onclick="openRenameFileMenu()" data-type="rename">重命名</a></li>
     <li><a href="#" onclick="openDeleteFileMenu()">删除</a></li>
     <li><a href="#" onclick="openMoveFileMenu()">移动到</a></li>
 </ul>
