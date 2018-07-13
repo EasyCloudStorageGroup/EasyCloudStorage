@@ -6,6 +6,8 @@ import com.easycloudstorage.service.filemodule.ShowService;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import com.easycloudstorage.service.orgModule.OrgService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +40,7 @@ public class FileController {
     @ResponseBody
     @RequestMapping(value="upload", method=RequestMethod.POST)
     public Result  doUploadFile(@RequestParam("file") MultipartFile[] files, HttpServletRequest request) {
+        System.out.println("upload called");
         boolean result=FileManager.uploadFiles(files,request,fileService);
         Result res=new Result();
         if (result)
