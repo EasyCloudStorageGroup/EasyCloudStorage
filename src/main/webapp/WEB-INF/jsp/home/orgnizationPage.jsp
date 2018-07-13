@@ -30,6 +30,9 @@
                 $(".file-manager-board").css("height", boardHeight+"px");
             });
 
+            $("body").css("background", "${sessionScope.user.getBgUrl()}")
+            $(".imgShow").css("background", "${sessionScope.user.getBgUrl()}")
+            $(".imgShow").css("background-size","264px 180px");
         })
 </script>
 
@@ -41,35 +44,10 @@
         background-color: white;
         border-radius:10px;
         overflow: auto;
-        opacity: 0.85;
-    }
-</style>
-<style>
-    .directory-show-board {
-        position: relative;
-        top: 10px;
-        width: 400px;
-        background-color: white;
-        border-radius:10px;
+        opacity: 0.9;
     }
 </style>
 
-<style>
-    .empty-notice-board{
-        position: relative;
-        left: 400px;
-        top: 100px;
-        background-color: white;
-        border-radius:10px;
-        opacity:0.6;}
-</style>
-<style>
-    .table-show-board{
-        position:relative;
-        top:10px;
-
-
-    }</style>
 
 <%@ include file="include/orgNavigator.jsp"%>
 <link href="/EasyCloudStorage/css/menu.css" rel="stylesheet"/>
@@ -102,6 +80,5 @@
 
 
 <script src="js/menu.js"></script>
-<script src="js/menuLayer.js"></script>
 </body>
 </html>

@@ -1,22 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Dell
-  Date: 2018/7/10
-  Time: 16:04
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>    <%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 7/4/2018
-  Time: 3:46 PM
-  To change this template use File | Settings | File Templates.
---%>
 
 <%--
     导航栏组件

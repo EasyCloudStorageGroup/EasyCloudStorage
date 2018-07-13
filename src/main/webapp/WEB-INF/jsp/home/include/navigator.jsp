@@ -69,7 +69,7 @@
     </ul>
 
     <ul class="layui-nav top-left-navigator">
-    <li class="layui-nav-item layui-this"><a href="homePage?dirId=0">网盘</a></li>
+    <li class="layui-nav-item"><a href="homePage?dirId=0">网盘</a></li>
         <li class="layui-nav-item"><a href="orgnizationPage" id="orgnizationButton">组织</a></li>
     </ul>
 
