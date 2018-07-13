@@ -61,8 +61,6 @@ public class FileController {
         JSONObject b = new JSONObject();
         b.put("ccc", 1);b.put("bbb","ffffefa");
         object.put("obh", b);
-        System.out.println("in get all and json is:");
-        System.out.println(object.toString());
         mv.setViewName("rename");
         return mv;
     }

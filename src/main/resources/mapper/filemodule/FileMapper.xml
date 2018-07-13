@@ -101,4 +101,8 @@
         where nfa.accountId = #{0} and nf.orgId = #{1};
     </select>
 
+    <select id="getOrgRootDir" resultType="Directory" parameterType="Integer">
+        select * from Directory where parentDirId IS NULL and orgId = #{0};
+    </select>
+
 </mapper>

@@ -1,6 +1,7 @@
 package com.easycloudstorage.service.filemodule;
 
 import com.easycloudstorage.mapper.filemodule.FileMapper;
+import com.easycloudstorage.mapper.organizationmodule.OrganizationMapper;
 import com.easycloudstorage.pojo.Directory;
 import com.easycloudstorage.pojo.NormalFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import java.util.List;
 public class FileService {
     @Autowired
     private FileMapper fileMapper;
+    @Autowired
+    private OrganizationMapper organizationMapper;
 
     public void insertFile(NormalFile file){
         fileMapper.insertFile(file);
@@ -86,9 +89,17 @@ public class FileService {
             }
         }
 
-        Directory root = new Directory();
-        root.setDirId(null);
-        root.setName("root");
+        /*如果当前用户是组织拥有者，则获得根目录*/
+        String ownerId = organizationMapper.getOwnerId(orgId);
+        Directory root;
+        if(ownerId.equals(accountId)) {
+            root = fileMapper.getOrgRootDir(orgId);
+        }
+        else {
+            root = new Directory();
+            root.setDirId(null);
+            root.setName("root");
+        }
 
         for(Directory directory : visibleDirectories) {
             if(directory.getParentDir() == null)

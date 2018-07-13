@@ -31,4 +31,6 @@ public interface FileMapper {
     List<Directory> getVisibleDirectories(String accountId, int orgId);
 
     List<NormalFile> getVisibleNorFiles(String accountId, int orgId);
+
+    Directory getOrgRootDir(Integer orgId);
 }
