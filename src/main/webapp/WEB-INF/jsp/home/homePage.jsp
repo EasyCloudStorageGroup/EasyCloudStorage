@@ -271,6 +271,8 @@ border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
 
 <script type="text/javascript" src="/EasyCloudStorage/jquery/changeSkin/jquery.js"></script>
 <script>
+
+
     $("#download_btn").click(function () {
         var idCollection = [];
         var idCollection2 = [];
@@ -280,11 +282,14 @@ border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
         $("input[name = 'check2']:checked").each(function (i) {
             idCollection2[i] = $(this).val();
         })
-        var data = {
-            "idCollection[]":idCollection,
-            "idCollection2[]":idCollection2
-        };
-        window.location = "download?" + $.param(data);
+
+       if(!(idCollection.length === 0 && idCollection2.length === 0)) {
+           var data = {
+               "idCollection[]": idCollection,
+               "idCollection2[]": idCollection2
+           };
+           window.location = "download?" + $.param(data);
+       }
     })
 </script>
 </body>

@@ -27,40 +27,51 @@ public class DownloadController {
 
 
     @RequestMapping(value = "/download")
-    public ResponseEntity<byte[]> download(@RequestParam(value = "idCollection[]", required = false)int[] idCollection, @RequestParam(value = "idCollection2[]", required = false)int[] idCollection2, HttpServletRequest request) throws IOException{
+    public ResponseEntity<byte[]> download(@RequestParam(value = "idCollection[]", required = false)Integer[] idCollection, @RequestParam(value = "idCollection2[]", required = false)Integer[] idCollection2, HttpServletRequest request) throws IOException{
         //通过文件id获取路径
         //获取普通文件路径
-        ArrayList<String> paths = new ArrayList<>();
-        for(int i:idCollection){
-            paths.add(fileService.selectNormalFile(i).getRealPath());
+        //如果只有一个文件则不需要压缩
+        if(idCollection.length == 0){
+            return null;
         }
-        //获取文件夹路径
-        /*
-        *文件夹下载待完成
-        */
-        String resourcesName = "files.zip";
-        ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream("E:/" + resourcesName));
-        InputStream input = null;
-        for(String path:paths){
+        else if (idCollection.length == 1){
+            String path = fileService.selectNormalFile(idCollection[0]).getRealPath();
             File file = new File(path);
-            String fileName = file.getName();
-            input = new FileInputStream(path);
-            zipOut.putNextEntry(new ZipEntry(fileName));
-            int temp = 0;
-            while ((temp = input.read()) != -1){
-                zipOut.write(temp);
-            }
-            input.close();
-
+            HttpHeaders headers = new HttpHeaders();
+            String name = new String(file.getName().getBytes("utf-8"),"iso-8859-1");
+            headers.setContentDispositionFormData("attachment", name);
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers,HttpStatus.CREATED);
         }
-        zipOut.close();
+        else {
+            ArrayList<String> paths = new ArrayList<>();
+            for(Integer i:idCollection){
+                paths.add(fileService.selectNormalFile(i).getRealPath());
+            }
+            String resourcesName = "files.zip";
+            ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream("E:/" + resourcesName));
+            InputStream input = null;
+            for(String path:paths){
+                File file = new File(path);
+                String fileName = file.getName();
+                input = new FileInputStream(path);
+                zipOut.putNextEntry(new ZipEntry(fileName));
+                int temp = 0;
+                while ((temp = input.read()) != -1){
+                    zipOut.write(temp);
+                }
+                input.close();
 
-        File file = new File("E:/" + resourcesName);
-        HttpHeaders headers = new HttpHeaders();
-        String name = new String(resourcesName.getBytes("utf-8"),"iso-8859-1");
-        headers.setContentDispositionFormData("attachment", name);
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers,HttpStatus.CREATED);
+            }
+            zipOut.close();
+
+            File file = new File("E:/" + resourcesName);
+            HttpHeaders headers = new HttpHeaders();
+            String name = new String(resourcesName.getBytes("utf-8"),"iso-8859-1");
+            headers.setContentDispositionFormData("attachment", name);
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers,HttpStatus.CREATED);
+        }
     }
 }
 

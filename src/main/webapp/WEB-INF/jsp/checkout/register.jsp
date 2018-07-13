@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
 <link rel="stylesheet" href="/EasyCloudStorage/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="/EasyCloudStorage/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="/EasyCloudStorage/css/login/form-elements.css">
+<link rel="stylesheet" href="/EasyCloudStorage/css/login/form-elements.css?v=3.0">
 <link rel="stylesheet" href="/EasyCloudStorage/css/login/style.css">
 
 <link rel="shortcut icon" href="/EasyCloudStorage/img/ico/favicon.png">
@@ -26,7 +26,7 @@
                     <div class="col-sm-6 col-sm-offset-3 form-box">
                         <div class="form-top">
                             <h1 align="center">注册</h1>
-                            <span id="warning"></span>
+                            <font color="red"><span id="warning"></span></font>
                             <h3 align="center"><font color="red">${error}</font></h3>
                         </div>
                         <div class="form-bottom">
@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="sr-only" for="form-password">Password</label>
-                                    <input type="password" id="form-password" name="password" class="form-password form-control" placeholder="请输入密码">
+                                    <input type="password" id="form-password" name="password"   class="form-password form-control" placeholder="请输入密码">
                                 </div>
                                 <div class="form-group">
                                     <label class="sr-only" for="form-password2">password</label>
@@ -50,6 +50,11 @@
                                 <div class="form-group">
                                     <label class="sr-only" for="form-phoneNumber">phoneNumber</label>
                                     <input type="text" id="form-phoneNumber" name = "phoneNumber" class="form-phoneNumber form-control" placeholder="请输入电话号码">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-identifyingCode">identifyingCode</label>
+                                    <input type="text" id="form-identifyingCode" name="identifyingCode" class="form-identifyingCode form-control2" placeholder="请输入验证码">
+                                    <button type="submit" class="btn2">发送验证码</button>
                                 </div>
                                 <div class="form-group">
                                     <label class="sr-only" for="form-sex">sex</label>
@@ -69,12 +74,15 @@
             </div>
         </div>
     </div>
+<script type="text/javascript" src="/EasyCloudStorage/jquery/changeSkin/jquery.js"></script>
 <script>
     function check() {
-        password1 = document.getElementById("form-pssword").value;
-        password2 = document.getElementById("form-password2").value;
+        var password1 = document.getElementById("form-password").value;
+        var password2 = document.getElementById("form-password2").value;
         if(password2 != password1){
             document.getElementById("warning").innerHTML = "两次输入密码不一致";
+            $("#form-password").val("");
+            $("#form-password2").val("");
         }
 
     }
