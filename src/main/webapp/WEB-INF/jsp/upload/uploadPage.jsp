@@ -2,7 +2,6 @@
          isELIgnored="false"%>
 
 <%@ include file="../shared/sharedHeader.jsp"%>
-<script src=""></script>
 <div class="layui-upload">
 
     <div>
@@ -25,7 +24,6 @@
 </div>
 
 <script>
-
     var id=0;
     var items=new Array()
     var date=new Array()
@@ -124,13 +122,13 @@
         items[index].XHR=xhr
 
         xhr.upload.onprogress=function (eve) {
-                if (eve.lengthComputable) {
+            if (eve.lengthComputable) {
                 var percentComplete = Math.round(eve.loaded * 100 / eve.total);
                 var time=(new Date().getTime()-date[index].getTime())/1000
-                    date[index]=new Date()
-                    var amount=eve.loaded-loaded[index]
-                    loaded[index]=eve.loaded
-                    if (0==time)return
+                date[index]=new Date()
+                var amount=eve.loaded-loaded[index]
+                loaded[index]=eve.loaded
+                if (0==time)return
                 var speed=amount/time
 
                 document.getElementById(index.toString()).innerHTML = percentComplete.toString() + "%"+"("+checkSize(speed)+"/s"+")";
@@ -155,6 +153,5 @@
         xhr.send(fd);
 
     }
-
 
 </script>
