@@ -50,6 +50,11 @@
     .groups-div {
         margin-top: 10px;
     }
+    .add-button{
+        position: fixed;
+        bottom:0px;
+
+    }
 </style>
 
 <script>
@@ -75,7 +80,13 @@
 <div class="orgMembersBoard layui-col-md3">
     <div class="layui-col-md12">
         <div class="orgMembersBoard-header">
-            组织结构 -- <span class="org-name">${organization.name}</span>
+            组织结构 -- <span class="org-name">${organization.name}
+               <a href="/EasyCloudStorage/toInvite">
+                    <button 	class="layui-btn layui-btn-normal" style="position: absolute;left: 230px">
+                        邀请成员
+                    </button>
+               </a>
+            </span>
         </div>
 
         <div class="org-members">
@@ -102,10 +113,18 @@
                 </div>
             </c:forEach>
 
+
             <div class="layui-collapse groups-div">
                 <c:forEach items="${organization.groups}" var="group">
                     <div class="layui-colla-item">
-                        <h2 class="layui-colla-title">${group.name}</h2>
+                        <h2 class="layui-colla-title">
+                            <a href="/EasyCloudStorage/toAddMember">
+                                <img src="/EasyCloudStorage/img/organization/minus.png" style="width: 40px;height: 40px">
+                            </a>${group.name}
+                            <a href="/EasyCloudStorage/toAddMember">
+                                <img src="/EasyCloudStorage/img/organization/add.png" style="position:absolute;left: 280px;width: 50px;height: 40px">
+                            </a>
+                        </h2>
                         <div class="layui-colla-content layui-show">
                             <c:forEach items="${group.members}" var="member">
                                 <div class="grouped-member-div">
@@ -132,7 +151,14 @@
                         </div>
                     </div>
                 </c:forEach>
-            </div>
+                <div class="add-button">
+                    <a href="/EasyCloudStorage/toAddMember">
+                        <button 	class="layui-btn layui-btn-normal" style="width: 328px;opacity: 0.8;">
+                            新建分组
+                        </button>
+                    </a>
+                </div>
+             </div>
         </div>
     </div>
 </div>

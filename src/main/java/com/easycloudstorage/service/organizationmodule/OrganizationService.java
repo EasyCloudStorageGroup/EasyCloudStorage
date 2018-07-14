@@ -37,12 +37,22 @@ public class OrganizationService {
                     result.add(tem);
             }
         }
-        else {
+        else if(type.equals("all")){
             for (int i = 0; i < organizationList.size(); i++) {
                 tem = organizationList.get(i);
                 if ((organizationMapper.isMember(user.getAccountId(),tem.getOrgId()))>0)
                     result.add(tem);
             }
+        }
+        else {
+            for (int i = 0; i < organizationList.size(); i++) {
+                tem = organizationList.get(i);
+                if ((organizationMapper.isMember(user.getAccountId(),tem.getOrgId()))>0)
+                    if(!tem.getOwnerId().equals(user.getAccountId()))
+                    result.add(tem);
+            }
+
+
         }
         return result;
     }
@@ -102,7 +112,9 @@ public class OrganizationService {
 
     public void removeGpMember(String accountId,int groupId){organizationMapper.removeGpMember(accountId,groupId);}
 
+
     public String getOwnerId(Integer orgId) {
         return organizationMapper.getOwnerId(orgId);
     }
+
 }

@@ -2,6 +2,7 @@ package com.easycloudstorage.controller.organizationmodule;
 
 import com.easycloudstorage.pojo.Directory;
 
+import com.easycloudstorage.pojo.Group;
 import com.easycloudstorage.pojo.Organization;
 import com.easycloudstorage.pojo.User;
 import com.easycloudstorage.service.filemodule.FileService;
@@ -143,7 +144,7 @@ public class OrganizationController {
         Organization org=null;
         //避免输入为空
         if("".equals(name) || "".equals(description)){
-            mv.setViewName("checkout/register");
+            mv.setViewName("organization/create/createPage");
             String error = "输入为空";
             mv.addObject("error", error);
         }
@@ -219,8 +220,8 @@ public class OrganizationController {
         return mv;
     }
 
-    @RequestMapping("orgnizationPage")
-    public ModelAndView orgList(String type,HttpSession session){
+    @RequestMapping("organizationPage")
+    public ModelAndView organizationPage(String type,HttpSession session){
         User user=(User) session.getAttribute("user");
 
         session.setAttribute("navigatorType","orgPage");
@@ -238,4 +239,122 @@ public class OrganizationController {
     }
 
 
+
+    //接口方法,主要是增加删除等功能，映射还未添加
+
+    //将成员踢出组织,参数含义为第一个为只有组织拥有者能踢人，第二个是被踢的人的id，第三个用来获取当前组织的id
+    public String removeOrgMember(String memberId,HttpSession session) {
+        int orgId=(int)session.getAttribute("orgId");
+       User user=(User)session.getAttribute("user");
+       String userId=user.getAccountId();
+       if(userId!=null&&!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){//判断该用户是否为组织的拥有者，如果不是拥有者，直接退出此函数
+           return "organization/home/orgHomePage" ;
+       }
+       else {
+           organizationService.removeMember(memberId,orgId);
+           return "organization/home/orgHomePage" ;
+       }
+    }
+
+    //删除该组织
+    public String deleteOrg(HttpSession session){
+        User user=(User)session.getAttribute("user");
+        String userId=user.getAccountId();
+        int orgId=(int)session.getAttribute("orgId");
+        if(!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){
+            return "organization/home/orgHomePage";
+        }
+        else {
+            organizationService.deleteOrg(orgId);
+            return "home/organizationPage";
+        }
+    }
+
+    //往分组里添加已经在组织内的成员
+    //这个具体形式还没想好，参数为 memberId为被添加到分组的成员的Id，groupId为被加入的分组
+    @RequestMapping(value = "/addGroupMember", method = RequestMethod.POST)
+    public String addGroupMember(String memberId,int groupId,HttpSession session){
+        User user=(User)session.getAttribute("user");
+        String userId=user.getAccountId();
+        int orgId=(int)session.getAttribute("orgId");
+        if(!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){
+            return "organization/home/orgHomePage";
+        }
+        else {
+            organizationService.distributeMember(memberId,groupId);
+            return  "organization/home/orgHomePage";
+        }
+    }
+
+    //新建分组，需要填写组名，描述,orgId会自动获取，groupId会自动生成
+    @RequestMapping(value = "/addGroup", method = RequestMethod.POST)
+    public ModelAndView addGroup(@RequestParam("name")String name, @RequestParam("description")String description,HttpSession session){
+        ModelAndView mv = new ModelAndView();
+        List<Group> groupList = organizationService.groupList();
+
+        int repeatFlag = 0;
+
+        for(Group group:groupList){
+            if(name.equals(group.getName())){
+                repeatFlag++;
+            }
+        }
+        Group group=null;
+        //避免输入为空
+        if("".equals(name) || "".equals(description)){
+         //   mv.setViewName("checkout/register");
+            String error = "输入为空";
+            mv.addObject("error", error);
+        }
+        else{
+            //用户名重复
+            if(repeatFlag != 0){
+         //       mv.setViewName("organization/create/createPage");
+                String error = "已被注册的组名";
+                mv.addObject("error", error);
+            }
+            //均符合规范向数据库中添加用户
+            else{
+                User user=new User();
+                user=(User)session.getAttribute("user");
+                group= new Group();
+                group.setName(name);
+                group.setOrgId((int)session.getAttribute("orgId"));
+                group.setDescription(description);
+                organizationService.addGroup(group);
+           //     mv.setViewName("organization/create/inviteMember");
+
+            }
+            //mv.setViewName("checkout/register");
+        }
+        return mv;
+    }
+
+    //删除分组
+    public String deleteGroup(int groupId,HttpSession session){
+    User user=(User)session.getAttribute("user");
+    String userId=user.getAccountId();
+    int orgId=(int)session.getAttribute("orgId");
+    if(!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){
+        return "organization/home/orgHomePage";
+    }
+    else {
+        organizationService.deleteGroup(groupId);
+        return "organization/home/orgHomePage";
+    }
+}
+
+    //删除分组成员
+    public String removeGroupMember(String memberId,int groupId,HttpSession session){
+        User user=(User)session.getAttribute("user");
+        String userId=user.getAccountId();
+        int orgId=(int)session.getAttribute("orgId");
+        if(!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){
+            return "organization/home/orgHomePage";
+        }
+        else {
+            organizationService.removeGpMember(memberId,groupId);
+            return "organization/home/orgHomePage";
+        }
+    }
 }
