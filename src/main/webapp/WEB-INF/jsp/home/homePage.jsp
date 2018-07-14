@@ -173,7 +173,7 @@
 <c:choose>
     <c:when test="${empty currentDirectories&&empty currentNormalFiles}">
 
-        <div class="none-notice-board" ><img src="/EasyCloudStorage/img/home/smile.PNG" style="width:400px;height: 400px;" />
+        <div class="none-notice-board" ><img src="/EasyCloudStorage/img/home/smile.png" style="width:400px;height: 400px;" />
 
             <h2>当前没有任何文件哦,赶紧上传一个吧！</h2>
         </div>
@@ -183,8 +183,11 @@
 <div class="table-show-board">
     <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo" id="file-manager-table" style="table-layout: fixed"  >
         <thead>
+        <br/><tr><input type="checkbox" height="30px" onclick="selectAll(this)"><label>全选</label></tr>
         <tr>
-            <th style="width: 50px;"><button class="layui-btn layui-btn-normal" type="submit" id="download_btn" >下载</button></th>
+            <th style="width: 50px;">
+                <button class="layui-btn layui-btn-normal" type="submit" id="download_btn" >下载</button>
+            </th>
             <th lay-data="{field:'type'}"style="width: 10px"></th>
             <th lay-data="{field:'username'"style="width: 350px">名称</th>
             <th lay-data="{field:'type'}"style="width: 150px">类型</th>
@@ -195,7 +198,7 @@
         <tbody>
         <c:forEach items="${currentDirectories}" var="Directory">
             <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id="${Directory.dirId}" sortType="Directory">
-                <td><input type="checkbox" value="${Directory.dirId}" style="border-radius: 50%;border:10px solid" name="check2"></td>   <%--多选框 --%>
+                <td><input type="checkbox" value="${Directory.dirId}" name="check2"></td>   <%--多选框 --%>
                 <td><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>   <%-- 文件夹图片--%>
                 <td><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td> <%-- 文件名，以及跳转的点击接口--%>
                 <td>-</td>           <%-- 文件夹类型，由于不存在所以写为"-"--%>
@@ -295,7 +298,40 @@ border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
 
 <script type="text/javascript" src="/EasyCloudStorage/jquery/changeSkin/jquery.js"></script>
 <script src="js/FileManager/download.js"></script>
+<script>
+    $("#download_btn").click(function () {
+        var idCollection = [];
+        var idCollection2 = [];
+        $("input[name = 'check']:checked").each(function (i) {
+            idCollection[i] = $(this).val();
+        });
+        $("input[name = 'check2']:checked").each(function (i) {
+            idCollection2[i] = $(this).val();
+        })
 
+       if(!(idCollection.length === 0 && idCollection2.length === 0)) {
+           var data = {
+               "idCollection[]": idCollection,
+               "idCollection2[]": idCollection2
+           };
+           window.location = "download?" + $.param(data);
+       }
+    })
+</script>
+
+<script><%--用于选择所有文件--%>
+    function selectAll(input) {
+        var result = false;
+        if(input.checked==true)
+            result=true;
+        $("input[name='check']").each(function () {
+            this.checked=result;
+        })
+        $("input[name='check2']").each(function () {
+            this.checked=result;
+        })
+    }
+</script>
 <%--王浩宇添加--%>
 <script src="/EasyCloudStorage/layui/lay/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->

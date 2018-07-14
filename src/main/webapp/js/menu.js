@@ -2,8 +2,10 @@ var clientMenu = document.getElementById('clientMenu');
 var dirClass=document.getElementsByClassName("dirClass");
 var normalFileClass=document.getElementsByClassName("normalFileClass");
 var fileMoveClickedId;
-var nodeCollection = [];
+var fileCollection = [];
+var dirCollection = [];
 
+//右键菜单事件
 function menuEvent(event){
     if(event.clientX + 120 > screen.availWidth){
         clientMenu.style.left = event.clientX - 120 + 'px';
@@ -22,10 +24,6 @@ function menuEvent(event){
     clientMenu.objName=this.children[2].innerText;
     clientMenu.objClass=this.className;
     this.children[0].children[0].checked= true
-    $("input[name = 'check']").each(function (i) {
-        if(this.checked==true)
-            nodeCollection[i] = this.parentElement.parentElement;
-    });
 
     return false;
 }
@@ -38,6 +36,7 @@ function defaultMenu(){
     return false;
 }
 
+//重命名菜单
 function openRenameFileMenu()
 {
     var result=/dirId=([0-9]+)/.exec(window.location.href);
@@ -64,6 +63,8 @@ function openRenameFileMenu()
 
     });
 }
+
+//新建文件夹菜单
 function openNewDirectoryMenu()
 {
     var result=/dirId=([0-9]+)/.exec(window.location.href);
@@ -88,6 +89,7 @@ function openNewDirectoryMenu()
     });
 }
 
+//删除文件菜单
 function openDeleteFileMenu()
 {
     var result=/dirId=([0-9]+)/.exec(window.location.href);
@@ -100,33 +102,42 @@ function openDeleteFileMenu()
         layer.confirm('确定删除选中文件？',{
         btn:['确定','取消']
     },function () {
-        for(var i=0;i<nodeCollection.length;i++)
-        {
-            if(nodeCollection[i].className=="normalFileClass")
+            $("input[name = 'check']").each(function (i) {
+                if(this.checked==true)
+                    fileCollection[i] = this.parentElement.parentElement;
+            });
+            $("input[name = 'check2']").each(function (i) {
+                if(this.checked==true)
+                    dirCollection[i] = this.parentElement.parentElement;
+            });
+            for(var i=0;i<dirCollection.length;i++)
+            {
                 $.ajax({
                     type: "get",
                     async: true,
-                    url: encodeURI(encodeURI("deleteFilePage?fileId="+nodeCollection[i].id+"&dirId="+dirId)),
-                    success:function () {
-                        window.location.reload(true)
-                    }
-                })//window.location.href=encodeURI(encodeURI("deleteFilePage?fileId="+nodeCollection[i].id+"&dirId="+dirId));
-            else if(nodeCollection[i].className=="dirClass")
-                $.ajax({
-                    type: "get",
-                    async: true,
-                    url: encodeURI(encodeURI("deleteDirectoryPage?fileId="+nodeCollection[i].id+"&dirId="+dirId)),
+                    url: encodeURI(encodeURI("deleteDirectoryPage?fileId="+dirCollection[i].id+"&dirId="+dirId)),
                     success:function () {
                         window.location.reload(true)
                     }
                 })//window.location.href=encodeURI(encodeURI("deleteDirectoryPage?fileId="+nodeCollection[i].id+"&dirId="+dirId));
+            }
+        for(var i=0;i<fileCollection.length;i++)
+        {
+            $.ajax({
+                type: "get",
+                async: true,
+                url: encodeURI(encodeURI("deleteFilePage?fileId="+fileCollection[i].id+"&dirId="+dirId)),
+                success:function () {
+                    window.location.reload(true)
+                }
+            })//window.location.href=encodeURI(encodeURI("deleteFilePage?fileId="+nodeCollection[i].id+"&dirId="+dirId));
         }
         layer.msg("删除成功",{time:5000});
-        //window.location.reload(true)
     });
     });
 }
 
+//移动文件菜单
 function openMoveFileMenu()
 {
     var result=/dirId=([0-9]+)/.exec(window.location.href);
@@ -151,22 +162,33 @@ function openMoveFileMenu()
                     content:div.outerHTML,
                     yes:function (index, layero) {
                         layer.close(index)
-                        for(var i=0;i<nodeCollection.length;i++)
+                        $("input[name = 'check']").each(function (i) {
+                            if(this.checked==true)
+                                fileCollection[i] = this.parentElement.parentElement;
+                        });
+                        $("input[name = 'check2']").each(function (i) {
+                            if(this.checked==true)
+                                dirCollection[i] = this.parentElement.parentElement;
+                        });
+                        for(var i=0;i<fileCollection.length;i++)
                         {
-                            if(clientMenu.objClass=="normalFileClass")
+                            if(fileCollection[i]!= undefined)
                                 $.ajax({
                                     type: "get",
                                     async: true,
-                                    url: encodeURI(encodeURI("moveFilePage?fileId="+nodeCollection[i].id+"&moveToId="+fileMoveClickedId+"&dirId="+dirId)),
+                                    url: encodeURI(encodeURI("moveFilePage?fileId="+fileCollection[i].id+"&moveToId="+fileMoveClickedId+"&dirId="+dirId)),
                                     success:function () {
                                         window.location.reload(true)
                                     }
                                 })//window.location.href=encodeURI(encodeURI("moveFilePage?fileId="+clientMenu.id+"&moveToId="+fileMoveClickedId+"&dirId="+dirId));
-                            else if(clientMenu.objClass=="dirClass")
+                        }
+                        for(var i=0;i<dirCollection.length;i++)
+                        {
+                            if(dirCollection[i]!= undefined)
                                 $.ajax({
                                     type: "get",
                                     async: true,
-                                    url: encodeURI(encodeURI("moveDirectoryPage?fileId="+nodeCollection[i].id+"&moveToId="+fileMoveClickedId+"&dirId="+dirId)),
+                                    url: encodeURI(encodeURI("moveDirectoryPage?fileId="+dirCollection[i].id+"&moveToId="+fileMoveClickedId+"&dirId="+dirId)),
                                     success:function () {
                                         window.location.reload(true)
                                     }
@@ -262,5 +284,5 @@ function mouseOut(file)
         else
             allFileMoveClasses[i].style.backgroundColor=""
 }
-
+function test(){alert("test")}
 init();
