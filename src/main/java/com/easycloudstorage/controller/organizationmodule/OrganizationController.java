@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.easycloudstorage.service.usermodule.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
@@ -233,6 +234,25 @@ public class OrganizationController {
         ModelAndView mv = new ModelAndView("home/organizationPage");
 
         return mv;
+    }
+    @RequestMapping("modifyOrg")
+    public ModelAndView modifyPage(HttpSession session){
+        int orgId=(Integer) session.getAttribute("orgId");
+        Organization org=organizationService.getByOrgId(orgId);
+        ModelAndView mv = new ModelAndView("organization/orgInfo/orgInfo");
+        mv.addObject("organization",org);
+        return mv;
+    }
+
+    @RequestMapping("submitForm")
+    public ModelAndView modifyState(HttpServletRequest request){
+        int orgId=(Integer) request.getAttribute("orgId");//获取客户端传来的组织id
+        Organization org=organizationService.getByOrgId(orgId);
+        String name=(String) request.getAttribute("newName");
+        String description=(String) request.getAttribute("description");
+        organizationService.changeName(orgId,name);
+        organizationService.changeDescription(orgId,description);
+        return null;
     }
 
 

@@ -119,4 +119,10 @@ public class OrganizationService {
         return organizationMapper.getOwnerId(orgId);
     }
 
+    public void changeName(int orgId,String newName){
+        organizationMapper.changeName(orgId,newName);
+    }
+    public void changeDescription(int orgId,String newDes){
+        organizationMapper.changeName(orgId,newDes);
+    }
 }

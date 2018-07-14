@@ -45,4 +45,9 @@ public interface OrganizationMapper {
 
     /*得到组织拥有者id*/
     String getOwnerId(Integer orgId);
+
+//    改变组织信息
+    void changeName(int orgId,String newName);
+    void changeDescription(int orgId,String newDescription);
+
 }
