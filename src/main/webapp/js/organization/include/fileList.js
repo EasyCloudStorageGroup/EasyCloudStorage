@@ -1,6 +1,6 @@
 /*按钮组显示、隐藏的操作*/
 function butGroupsShowOrHide() {
-    var selectedNum = $(".file-selected").size();
+    var selectedNum = $(".file-selected").length;
     if(selectedNum == 0)
         $(".layui-btn-container .layui-btn-group").hide();
     else
@@ -15,7 +15,7 @@ function fileDownloadable(authority) {
         return false;
 }
 function downloadButClickable() {
-    var selectedDirNum = $(".file-selected .dir-block").size();
+    var selectedDirNum = $(".file-selected .dir-block").length;
 
     var isFileUnDownloadable = false;
     $(".file-selected .nor-file-block").each(function () {
@@ -73,7 +73,7 @@ function deleteButClickable() {
 
 /*决定重命名按钮是否禁用*/
 function renameButClickable() {
-    var selectedNum = $(".file-selected").size();
+    var selectedNum = $(".file-selected").length;
 
     var authority = $(".file-selected .nor-file-block, .file-selected .dir-block").attr("authority");
 

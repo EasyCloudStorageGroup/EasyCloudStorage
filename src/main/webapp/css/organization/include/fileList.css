@@ -80,3 +80,19 @@
 .fileListBoard-header .layui-btn-container .layui-btn-primary {
     color: #574ab8;
 }
+
+#file-show-modal .modal-dialog {
+    width: 1000px;
+}
+
+#file-show-modal .modal-body {
+    height: 500px;
+    text-align: center;
+}
+
+#file-show-modal .file-show-img {
+    max-width: 968px;
+    max-height: 470px;
+    display: inline-block;
+    vertical-align: middle;
+}

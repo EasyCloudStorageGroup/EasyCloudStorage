@@ -154,7 +154,7 @@
     </div>
     <div class="bottom"><button class="quit layui-btn">收起</button></div>
 </div>
-<script type="text/javascript" src="/EasyCloudStorage/jquery/changeSkin/jquery.js"></script>
+
 <script type="text/javascript">
     var i = 0;
     $("#changeSkin").click(function(){
