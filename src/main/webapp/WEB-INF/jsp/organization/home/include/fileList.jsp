@@ -55,19 +55,38 @@
         $(".nor-file-block").on("dblclick", function () {
             var fileType = $(this).attr("fileType");
             if(fileType == "image/jpeg" || fileType == "image/png")  {
-                var showImg = $("<img class='file-show-img' src='/Data"+$(this).attr("realPath").substr(23)+"'>");
-                $("#file-show-modal .modal-body").prepend(showImg);
+                var imgDiv = $("<div style='height:500px; text-align:center'></div>");
+                var showImg = $("<img class='file-show-img' " +
+                    "style='max-width: 968px;max-height: 470px;display: inline-block;vertical-align: middle;'" +
+                    "src='/Data"+$(this).attr("realPath").substr(23)+"' >");
+                $("#file-show-modal .modal-body").prepend(imgDiv);
+                imgDiv.prepend(showImg);
                 $("#file-show-modal").modal("show");
             }
             else if(fileType == "audio/mp3") {
+                var audioDiv = $("<div style='text-align:center'></div>");
                 var showAudio = $("<audio loop='loop' autoplay='autoplay' style='width: 500px; opacity: 0.95;' controls='controls' src='/Data"+$(this).attr("realPath").substr(23)+"'>");
-                $("#file-show-modal .modal-body").height("100px");
-                $("#file-show-modal .modal-body").prepend(showAudio);
+                audioDiv.prepend(showAudio)
+                $("#file-show-modal .modal-body").prepend(audioDiv);
                 $("#file-show-modal").modal("show");
             }
             else if(fileType == "video/mp4") {
+                var videoDiv = $("<div style='text-align:center'></div>");
                 var showVideo = $("<video autoplay='autoplay' width='800px' height='400px' controls='controls' src='/Data"+$(this).attr("realPath").substr(23)+"'>");
-                $("#file-show-modal .modal-body").prepend(showVideo);
+                videoDiv.prepend(showVideo)
+                $("#file-show-modal .modal-body").prepend(videoDiv);
+                $("#file-show-modal").modal("show");
+            }
+            else if(fileType == "text/plain") {
+                var txtPre = $("<pre></pre>")
+                $.ajax({
+                    type: "POST",
+                    url: "/Data"+$(this).attr("realPath").substr(23),
+                    success: function(msg){
+                        txtPre.html(msg);
+                    }
+                });
+                $("#file-show-modal .modal-body").prepend(txtPre);
                 $("#file-show-modal").modal("show");
             }
         });
@@ -75,7 +94,6 @@
         /*模态框关闭事件*/
         $('#file-show-modal').on('hide.bs.modal', function () {
             $("#file-show-modal .modal-body").empty();
-            $("#file-show-modal .modal-body").height("500px");
         });
 
         /*file悬浮事件*/

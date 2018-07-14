@@ -1,13 +1,11 @@
 package com.easycloudstorage.controller.organizationmodule;
 
 import com.easycloudstorage.pojo.Directory;
-
 import com.easycloudstorage.pojo.Group;
 import com.easycloudstorage.pojo.Organization;
 import com.easycloudstorage.pojo.User;
 import com.easycloudstorage.service.filemodule.FileService;
 import com.easycloudstorage.service.organizationmodule.OrganizationService;
-
 import com.easycloudstorage.util.CreateDirForOrg;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.easycloudstorage.service.usermodule.UserService;
 
 import javax.servlet.http.HttpSession;
-
 import java.util.ArrayList;
-
 import java.util.Date;
-
 import java.util.List;
 
 @Controller
@@ -117,7 +112,7 @@ public class OrganizationController {
     }
 
     @RequestMapping(value = "/toCreatePage", method = RequestMethod.GET)
-    public String toCreatePage(){
+    public String toCreatePage() {
         return "organization/create/createPage";
     }
 
