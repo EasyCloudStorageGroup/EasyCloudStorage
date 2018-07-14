@@ -85,10 +85,6 @@
                             </a>
                                 <p align="center">${Organization.name}</p>
                         </div>
-<<<<<<< HEAD:src/main/webapp/WEB-INF/jsp/home/organizationPage.jsp
-=======
-
->>>>>>> 组织修改页面:src/main/webapp/WEB-INF/jsp/home/orgnizationPage.jsp
                     </c:forEach>
 
         </c:otherwise>

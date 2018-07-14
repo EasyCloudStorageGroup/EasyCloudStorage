@@ -114,7 +114,6 @@ public class OrganizationService {
 
     public void removeGpMember(String accountId,int groupId){organizationMapper.removeGpMember(accountId,groupId);}
 
-
     public String getOwnerId(Integer orgId) {
         return organizationMapper.getOwnerId(orgId);
     }
@@ -122,7 +121,13 @@ public class OrganizationService {
     public void changeName(int orgId,String newName){
         organizationMapper.changeName(orgId,newName);
     }
+
     public void changeDescription(int orgId,String newDes){
         organizationMapper.changeName(orgId,newDes);
     }
+
+    public List<Group> getGroupByOrgId(int orgId){
+        return organizationMapper.getGroupByOrgId(orgId);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.easycloudstorage.controller.organizationmodule;
 
 import com.easycloudstorage.pojo.Directory;
+
 import com.easycloudstorage.pojo.Group;
 import com.easycloudstorage.pojo.Organization;
 import com.easycloudstorage.pojo.User;
@@ -241,6 +242,8 @@ public class OrganizationController {
         Organization org=organizationService.getByOrgId(orgId);
         ModelAndView mv = new ModelAndView("organization/orgInfo/orgInfo");
         mv.addObject("organization",org);
+        List<Group> groups=organizationService.getGroupByOrgId(orgId);
+        mv.addObject("groupList",groups);
         return mv;
     }
 

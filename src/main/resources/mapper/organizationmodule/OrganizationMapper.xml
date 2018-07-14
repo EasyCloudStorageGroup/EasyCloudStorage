@@ -135,4 +135,9 @@
         where orgId=#{0}
     </update>
 
+    <select id="getGroupByOrgId" resultType="Group">
+        select * from _group
+        where orgId=#{0}
+    </select>
+
 </mapper>

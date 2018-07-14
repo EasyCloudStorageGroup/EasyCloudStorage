@@ -49,5 +49,7 @@ public interface OrganizationMapper {
 //    改变组织信息
     void changeName(int orgId,String newName);
     void changeDescription(int orgId,String newDescription);
+//获得组织的分组信息
+    List<Group> getGroupByOrgId(int orgId);
 
 }
