@@ -50,11 +50,6 @@
     .groups-div {
         margin-top: 10px;
     }
-    .add-button{
-        position: fixed;
-        bottom:0px;
-
-    }
 </style>
 
 <script>
@@ -88,8 +83,7 @@
                </a>
             </span>
         </div>
-
-        <div class="org-members">
+       <div class="org-members">
             <c:forEach items="${organization.unGroupedMembers}" var="member">
                 <div class="un-grouped-member-div">
                     <c:if test="${member.defaultAvatar==1}">
@@ -104,6 +98,16 @@
                         <img class="avatar" src="/EasyCloudStorage/img/avatar/${member.accountId}.jpg">
                     </c:if>
                         ${member.userName}
+                        <div class="btn-group">
+                             <button type="button" class="btn btn-default dropdown-toggle"
+                                data-toggle="dropdown">
+                            删除 <span class="caret"></span>
+                              </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/EasyCloudStorage/removeOrgMember?memberId=${member.accountId}">踢出组织</a></li>
+                                <%--<li><a href="/EasyCloudStorage/removeGroupMember?memberId=${member.accountId}$groupId=${}">另一个功能</a></li>--%>
+                            </ul>
+                          </div>
                     <c:if test="${organization.ownerId == member.accountId}">
                         (创建者)
                     </c:if>
@@ -118,9 +122,12 @@
                 <c:forEach items="${organization.groups}" var="group">
                     <div class="layui-colla-item">
                         <h2 class="layui-colla-title">
-                            <a href="/EasyCloudStorage/toAddMember">
+                            <a href="/EasyCloudStorage/deleteGroup?groupId=${group.groupId}">
                                 <img src="/EasyCloudStorage/img/organization/minus.png" style="width: 40px;height: 40px">
-                            </a>${group.name}
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg" style="position: fixed;left:85px;bottom:10px;width:328px;">新建分组</button>
+
+                            </a>
+                                ${group.name}
                             <a href="/EasyCloudStorage/toAddMember">
                                 <img src="/EasyCloudStorage/img/organization/add.png" style="position:absolute;left: 280px;width: 50px;height: 40px">
                             </a>
@@ -140,6 +147,16 @@
                                         <img class="avatar" src="/EasyCloudStorage/img/avatar/${member.accountId}.jpg">
                                     </c:if>
                                         ${member.userName}
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                data-toggle="dropdown">
+                                            默认 <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="/EasyCloudStorage/removeOrgMember?memberId=${member.accountId}">移出组织</a></li>
+                                            <li><a href="/EasyCloudStorage/removeGroupMember?memberId=${member.accountId}&groupId=${group.groupId}">移出分组</a></li>
+                                        </ul>
+                                    </div>
                                     <c:if test="${organization.ownerId == member.accountId}">
                                         (创建者)
                                     </c:if>
@@ -151,14 +168,46 @@
                         </div>
                     </div>
                 </c:forEach>
-                <div class="add-button">
-                    <a href="/EasyCloudStorage/toAddMember">
-                        <button 	class="layui-btn layui-btn-normal" style="width: 328px;opacity: 0.8;">
-                            新建分组
-                        </button>
-                    </a>
-                </div>
              </div>
+        </div>
+    </div>
+</div>
+
+<!-- Large modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg"style="position: fixed;left:85px;bottom:10px;width:328px;">新建分组</button>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form class="layui-form" action="addGroup" method="post">
+                <div class="layui-form-item">
+
+                    <div class="layui-input-block">
+                        <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入组名" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+
+                    <div class="layui-input-block">
+                        <input type="text" name="description" lay-verify="required" placeholder="请输入描述" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <select name="city" lay-verify="">
+                            <option value="">选择用户</option>
+                            <c:forEach items="${organization.members}" var="member">
+                                <option value="${member.accountId}">${member.userName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

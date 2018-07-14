@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import com.easycloudstorage.service.usermodule.UserService;
 
 import javax.servlet.http.HttpSession;
 
@@ -31,6 +32,8 @@ public class OrganizationController {
     private OrganizationService organizationService;
     @Autowired
     private FileService fileService;
+    @Autowired
+    private UserService userService;
 
     //点击某一个组织之后，进入这个controller
     @RequestMapping("enterOrganization")
@@ -107,7 +110,6 @@ public class OrganizationController {
         mv.addObject("organization", organization);
 
         toTheDir(dirId, session);
-
         List<Directory> dirNav = getDirNav(session);
         session.setAttribute("dirNav", dirNav);
 
@@ -243,16 +245,17 @@ public class OrganizationController {
     //接口方法,主要是增加删除等功能，映射还未添加
 
     //将成员踢出组织,参数含义为第一个为只有组织拥有者能踢人，第二个是被踢的人的id，第三个用来获取当前组织的id
+    @RequestMapping("removeOrgMember")
     public String removeOrgMember(String memberId,HttpSession session) {
         int orgId=(int)session.getAttribute("orgId");
        User user=(User)session.getAttribute("user");
        String userId=user.getAccountId();
        if(userId!=null&&!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){//判断该用户是否为组织的拥有者，如果不是拥有者，直接退出此函数
-           return "organization/home/orgHomePage" ;
+           return "redirect:orgHomePage" ;
        }
        else {
            organizationService.removeMember(memberId,orgId);
-           return "organization/home/orgHomePage" ;
+           return "redirect:orgHomePage" ;
        }
     }
 
@@ -262,11 +265,11 @@ public class OrganizationController {
         String userId=user.getAccountId();
         int orgId=(int)session.getAttribute("orgId");
         if(!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){
-            return "organization/home/orgHomePage";
+            return "redirect:orgHomePage";
         }
         else {
             organizationService.deleteOrg(orgId);
-            return "home/organizationPage";
+            return "redirect:organizationPage";
         }
     }
 
@@ -278,17 +281,18 @@ public class OrganizationController {
         String userId=user.getAccountId();
         int orgId=(int)session.getAttribute("orgId");
         if(!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){
-            return "organization/home/orgHomePage";
+            return "redirect:orgHomePage";
         }
         else {
             organizationService.distributeMember(memberId,groupId);
-            return  "organization/home/orgHomePage";
+            return  "redirect:orgHomePage";
         }
     }
 
+
     //新建分组，需要填写组名，描述,orgId会自动获取，groupId会自动生成
     @RequestMapping(value = "/addGroup", method = RequestMethod.POST)
-    public ModelAndView addGroup(@RequestParam("name")String name, @RequestParam("description")String description,HttpSession session){
+    public String addGroup(@RequestParam("name")String name, @RequestParam("description")String description,HttpSession session){
         ModelAndView mv = new ModelAndView();
         List<Group> groupList = organizationService.groupList();
 
@@ -327,34 +331,36 @@ public class OrganizationController {
             }
             //mv.setViewName("checkout/register");
         }
-        return mv;
+        return "redirect:orgHomePage" ;
     }
 
     //删除分组
+    @RequestMapping("deleteGroup")
     public String deleteGroup(int groupId,HttpSession session){
     User user=(User)session.getAttribute("user");
     String userId=user.getAccountId();
     int orgId=(int)session.getAttribute("orgId");
     if(!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){
-        return "organization/home/orgHomePage";
+        return "redirect:orgHomePage";
     }
     else {
         organizationService.deleteGroup(groupId);
-        return "organization/home/orgHomePage";
+        return "redirect:orgHomePage";
     }
 }
 
     //删除分组成员
+    @RequestMapping("removeGroupMember")
     public String removeGroupMember(String memberId,int groupId,HttpSession session){
         User user=(User)session.getAttribute("user");
         String userId=user.getAccountId();
         int orgId=(int)session.getAttribute("orgId");
         if(!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){
-            return "organization/home/orgHomePage";
+            return "redirect:orgHomePage";
         }
         else {
             organizationService.removeGpMember(memberId,groupId);
-            return "organization/home/orgHomePage";
+            return "redirect:orgHomePage";
         }
     }
 }
