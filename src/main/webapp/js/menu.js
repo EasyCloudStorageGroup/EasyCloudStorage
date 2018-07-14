@@ -22,6 +22,10 @@ function menuEvent(event){
     clientMenu.objName=this.children[2].innerText;
     clientMenu.objClass=this.className;
     this.children[0].children[0].checked= true
+    $("input[name = 'check']").each(function (i) {
+        if(this.checked==true)
+            nodeCollection[i] = this.parentElement.parentElement;
+    });
 
     return false;
 }
@@ -90,10 +94,6 @@ function openDeleteFileMenu()
     var dirId;
     if(result!=null&&result.length>1) dirId=result[1];
     else dirId=0;
-    $("input[name = 'check']").each(function (i) {
-        if(this.checked==true)
-            nodeCollection[i] = this.parentElement.parentElement;
-    });
     layui.use('layer',function () {
         var $ = layui.jquery, layer = layui.layer;
 
@@ -151,10 +151,27 @@ function openMoveFileMenu()
                     content:div.outerHTML,
                     yes:function (index, layero) {
                         layer.close(index)
-                        if(clientMenu.objClass=="normalFileClass")
-                            window.location.href=encodeURI(encodeURI("moveFilePage?fileId="+clientMenu.id+"&moveToId="+fileMoveClickedId+"&dirId="+dirId));
-                        else if(clientMenu.objClass=="dirClass")
-                            window.location.href=encodeURI(encodeURI("moveDirectoryPage?fileId="+clientMenu.id+"&moveToId="+fileMoveClickedId+"&dirId="+dirId));
+                        for(var i=0;i<nodeCollection.length;i++)
+                        {
+                            if(clientMenu.objClass=="normalFileClass")
+                                $.ajax({
+                                    type: "get",
+                                    async: true,
+                                    url: encodeURI(encodeURI("moveFilePage?fileId="+nodeCollection[i].id+"&moveToId="+fileMoveClickedId+"&dirId="+dirId)),
+                                    success:function () {
+                                        window.location.reload(true)
+                                    }
+                                })//window.location.href=encodeURI(encodeURI("moveFilePage?fileId="+clientMenu.id+"&moveToId="+fileMoveClickedId+"&dirId="+dirId));
+                            else if(clientMenu.objClass=="dirClass")
+                                $.ajax({
+                                    type: "get",
+                                    async: true,
+                                    url: encodeURI(encodeURI("moveDirectoryPage?fileId="+nodeCollection[i].id+"&moveToId="+fileMoveClickedId+"&dirId="+dirId)),
+                                    success:function () {
+                                        window.location.reload(true)
+                                    }
+                                })//window.location.href=encodeURI(encodeURI("moveDirectoryPage?fileId="+clientMenu.id+"&moveToId="+fileMoveClickedId+"&dirId="+dirId));
+                        }
                     },
                     cancel:function (index, layero) {
                         layer.close(index)

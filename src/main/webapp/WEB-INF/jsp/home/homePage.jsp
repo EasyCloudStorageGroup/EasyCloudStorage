@@ -195,7 +195,7 @@
         <tbody>
         <c:forEach items="${currentDirectories}" var="Directory">
             <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id="${Directory.dirId}" sortType="Directory">
-                <td><input type="checkbox" value="${Directory.dirId}" name="check2"></td>   <%--多选框 --%>
+                <td><input type="checkbox" value="${Directory.dirId}" style="border-radius: 50%;border:10px solid" name="check2"></td>   <%--多选框 --%>
                 <td><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>   <%-- 文件夹图片--%>
                 <td><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td> <%-- 文件名，以及跳转的点击接口--%>
                 <td>-</td>           <%-- 文件夹类型，由于不存在所以写为"-"--%>

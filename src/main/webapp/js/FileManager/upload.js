@@ -27,6 +27,7 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
                         layer.close(index)
                         layer.close(i);
                         ifOn=false
+                        window.location.reload(true)
                     })
                     return false
                 }
