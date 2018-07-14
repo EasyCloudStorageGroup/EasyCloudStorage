@@ -382,7 +382,7 @@ public class FileController {
 
         List<NormalFile> allNormalFiles = showService.normalFileList();
         List<NormalFile> normalFilesOfDir = showService.showNormalFile(parentDirId, allNormalFiles);
-        for(NormalFile normalFile : allNormalFiles)
+        for(NormalFile normalFile : normalFilesOfDir)
             if(normalFile.getName().equals(fileName))
                 return true;
 
