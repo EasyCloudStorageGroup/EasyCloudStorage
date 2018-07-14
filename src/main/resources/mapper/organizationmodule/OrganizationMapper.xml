@@ -123,4 +123,30 @@
     </delete>
 
 
+    <!--权限管理-->
+    <select id="norAuthority" resultType="NorFileAuthority">
+        SELECT * FROM norfileauthority;
+    </select>
+
+    <select id="dirAuthority" resultType="DirAuthority">
+        SELECT * FROM dirauthority;
+    </select>
+
+    <update id="updateNorAutuority" parameterType="NorFileAuthority">
+        UPDATE norfileauthority SET accountId=#{accountId},fileId=#{fileId},authority=#{authority}
+        WHERE accountId=#{accountId} AND fileId=#{fileId} AND orgId=#{orgId};
+    </update>
+
+    <update id="updateDirAutuority" parameterType="DirAuthority">
+        UPDATE dirauthority SET accountId=#{accountId},dirId=#{dirId},authority=#{authority}
+        WHERE accountId=#{accountId} AND dirId=#{dirId} AND orgId=#{orgId};
+    </update>
+
+    <insert id="insertNorAuthority" parameterType="NorFileAuthority">
+        insert INTO norfileauthority(accountId,fileId,orgId,authority) VALUES (#{accountId},#{fileId},#{orgId},#{authority});
+    </insert>
+
+    <insert id="insertDirAuthority" parameterType="DirAuthority">
+        insert INTO dirauthority(accountId,dirId,orgId,authority) VALUES (#{accountId},#{dirId},#{orgId},#{authority});
+    </insert>
 </mapper>

@@ -22,3 +22,6 @@
     <%@ include file="include/orgMembers.jsp"%>
     <%@ include file="include/fileList.jsp"%>
 </div>
+
+</body>
+</html>

@@ -43,4 +43,6 @@ public interface OrganizationMapper {
 
     /*得到组织拥有者id*/
     String getOwnerId(Integer orgId);
+
+
 }

@@ -175,9 +175,11 @@
                     </button>
                 </div>
 
-                <button class="layui-btn layui-btn-primary layui-btn-sm" id="authority-set-but">
-                    权限设置
-                </button>
+                <c:if test="${organization.ownerId == user.accountId}">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" id="authority-set-but" data-toggle="modal" data-target="#authority-set-modal">
+                        权限设置
+                    </button>
+                </c:if>
             </div>
         </div>
 
@@ -219,20 +221,6 @@
     </div>
 </div>
 
+<%@ include file="filePreShow.jsp"%>
 
-<%--文件预览模态框--%>
-<div class="modal fade" id="file-show-modal" tabindex="-1" role="dialog" aria-labelledby="file-show-modal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="file-show-modal-title">文件预览</h4>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            </div>
-        </div>
-    </div>
-</div>
+<%@ include file="authority.jsp"%>
