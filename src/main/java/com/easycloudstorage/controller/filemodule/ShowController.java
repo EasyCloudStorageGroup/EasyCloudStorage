@@ -42,8 +42,8 @@ public class ShowController {
         filePath=filePath.substring(23);
         }
         else if(file!=null&&file.getType().equals("text/plain")){
-            filePath=file.getRealPath();
-        try {
+
+        try {filePath=file.getRealPath();
             fileContent=showService.readFile(filePath);
         } catch (Exception e) {
             e.printStackTrace();
