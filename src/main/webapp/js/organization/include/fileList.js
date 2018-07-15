@@ -2,9 +2,9 @@
 function butGroupsShowOrHide() {
     var selectedNum = $(".file-selected").length;
     if(selectedNum == 0)
-        $(".layui-btn-container .layui-btn-group").hide();
+        $(".layui-btn-container .layui-btn-group, #authority-set-but").hide();
     else
-        $(".layui-btn-container .layui-btn-group").show();
+        $(".layui-btn-container .layui-btn-group, #authority-set-but").show();
 }
 
 /*决定下载按钮是否禁用*/
@@ -145,4 +145,17 @@ function renameFile()
             layer.msg("重命名成功")
         });
     });
+}
+
+
+/*权限管理点击事件*/
+function authoritySetButClick() {
+    $(".selected-files-name-div").empty();
+    var selectedFiles = $("input[name = 'check']:checked, input[name = 'check2']:checked");
+    selectedFiles.each(function () {
+        var nameBadge = $("<span class='layui-badge layui-bg-gray' style='margin-right: 5px'>"+$(this).attr("fileName")+"</span>")
+        $(".selected-files-name-div").append(nameBadge);
+    });
+
+    $("#authority-set-modal").modal("show");
 }

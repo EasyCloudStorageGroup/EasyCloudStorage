@@ -91,7 +91,7 @@
                         <tr>
                             <td width="20%">文件名：</td>
                             <td width="80%" style="overflow: hidden">
-                                <div style="overflow-x: hidden;overflow-y: auto">文件名字</div>
+                                <div style="overflow-x: hidden;overflow-y: auto" class="selected-files-name-div"></div>
                             </td>
                         </tr>
                         <tr height="5">

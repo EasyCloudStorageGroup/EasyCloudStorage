@@ -135,7 +135,7 @@
             }
         }
 
-        $(".layui-btn-container .layui-btn-group").hide();
+        $(".layui-btn-container .layui-btn-group, #authority-set-but").hide();
 
         //使用layui  element 模块
         $(function () {
@@ -176,7 +176,7 @@
                 </div>
 
                 <c:if test="${organization.ownerId == user.accountId}">
-                    <button class="layui-btn layui-btn-primary layui-btn-sm" id="authority-set-but" data-toggle="modal" data-target="#authority-set-modal">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" id="authority-set-but" onclick="authoritySetButClick()">
                         权限设置
                     </button>
                 </c:if>

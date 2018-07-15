@@ -10,7 +10,7 @@ function inputHandler(obj) {
 //记录选中的文件id，用户id和权限
 function recordHandler() {
     //获得被赋予权限的用户
-    var userArray=new Array();
+    var userArray=[];
     $(".ungroup").each(function () {
         if($(this).is(':checked') == true) {
             userArray.push($(this).parent().attr("accountId"));
@@ -24,34 +24,47 @@ function recordHandler() {
     //获取权限
     var selectAuthority;
     if(($("#visible").is(':checked')==true)&&($(".fileOperate").is(':checked') ==false)){
-        selectAuthority=0;
+        selectAuthority="0";
     }
     else if(($("#visible").is(':checked')==true)&&(($("#download").is(':checked')==true)&&($("#edit").is(':checked')==false))){
-        selectAuthority=1;
+        selectAuthority="1";
     }
     else if(($("#visible").is(':checked')==true)&&(($("#edit").is(':checked')==true)&&
             ($("#download").is(':checked')==false)&&($("#create").is(':checked')==false))){
-        selectAuthority=2;
+        selectAuthority="2";
     }
     else if(($("#visible").is(':checked')==true)&&(($("#create").is(':checked')==true)&&($("#edit").is(':checked')==false))){
-        selectAuthority=3;
+        selectAuthority="3";
     }
     else if(($("#visible").is(':checked')==true)&&(($("#download").is(':checked')==true)&&($("#edit").is(':checked')==true))){
-        selectAuthority=4;
+        selectAuthority="4";
     }
     else {
-        selectAuthority=5;
+        selectAuthority="5";
     }
     userArray.push(selectAuthority);
+
+    //获得fileIds
+    var norFileIds = new Array();
+    var dirIds = new Array();
+    $("input[name = 'check']:checked").each(function () {
+        norFileIds.push($(this).val());
+    });
+    $("input[name = 'check2']:checked").each(function () {
+        dirIds.push($(this).val());
+    });
+
+    var data = [];
+    data.push(userArray, norFileIds, dirIds);
 
     $.ajax({
         type:'post',
         url:'/EasyCloudStorage/authorityManage',
         contentType:"application/json",
-        data:JSON.stringify(userArray),
+        data:JSON.stringify(data),
         traditional:true,
         success:function (data) {
-
+            window.location.reload(true);
         }
     })
 }
