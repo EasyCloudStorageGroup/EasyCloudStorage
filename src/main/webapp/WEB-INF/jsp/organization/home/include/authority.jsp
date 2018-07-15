@@ -73,7 +73,7 @@
             if ($(this).is(':checked') ==false) {
                 $("#allAutuority").prop("checked", false);
             }
-        })
+        });
     })
 </script>
 
@@ -123,36 +123,16 @@
                         <td valign="top">权限类型：</td>
                         <td>
                             <div style="height: 120px; overflow:auto; border:1px solid #e2e2e2">
-                                    <div style="float: left;width: 49%;height: 25px;line-height: 25px;">
-                                        &nbsp;
-                                        <input type="checkbox" name="none" id="none" style="vertical-align: middle;" checked="checked" class="total">
-                                        <label for="visible">没有任何权限</label>
-                                    </div>
-                                        <div style="float: left;width: 49%;height: 25px;line-height: 25px;">
-                                                                   &nbsp;
-                                            <input type="checkbox" name="visible" id="visible" style="vertical-align: middle;" class="total">
-                                            <label for="visible">可预览</label>
-                                        </div>
-                                        <div style="float: left;width: 49%;height: 25px;line-height: 25px;">
-                                                                   &nbsp;
-                                            <input type="checkbox" name="download" id="download" class="fileOperate total" style="vertical-align: middle;">
-                                            <label for="visible">可下载</label>
-                                        </div>
-                                        <div style="float: left;width: 49%;height: 25px;line-height: 25px;">
-                                                                   &nbsp;
-                                            <input type="checkbox" name="create" id="create" class="fileOperate total" style="vertical-align: middle;">
-                                            <label for="visible">可创建文件夹</label>
-                                        </div>
-                                        <div style="float: left;width: 49%;height: 25px;line-height: 25px;">
-                                                                   &nbsp;
-                                            <input type="checkbox" name="edit" id="edit" class="fileOperate total" style="vertical-align: middle;">
-                                            <label for="visible">可编辑</label>
-                                        </div>
-                                        <div style="float: left;width: 49%;height: 25px;line-height: 25px;">
-                                                                   &nbsp;
-                                            <input type="checkbox" name="allAutuority" id="allAutuority" class="total" style="vertical-align: middle">
-                                            <label for="visible">全部权限</label>
-                                        </div>
+                                <form class="layui-form">
+                                    <select id="authority" class="select" lay-verify="">
+                                        <option value="0">可预览</option>
+                                        <option value="1">可预览、下载</option>
+                                        <option value="2">可预览、编辑</option>
+                                        <option value="3">可预览、创建文件夹</option>
+                                        <option value="4">可预览、下载和编辑</option>
+                                        <option value="5">可预览、创建和编辑</option>
+                                    </select>
+                                </form>
                             </div>
                         </td>
                     </tr>

@@ -117,58 +117,59 @@
                 </div>
             </c:forEach>
 
+            <c:if test="${organization.groups != null}">
+                <div class="layui-collapse groups-div">
+                    <c:forEach items="${organization.groups}" var="group">
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title">
+                                <a href="/EasyCloudStorage/deleteGroup?groupId=${group.groupId}">
+                                    <img src="/EasyCloudStorage/img/organization/minus.png" style="width: 40px;height: 40px">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg" style="position: fixed;left:85px;bottom:10px;width:328px;">新建分组</button>
 
-            <div class="layui-collapse groups-div">
-                <c:forEach items="${organization.groups}" var="group">
-                    <div class="layui-colla-item">
-                        <h2 class="layui-colla-title">
-                            <a href="/EasyCloudStorage/deleteGroup?groupId=${group.groupId}">
-                                <img src="/EasyCloudStorage/img/organization/minus.png" style="width: 40px;height: 40px">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg" style="position: fixed;left:85px;bottom:10px;width:328px;">新建分组</button>
-
-                            </a>
-                                ${group.name}
-                            <a href="/EasyCloudStorage/toAddMember">
-                                <img src="/EasyCloudStorage/img/organization/add.png" style="position:absolute;left: 280px;width: 50px;height: 40px">
-                            </a>
-                        </h2>
-                        <div class="layui-colla-content layui-show">
-                            <c:forEach items="${group.members}" var="member">
-                                <div class="grouped-member-div">
-                                    <c:if test="${member.defaultAvatar==1}">
-                                        <c:if test="${member.sex=='male'}">
-                                            <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-male.png">
+                                </a>
+                                    ${group.name}
+                                <a href="/EasyCloudStorage/toAddMember">
+                                    <img src="/EasyCloudStorage/img/organization/add.png" style="position:absolute;left: 280px;width: 50px;height: 40px">
+                                </a>
+                            </h2>
+                            <div class="layui-colla-content layui-show">
+                                <c:forEach items="${group.members}" var="member">
+                                    <div class="grouped-member-div">
+                                        <c:if test="${member.defaultAvatar==1}">
+                                            <c:if test="${member.sex=='male'}">
+                                                <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-male.png">
+                                            </c:if>
+                                            <c:if test="${member.sex=='female'}">
+                                                <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-female.png">
+                                            </c:if>
                                         </c:if>
-                                        <c:if test="${member.sex=='female'}">
-                                            <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-female.png">
+                                        <c:if test="${member.defaultAvatar==0}">
+                                            <img class="avatar" src="/EasyCloudStorage/img/avatar/${member.accountId}.jpg">
                                         </c:if>
-                                    </c:if>
-                                    <c:if test="${member.defaultAvatar==0}">
-                                        <img class="avatar" src="/EasyCloudStorage/img/avatar/${member.accountId}.jpg">
-                                    </c:if>
                                         ${member.userName}
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default dropdown-toggle"
-                                                data-toggle="dropdown">
-                                            默认 <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="/EasyCloudStorage/removeOrgMember?memberId=${member.accountId}">移出组织</a></li>
-                                            <li><a href="/EasyCloudStorage/removeGroupMember?memberId=${member.accountId}&groupId=${group.groupId}">移出分组</a></li>
-                                        </ul>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle"
+                                                    data-toggle="dropdown">
+                                                默认 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="/EasyCloudStorage/removeOrgMember?memberId=${member.accountId}">移出组织</a></li>
+                                                <li><a href="/EasyCloudStorage/removeGroupMember?memberId=${member.accountId}&groupId=${group.groupId}">移出分组</a></li>
+                                            </ul>
+                                        </div>
+                                        <c:if test="${organization.ownerId == member.accountId}">
+                                            (创建者)
+                                        </c:if>
+                                        <c:if test="${member.accountId == user.accountId}">
+                                            (我)
+                                        </c:if>
                                     </div>
-                                    <c:if test="${organization.ownerId == member.accountId}">
-                                        (创建者)
-                                    </c:if>
-                                    <c:if test="${member.accountId == user.accountId}">
-                                        (我)
-                                    </c:if>
-                                </div>
-                            </c:forEach>
+                                </c:forEach>
+                            </div>
                         </div>
-                    </div>
-                </c:forEach>
-             </div>
+                    </c:forEach>
+                </div>
+            </c:if>
         </div>
     </div>
 </div>
@@ -181,13 +182,11 @@
         <div class="modal-content">
             <form class="layui-form" action="addGroup" method="post">
                 <div class="layui-form-item">
-
                     <div class="layui-input-block">
                         <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入组名" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-
                     <div class="layui-input-block">
                         <input type="text" name="description" lay-verify="required" placeholder="请输入描述" autocomplete="off" class="layui-input">
                     </div>

@@ -23,25 +23,9 @@ function recordHandler() {
     })
     //获取权限
     var selectAuthority;
-    if(($("#visible").is(':checked')==true)&&($(".fileOperate").is(':checked') ==false)){
-        selectAuthority="0";
-    }
-    else if(($("#visible").is(':checked')==true)&&(($("#download").is(':checked')==true)&&($("#edit").is(':checked')==false))){
-        selectAuthority="1";
-    }
-    else if(($("#visible").is(':checked')==true)&&(($("#edit").is(':checked')==true)&&
-            ($("#download").is(':checked')==false)&&($("#create").is(':checked')==false))){
-        selectAuthority="2";
-    }
-    else if(($("#visible").is(':checked')==true)&&(($("#create").is(':checked')==true)&&($("#edit").is(':checked')==false))){
-        selectAuthority="3";
-    }
-    else if(($("#visible").is(':checked')==true)&&(($("#download").is(':checked')==true)&&($("#edit").is(':checked')==true))){
-        selectAuthority="4";
-    }
-    else {
-        selectAuthority="5";
-    }
+    var mySelect=document.getElementById("authority");
+    var index=mySelect.selectedIndex;
+    selectAuthority=mySelect.options[index].value;
     userArray.push(selectAuthority);
 
     //获得fileIds
@@ -69,14 +53,6 @@ function recordHandler() {
     })
 }
 
-//取消小组成员时同时取消小组按钮的选中状态
-//obj_1：成员id  obj_2：组id
-function cancelGroup(obj_1,obj_2) {
-    if ($("#"+obj_1).is(':checked') == false) {
-        $("#"+obj_2).prop("checked", false);
-    }
-}
-
 function authorityHandler() {
     var inputText=document.getElementById("UserId");
     inputText.value="";
@@ -101,11 +77,10 @@ function storeName() {
 function clearStorage() {
     var inputText=document.getElementById("UserId");
     inputText.value="";
-    $(".fileOperate").prop("checked", false);
-    $("#visible").prop("checked", false);
-    $("#none").prop("checked", true);
-    $("#allAutuority").prop("checked", false);
+    var mySelect=document.getElementById("authority");
+    mySelect.options[0].selected=true;
 }
+
 //清空变量memberName的内容
 function clearMemberName() {
     memberName="";
@@ -115,4 +90,12 @@ function clearCheckbox() {
     $(".ungroup").prop("checked", false);
     $(".group").prop("checked", false);
     $(".userName").prop("checked", false);
+}
+
+//取消小组成员时同时取消小组按钮的选中状态
+//obj_1：成员id  obj_2：组id
+function cancelGroup(obj_1,obj_2) {
+    if ($("#"+obj_1).is(':checked') == false) {
+        $("#"+obj_2).prop("checked", false);
+    }
 }
