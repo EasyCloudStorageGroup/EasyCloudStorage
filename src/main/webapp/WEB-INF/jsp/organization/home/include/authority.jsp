@@ -151,66 +151,14 @@
 
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 620px">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="ModalLabel">选择角色</h4>
             </div>
             <div class="modal-body">
-                <div class="org-members">
-                    <c:forEach items="${organization.unGroupedMembers}" var="member">
-                        <div class="un-grouped-member-div" accountId="${member.accountId}">
-                            <input type="checkbox" class="ungroup" value="${member.userName} ">
-                            <c:if test="${member.defaultAvatar==1}">
-                                <c:if test="${member.sex=='male'}">
-                                    <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-male.png">
-                                </c:if>
-                                <c:if test="${member.sex=='female'}">
-                                    <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-female.png">
-                                </c:if>
-                            </c:if>
-                            <c:if test="${member.defaultAvatar==0}">
-                                <img class="avatar" src="/EasyCloudStorage/img/avatar/${member.accountId}.jpg">
-                            </c:if>
-                                ${member.userName}
-                            <c:if test="${organization.ownerId == member.accountId}">
-                                (创建者)
-                            </c:if>
-                        </div>
-                    </c:forEach>
-
-                    <div class="layui-collapse groups-div">
-                        <c:forEach items="${organization.groups}" var="group">
-                            <input type="checkbox" class="group" id="${group.groupId}" value="${group.name}" onclick="inputHandler(${group.groupId})">
-                            <div class="layui-colla-item">
-                                <h2 class="layui-colla-title">${group.name}</h2>
-                                <div class="layui-colla-content layui-show">
-                                    <c:forEach items="${group.members}" var="member">
-                                        <div class="grouped-member-div" accountId="${member.accountId}">
-                                            <input type="checkbox" class="${group.groupId} userName" id="${member.accountId}"
-                                                   value="${member.userName}" onclick="cancelGroup(${member.accountId},${group.groupId})">
-                                            <c:if test="${member.defaultAvatar==1}">
-                                                <c:if test="${member.sex=='male'}">
-                                                    <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-male.png">
-                                                </c:if>
-                                                <c:if test="${member.sex=='female'}">
-                                                    <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-female.png">
-                                                </c:if>
-                                            </c:if>
-                                            <c:if test="${member.defaultAvatar==0}">
-                                                <img class="avatar" src="/EasyCloudStorage/img/avatar/${member.accountId}.jpg">
-                                            </c:if>
-                                                ${member.userName}
-                                        </div>
-                                    </c:forEach>
-                                </div>
-                            </div>
-                        </c:forEach>
-                    </div>
-                </div>
-
-
+                <%@ include file="orgMemberSelectList.jsp"%>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
