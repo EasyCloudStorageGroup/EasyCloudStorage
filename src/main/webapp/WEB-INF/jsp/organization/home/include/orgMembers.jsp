@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8"
          isELIgnored="false"%>
 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <style>
     .orgMembersBoard > div {
         position: relative;
@@ -221,7 +223,30 @@
             $(".add-group-div").animate({opacity: 1}, "fast");
         }, function () {
             $(".add-group-div").animate({opacity: 0.5}, "fast")
+        });
+
+        /*添加组成员*/
+        $(".add-group-member-link").click(function () {
+            $("#add-group-member-modal .make-sure-but").attr("groupId", $(this).attr("groupId"));
+            $("#add-group-member-modal").modal("show");
+            $("#add-group-member-modal .make-sure-but").click(function () {
+                var userArray=[];
+                $(".ungroup").each(function () {
+                    if($(this).is(':checked') == true) {
+                        userArray.push($(this).parent().parent().attr("accountId"));
+                    }
+                })
+                $(".userName").each(function () {
+                    if($(this).is(':checked') == true) {
+                        userArray.push($(this).parent().parent().attr("accountId"));
+                    }
+                });
+
+                window.location.href="addGroupMember?memberId="+userArray[0]+"&groupId="+$(this).attr("groupId");
+            })
         })
+        
+        
     });
 </script>
 
@@ -270,15 +295,13 @@
                     </c:if>
                 </div>
             </c:forEach>
-
-            <c:if test="${organization.groups != null}">
                 <div class="layui-collapse groups-div">
                     <c:forEach items="${organization.groups}" var="group">
                         <div class="layui-colla-item">
                             <h2 class="layui-colla-title">
-                                ${group.name}
+                                    ${group.name}
                                 <c:if test="${user.accountId == organization.ownerId}">
-                                    <a href="/EasyCloudStorage/toAddMember" class="add-group-member-link" title="添加组成员">
+                                    <a class="add-group-member-link" title="添加组成员" groupId="${group.groupId}">
                                         <i class="layui-icon">&#xe61f;</i>
                                     </a>
 
@@ -302,7 +325,7 @@
                                             <c:if test="${member.defaultAvatar==0}">
                                                 <img class="avatar" src="/EasyCloudStorage/img/avatar/${member.accountId}.jpg">
                                             </c:if>
-                                            ${member.userName}
+                                                ${member.userName}
                                             <c:if test="${organization.ownerId == member.accountId}">
                                                 (创建者)
                                             </c:if>
@@ -322,7 +345,6 @@
                         </div>
                     </c:forEach>
                 </div>
-            </c:if>
 
             <c:if test="${user.accountId == organization.ownerId}">
                <div class="add-group-div" data-toggle="modal" data-target=".bs-example-modal-lg">
@@ -339,7 +361,11 @@
     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <form class="layui-form" action="addGroup" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">新建分组</h4>
+                </div>
+                <form class="layui-form" action="addGroup" method="post" style="width: 800px">
                     <div class="layui-form-item">
                         <div class="layui-input-block">
                             <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入组名" class="layui-input">
@@ -351,7 +377,7 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <div class="layui-input-block">
+                        <div class="layui-input-block" style="text-align: center">
                             <button class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
                         </div>
                     </div>
@@ -413,11 +439,11 @@
                     <h4 class="modal-title" id="add-group-member-modal-h4">添加组成员</h4>
                 </div>
                 <div class="modal-body">
-
+                    <%@ include file="orgMemberSelectList.jsp"%>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-danger make-sure-but">确定</button>
+                    <button type="button" class="btn btn-default make-sure-but">确定</button>
                 </div>
             </div>
         </div>

@@ -270,7 +270,7 @@ public class OrganizationController {
 
     //往分组里添加已经在组织内的成员
     //这个具体形式还没想好，参数为 memberId为被添加到分组的成员的Id，groupId为被加入的分组
-    @RequestMapping(value = "/addGroupMember", method = RequestMethod.POST)
+    @RequestMapping(value = "/addGroupMember")
     public String addGroupMember(String memberId,int groupId,HttpSession session){
         User user=(User)session.getAttribute("user");
         String userId=user.getAccountId();

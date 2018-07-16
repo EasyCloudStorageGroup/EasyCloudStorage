@@ -13,12 +13,12 @@ function recordHandler() {
     var userArray=[];
     $(".ungroup").each(function () {
         if($(this).is(':checked') == true) {
-            userArray.push($(this).parent().attr("accountId"));
+            userArray.push($(this).parent().parent().attr("accountId"));
         }
     })
     $(".userName").each(function () {
         if($(this).is(':checked') == true) {
-            userArray.push($(this).parent().attr("accountId"));
+            userArray.push($(this).parent().parent().attr("accountId"));
         }
     })
     //获取权限

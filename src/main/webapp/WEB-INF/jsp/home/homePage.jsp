@@ -124,12 +124,22 @@
 </style>
 <style>
     .table-show-board{
-    position:relative;
-    top:10px;
+        position:relative;
+        top:10px;
         overflow: auto;
         height: 800px;
         opacity: 0.95;
-}
+    }
+
+    .none-notice-board {
+        text-align: center;
+        width: 500px;
+        margin-left: 100px;
+    }
+
+    .but-ops-div {
+        margin-top: 10px;
+    }
 </style>
 
 <%@ include file="include/navigator.jsp"%>
@@ -138,18 +148,20 @@
 <!--homePage右下角大部分的展示内容-->
 <div class="file-manager-board">
 <!--该choose选择是展示目录信息还是文件具体内容-->
-    <c:choose>
-        <%-- 首先是目录信息--%>
-        <c:when test="${empty normalFile}">
-             <a href="#" onclick="openNewDirectoryMenu()"><button 	class="layui-btn layui-btn-normal" style="margin-left: 20px">新建文件夹</button></a>
+    <div class="but-ops-div">
+<c:choose>
+    <%-- 首先是目录信息--%>
+    <c:when test="${empty normalFile}">
+        <a href="#" onclick="openNewDirectoryMenu()"><button 	class="layui-btn layui-btn-normal" style="margin-left: 20px">新建文件夹</button></a>
 
 
-                <div class="site-demo-button" id="layerDemo" style="float: left;margin-left: 1%">
-                  <button class="layui-btn site-demo-button" data-method="setTop">上传文件</button>
-                </div>
+        <div class="site-demo-button" id="layerDemo" style="float: left;margin-left: 1%">
+            <button class="layui-btn site-demo-button" data-method="setTop">上传文件</button>
+        </div>
 
-    <%@ include file="include/orderNav.jsp"%>
-    <%@ include file="include/searchBox.jsp"%>
+        <%@ include file="include/orderNav.jsp"%>
+        <%@ include file="include/searchBox.jsp"%>
+    </div>
 
      <div class="directory-show-board">
 
@@ -173,9 +185,9 @@
 <c:choose>
     <c:when test="${empty currentDirectories&&empty currentNormalFiles}">
 
-        <div class="none-notice-board" ><img src="/EasyCloudStorage/img/home/smile.png" style="width:400px;height: 400px;" />
-
-            <h2>当前没有任何文件哦,赶紧上传一个吧！</h2>
+        <div class="none-notice-board">
+            <img src="/EasyCloudStorage/img/home/emptyfile.png" style="width:100px;height: 100px;" />
+            <div>当前没有任何文件哦,赶紧上传一个吧！</div>
         </div>
     </c:when>
 

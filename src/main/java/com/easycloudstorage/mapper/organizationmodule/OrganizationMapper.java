@@ -7,6 +7,8 @@ import java.util.List;
 public interface OrganizationMapper {
     Organization getByOrgId(int orgId);
 
+    List<Group> getGroupsByOrgId(Integer orgId);
+
     List<Organization> orgList();
 
     void addOrg(Organization org);//增加组织
