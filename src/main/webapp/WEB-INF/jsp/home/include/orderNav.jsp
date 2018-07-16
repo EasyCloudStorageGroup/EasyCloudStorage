@@ -13,7 +13,7 @@
     .button-board {
         position: absolute;
         right: 1%;
-        top: 0px;
+        top: 10px;
 
         background-color: white;
         border-radius:10px;

@@ -16,6 +16,8 @@ public class OrganizationService {
 
     public Organization getByOrgId(int orgId) {
         Organization organization = organizationMapper.getByOrgId(orgId);
+        List<Group> groups = organizationMapper.getGroupsByOrgId(orgId);
+        organization.setGroups(groups);
         organization.setUnGroupedMembers(getUnGroupedMembers(organization));
 
         return organization;

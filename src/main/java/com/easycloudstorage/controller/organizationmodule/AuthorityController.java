@@ -87,8 +87,9 @@ public class AuthorityController {
             boolean isUpdated = false;
             for(int j=0;j<norAuthority.size();j++){
                 if((newNorAuthority.get(i).getAccountId().equals(norAuthority.get(j).getAccountId()))&&
-                        (newNorAuthority.get(i).getFileId()==norAuthority.get(j).getFileId())&&(newNorAuthority.get(i).getOrgId()==norAuthority.get(j).getOrgId())){
+                        (newNorAuthority.get(i).getFileId().equals(norAuthority.get(j).getFileId()))&&(newNorAuthority.get(i).getOrgId().equals(norAuthority.get(j).getOrgId()))){
                     authorityService.updateNorAuthority(newNorAuthority.get(i));
+                    isUpdated = true;
                 }
             }
             if(isUpdated == false)

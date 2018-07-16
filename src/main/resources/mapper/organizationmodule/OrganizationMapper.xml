@@ -20,36 +20,38 @@
             <result column="phoneNumber" property="phoneNumber"/>
             <result column="defaultAvatar" property="defaultAvatar"/>
         </collection>
+    </resultMap>
 
-        <collection property="groups" ofType="Group">
-            <id column="groupId" property="groupId"/>
-            <result column="gName" property="name"/>
-            <result column="gDescription" property="description"/>
-            <result column="orgId" property="orgId"/>
+    <resultMap type="Group" id="GroupBean">
+        <id column="groupId" property="groupId"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="orgId" property="orgId"/>
 
-            <collection property="members" ofType="User">
-                <id column="uAccountId" property="accountId"/>
-                <result column="uUserName" property="userName"/>
-                <result column="uPassword" property="password"/>
-                <result column="uSex" property="sex"/>
-                <result column="uPhoneNumber" property="phoneNumber"/>
-                <result column="uDefaultAvatar" property="defaultAvatar"/>
-            </collection>
+        <collection property="members" ofType="User">
+            <id column="accountId" property="accountId"/>
+            <result column="userName" property="userName"/>
+            <result column="password" property="password"/>
+            <result column="sex" property="sex"/>
+            <result column="phoneNumber" property="phoneNumber"/>
+            <result column="defaultAvatar" property="defaultAvatar"/>
         </collection>
     </resultMap>
 
     <select id="getByOrgId" resultMap="OrganizationBean" parameterType="int">
         select o.orgId, o.name, o.description, o.ownerId,
-          u.accountId, u.userName, u.password, u.sex, u.phoneNumber, u.defaultAvatar,
-          g.groupId, g.name as gName, g.description as gDescription,
-          u1.accountId as uAccountId, u1.userName as uUserName, u1.password as uPassword,
-          u1.sex as uSex, u1.phoneNumber as uPhoneNumber, u1.defaultAvatar as uDefaultAvatar
+          u.accountId, u.userName, u.password, u.sex, u.phoneNumber, u.defaultAvatar
           from Organization o left join UsersOrgs uo on o.orgId = uo.orgId
           left join User u on uo.accountId = u.accountId
-          left join _Group g on o.orgId = g.orgId
-          left join UsersGroups ug on g.groupId = ug.groupId
-          left join User u1 on ug.accountId = u1.accountId
 		  where o.orgId = #{orgId};
+    </select>
+
+    <select id="getGroupsByOrgId" resultMap="GroupBean" parameterType="Integer">
+        select g.groupId, g.name, g.description, g.orgId, u.accountId, u.userName, u.password, u.sex, u.phoneNumber, u.defaultAvatar
+          from _Group g left join UsersGroups ug
+          on ug.groupId = g.groupId
+          left join User u on ug.accountId = u.accountId
+          where g.orgId = #{0};
     </select>
 
     <select id="orgList" resultType="Organization">
