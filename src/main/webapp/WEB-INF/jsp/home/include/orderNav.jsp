@@ -36,7 +36,7 @@
         </button>
     </a>
     <a href="orderFile?orderBy=lastMovedTime">
-        <button class="layui-btn layui-btn-sm">
+        <button class="layui-btn layui-btn-sm" style="margin-right: 3px!important;">
             上次修改时间
             <i class="layui-icon">&#xe619;</i>
         </button>

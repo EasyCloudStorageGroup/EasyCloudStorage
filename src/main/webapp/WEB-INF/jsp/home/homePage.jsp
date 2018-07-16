@@ -43,7 +43,7 @@
         top: 70px;
         background-color: white;
         border-radius:10px;
-
+        min-width: 900px;
         opacity: 0.95;
     }
 </style>
@@ -203,8 +203,7 @@
             <th style="width: 50px;">
                 <button class="layui-btn layui-btn-normal" type="submit" id="download_btn" >下载</button>
             </th>
-            <th lay-data="{field:'type'}"style="width: 10px"></th>
-            <th lay-data="{field:'username'"style="width: 200px">名称</th>
+            <th lay-data="{field:'username'"style="width: 350px">名称</th>
             <th lay-data="{field:'type'}"style="width: 150px">类型</th>
             <th lay-data="{field:'joinTime'}"style="width: 150px">最后修改时间</th>
             <th style="width: 50px"></th>
@@ -214,8 +213,8 @@
         <tbody>
         <c:forEach items="${currentDirectories}" var="Directory">
             <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id="${Directory.dirId}" sortType="Directory">
-                <td><input type="checkbox" value="${Directory.dirId}" name="check2"></td>   <%--多选框 --%>
-                <td><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>   <%-- 文件夹图片--%>
+                <td><input type="checkbox" value="${Directory.dirId}" name="check2">
+                    <img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px" style="position:relative;left: 20px"/><%-- 文件夹图片--%></td>   <%--多选框 --%>
                 <td><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td> <%-- 文件名，以及跳转的点击接口--%>
                 <td>-</td>           <%-- 文件夹类型，由于不存在所以写为"-"--%>
                 <td >${Directory.displayTime}</td>    <%-- 文件的最后一次改动时间--%>
@@ -225,8 +224,8 @@
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
             <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
-                <td><input type="checkbox" value="${NormalFile.fileId}" name="check"></td>    <!--下载的多选框-->
-                <td><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>        <!--文件图片-->
+                <td><input type="checkbox" value="${NormalFile.fileId}" name="check">
+                    <img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px" style="position:relative;left: 20px"/><!--文件图片--></td>    <!--下载的多选框-->
                 <!--该choose决定了文件是否可以接着跳转查看详细信息，目前支持txt，jpg，MP3等格式的预览-->
                 <c:choose>
                     <%-- 以下文件类型能接着跳转查看详细信息--%>
