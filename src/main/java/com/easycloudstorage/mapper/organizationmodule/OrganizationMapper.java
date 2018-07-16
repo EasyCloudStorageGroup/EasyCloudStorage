@@ -51,5 +51,6 @@ public interface OrganizationMapper {
     void changeDescription(int orgId,String newDescription);
 //获得组织的分组信息
     List<Group> getGroupByOrgId(int orgId);
-
+//获得组织用户信息
+    List<User> getUsersByGroupId(int GroupId);
 }

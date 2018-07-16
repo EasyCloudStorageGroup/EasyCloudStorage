@@ -19,10 +19,7 @@
 
 <script src="/EasyCloudStorage/layui/layui.js" charset="utf-8"></script>
 
-
-
 <%--将参数传给组织id传给服务器--%>
-
 
 <div style="position:absolute;left: 25%; top: 15%; width:50%;height:90%;background-color:#ffffff">
     <a href="/EasyCloudStorage/enterOrganization?orgId=${organization.orgId}"><button class="layui-btn">返回</button></a>
@@ -34,9 +31,9 @@
 
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
-                <dl>
-                    <dd>名字：${organization.name}</dd>
-                    <dd>描述：${organization.description}</dd>
+                <dl style="text-align: center;font-size: large">
+                    <dd><strong>名字：</strong> ${organization.name}</dd><br>
+                    <dd><strong>描述：</strong> ${organization.description}</dd><br>
                     <dt>分组信息：</dt>
                     <c:choose>
                         <c:when test="${empty groupList}">
@@ -47,6 +44,7 @@
                                 <dt>${group.name}:</dt>
                                 <dd>描述：${group.description}</dd>
                                 <dd>成员数：${group.members.size()}</dd>
+                                <br>
                             </c:forEach>
                         </c:otherwise>
                     </c:choose>

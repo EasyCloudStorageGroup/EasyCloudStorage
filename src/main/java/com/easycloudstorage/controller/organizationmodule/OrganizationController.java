@@ -243,6 +243,10 @@ public class OrganizationController {
         ModelAndView mv = new ModelAndView("organization/orgInfo/orgInfo");
         mv.addObject("organization",org);
         List<Group> groups=organizationService.getGroupByOrgId(orgId);
+        for (int i=0;i<groups.size();++i){
+            Group group=groups.get(i);
+            group.setMembers(organizationService.getUsersByGroupId(group.getGroupId()));
+        }
         mv.addObject("groupList",groups);
         return mv;
     }

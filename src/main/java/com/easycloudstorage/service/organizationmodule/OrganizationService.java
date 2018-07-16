@@ -130,4 +130,5 @@ public class OrganizationService {
         return organizationMapper.getGroupByOrgId(orgId);
     }
 
+    public List<User> getUsersByGroupId(int groupId){return organizationMapper.getUsersByGroupId(groupId);}
 }
