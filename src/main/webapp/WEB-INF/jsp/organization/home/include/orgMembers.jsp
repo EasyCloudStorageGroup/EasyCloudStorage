@@ -271,7 +271,8 @@
                 </div>
             </c:forEach>
 
-            <c:if test="${organization.groups != null}">
+
+            <c:if test="${not empty organization.groups}">
                 <div class="layui-collapse groups-div">
                     <c:forEach items="${organization.groups}" var="group">
                         <div class="layui-colla-item">
@@ -348,6 +349,26 @@
                     <div class="layui-form-item">
                         <div class="layui-input-block">
                             <input type="text" name="description" lay-verify="required" placeholder="请输入描述" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <select name="group" lay-verify="">
+                                <option value="">请选择一个小组</option>
+                                <c:forEach items="${organization.groups}" var="group">
+                                    <option value="${group.groupId}">${group.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <select name="member" lay-verify="">
+                                <option value="">请选择成员</option>
+                                <c:forEach items="${organization.unGroupedMembers}" var="member">
+                                    <option value="${member.accountId}">${member.userName}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                     </div>
                     <div class="layui-form-item">
