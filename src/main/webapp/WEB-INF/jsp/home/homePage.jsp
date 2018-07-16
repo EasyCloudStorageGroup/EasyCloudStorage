@@ -194,28 +194,28 @@
 
     <c:otherwise>
 <div class="table-show-board">
-    <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo" id="file-manager-table" style="table-layout: fixed"  >
+    <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo" id="file-manager-table">
         <thead>
         <br/><tr><input type="checkbox" height="30px" onclick="selectAll(this)"><label>全选</label></tr>
         <tr>
-            <th style="width: 50px;">
+            <th >
                 <button class="layui-btn layui-btn-normal" type="submit" id="download_btn" >下载</button>
             </th>
-            <th lay-data="{field:'type'}"style="width: 10px"></th>
-            <th lay-data="{field:'username'"style="width: 350px">名称</th>
-            <th lay-data="{field:'type'}"style="width: 150px">类型</th>
-            <th lay-data="{field:'joinTime'}"style="width: 150px">最后修改时间</th>
+            <th lay-data="{field:'type', width:80}"style="width: 100px"></th>
+            <th lay-data="{field:'username', width:80}"style="width: 350px">名称</th>
+            <th lay-data="{field:'type', width:180}"style="width: 150px">类型</th>
+            <th lay-data="{field:'joinTime', width:180}"style="width: 150px">最后修改时间</th>
         </tr>
         </thead>
             <%--文件夹不为空的情况下，优先展示其中的子文件夹--%>
         <tbody>
         <c:forEach items="${currentDirectories}" var="Directory">
             <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id="${Directory.dirId}" sortType="Directory">
-                <td><input type="checkbox" value="${Directory.dirId}" name="check2"></td>   <%--多选框 --%>
-                <td><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>   <%-- 文件夹图片--%>
-                <td><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}">${Directory.name}</a></td> <%-- 文件名，以及跳转的点击接口--%>
-                <td>-</td>           <%-- 文件夹类型，由于不存在所以写为"-"--%>
-                <td >${Directory.displayTime}</td>    <%-- 文件的最后一次改动时间--%>
+                <td style="width: 10%"><input type="checkbox" value="${Directory.dirId}" name="check2"></td>   <%--多选框 --%>
+                <td style="width: 10%"><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>   <%-- 文件夹图片--%>
+                <td style="width: 40%"><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}"style="width: 350px">${Directory.name}</a></td> <%-- 文件名，以及跳转的点击接口--%>
+                <td style="width: 20%">-</td>           <%-- 文件夹类型，由于不存在所以写为"-"--%>
+                <td style="width: 20%">${Directory.displayTime}</td>    <%-- 文件的最后一次改动时间--%>
             </tr>
         </c:forEach>
             <%-- 文件夹不为空的情况下，之后展示其中的普通文件--%>

@@ -381,31 +381,7 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-<<<<<<< HEAD
-                        <div class="layui-input-block">
-                            <select name="group" lay-verify="">
-                                <option value="">请选择一个小组</option>
-                                <c:forEach items="${organization.groups}" var="group">
-                                    <option value="${group.groupId}">${group.name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <div class="layui-input-block">
-                            <select name="member" lay-verify="">
-                                <option value="">请选择成员</option>
-                                <c:forEach items="${organization.unGroupedMembers}" var="member">
-                                    <option value="${member.accountId}">${member.userName}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <div class="layui-input-block">
-=======
                         <div class="layui-input-block" style="text-align: center">
->>>>>>> develop
                             <button class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
                         </div>
                     </div>
