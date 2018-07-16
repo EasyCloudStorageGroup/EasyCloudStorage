@@ -173,7 +173,7 @@
 <c:choose>
     <c:when test="${empty currentDirectories&&empty currentNormalFiles}">
 
-        <div class="none-notice-board" ><img src="/EasyCloudStorage/img/home/smile.png" style="width:400px;height: 400px;" />
+        <div class="none-notice-board" ><img src="/EasyCloudStorage/img/home/smile.PNG" style="width:400px;height: 400px;"/>
 
             <h2>当前没有任何文件哦,赶紧上传一个吧！</h2>
         </div>
