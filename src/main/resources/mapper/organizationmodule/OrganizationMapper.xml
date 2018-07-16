@@ -129,6 +129,7 @@
         set name=#{1}
         where orgId=#{0}
     </update>
+
     <update id="changeDescription">
         update organization
         set description=#{1}

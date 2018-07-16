@@ -123,7 +123,7 @@ public class OrganizationService {
     }
 
     public void changeDescription(int orgId,String newDes){
-        organizationMapper.changeName(orgId,newDes);
+        organizationMapper.changeDescription(orgId,newDes);
     }
 
     public List<Group> getGroupByOrgId(int orgId){

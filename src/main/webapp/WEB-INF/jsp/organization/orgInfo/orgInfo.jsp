@@ -21,8 +21,6 @@
 
 
 
-
-
 <%--将参数传给组织id传给服务器--%>
 
 
@@ -32,8 +30,6 @@
         <ul class="layui-tab-title">
             <li class="layui-this">组织信息</li>
             <li>修改信息</li>
-
-
         </ul>
 
         <div class="layui-tab-content">
@@ -58,32 +54,33 @@
             </div>
             <div class="layui-tab-item">
 
-                <form class="layui-form" action="">
+                <form class="layui-form" lay-filter="example" action="submitForm" method="post">
 
                     <input type="hidden" name="orgId" value=${organization.orgId}>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">单行输入框</label>
+                    <label class="layui-form-label">新名字</label>
                     <div class="layui-input-block">
-                        <input name="newName" class="layui-input" type="text" placeholder="输入新名字" autocomplete="off" lay-verify="title">
+                        <input name="newName" class="layui-input" type="text" placeholder="请输入名字" autocomplete="off" lay-verify="title"
+                        value="${organization.name}">
                     </div>
                 </div>
 
                 <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">普通文本域</label>
+                    <label class="layui-form-label">新描述</label>
                     <div class="layui-input-block">
-                        <textarea name="description" class="layui-textarea" placeholder="请输入内容"></textarea>
+                        <textarea name="description" class="layui-textarea" placeholder="请输入名字">${organization.description}</textarea>
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn" lay-filter="demo1" lay-submit="">立即提交</button>
+                        <button class="layui-btn" lay-filter="demo1" lay-submit="" >立即提交</button>
                         <button class="layui-btn layui-btn-primary" type="reset">重置</button>
                     </div>
-
                 </div>
 
                 </form>
+
             </div>
         </div>
     </div>
@@ -92,6 +89,33 @@
 
 
 <script>
+
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        //自定义验证规则
+        form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            }
+        });
+
+        // //表单初始赋值
+        // form.val('example', {
+        //     "name": "新的名字" // "name": "value"
+        //     //,"description": "新的描述"
+        // })
+
+
+    });
+
+
+
     layui.use('element', function(){
         var $ = layui.jquery
             ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块

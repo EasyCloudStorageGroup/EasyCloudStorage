@@ -247,15 +247,18 @@ public class OrganizationController {
         return mv;
     }
 
-    @RequestMapping("submitForm")
-    public ModelAndView modifyState(HttpServletRequest request){
-        int orgId=(Integer) request.getAttribute("orgId");//获取客户端传来的组织id
+    @RequestMapping(value = "submitForm",method = RequestMethod.POST)
+    public ModelAndView modifyState(HttpServletRequest request,HttpSession session){
+        //Integer orgId=(Integer)request.getAttribute("orgId");//获取客户端传来的组织id
+        int orgId=(Integer) session.getAttribute("orgId");
         Organization org=organizationService.getByOrgId(orgId);
-        String name=(String) request.getAttribute("newName");
-        String description=(String) request.getAttribute("description");
+        String name=request.getParameter("newName");
+        String description=(String) request.getParameter("description");
         organizationService.changeName(orgId,name);
         organizationService.changeDescription(orgId,description);
-        return null;
+        ModelAndView mv =new ModelAndView("organization/orgInfo/success");
+        mv.addObject("org",org);
+        return mv;
     }
 
 
