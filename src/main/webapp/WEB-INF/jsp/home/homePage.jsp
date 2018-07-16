@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8"
          isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <%@ include file="../shared/sharedHeader.jsp"%>
 
@@ -31,6 +32,7 @@
         $("body").css("background", "${sessionScope.user.getBgUrl()}")
         $(".imgShow").css("background", "${sessionScope.user.getBgUrl()}")
         $(".imgShow").css("background-size","264px 180px");
+        $("#passwordText").hide();
     })
 </script>
 
@@ -142,6 +144,7 @@
     }
 </style>
 
+
 <%@ include file="include/navigator.jsp"%>
 <link href="/EasyCloudStorage/css/menu.css" rel="stylesheet"/>
 
@@ -201,9 +204,10 @@
                 <button class="layui-btn layui-btn-normal" type="submit" id="download_btn" >下载</button>
             </th>
             <th lay-data="{field:'type'}"style="width: 10px"></th>
-            <th lay-data="{field:'username'"style="width: 350px">名称</th>
+            <th lay-data="{field:'username'"style="width: 200px">名称</th>
             <th lay-data="{field:'type'}"style="width: 150px">类型</th>
             <th lay-data="{field:'joinTime'}"style="width: 150px">最后修改时间</th>
+            <th style="width: 50px"></th>
         </tr>
         </thead>
             <%--文件夹不为空的情况下，优先展示其中的子文件夹--%>
@@ -238,6 +242,7 @@
                 </c:choose>
                 <td>${NormalFile.type}</td>     <!--文件类型-->
                 <td>${NormalFile.displayTime}</td>     <!--文件最后改动时间-->
+                <td><button type="submit" onclick="getFileId(this.value)" class="layui-btn layui-btn-normal" data-toggle="modal" data-target="#myModal" value="${NormalFile.fileId}">分享</button></td>
             </tr>
         </c:forEach>
 
@@ -349,7 +354,102 @@ border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script src="/EasyCloudStorage/js/FileManager/upload.js">
 </script>
-
+<%--文件分享模块--%>
+<link href="/EasyCloudStorage/bootstrap/css/bootstrap.min.css">
+<script src="/EasyCloudStorage/bootstrap/js/bootstrap.min.js"></script>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">文件分享</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label><input name="sharing" type="radio" value="private" id="private">加密</label>
+                    <label><input name="sharing" type="radio" value="public" id="public">公开</label>
+                </div>
+                <div>
+                    <label><input type="text" class="form-control" id="linkText"></label>
+                    <label><input type="text" class="form-control" id="passwordText" placeholder="请输入加密密钥"></label>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="layui-btn layui-btn-normal" id="createLink">生成链接</button>
+                    <button id="copyLink" type="button" class="layui-btn layui-btn-normal" onclick="copyText()">复制链接</button>
+                    <div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="close">关闭</button>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var fileId = 0;
+    var linkHead = "http://localhost:8080";
+    var password = "";
+    function getFileId(btn) {
+        fileId = btn;
+    }
+    function copyText() {
+        var ele = document.getElementById("linkText");
+        ele.select();
+        document.execCommand("Copy");
+    }
+    function randomWord(randomFlag, min, max) {
+        var str = "";
+        range = min;
+        arr = ['2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm','n', 'p',
+        'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N','P', 'Q'
+        ,'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        if(randomFlag){
+            range = Math.round(Math.random() * (max - min)) + min;
+        }
+        for(var i = 0; i < range; i++){
+            pos = Math.round(Math.random()*(arr.length - 1));
+            str += arr[pos];
+        }
+        return str;
+    }
+    $("#private").click(function () {
+        $("#passwordText").show();
+    })
+    $("#public").click(function () {
+        $("#passwordText").hide();
+    })
+    $("#createLink").click(function () {
+        if($("input[name='sharing']:checked").val() === "public"){
+            var link = linkHead + "/EasyCloudStorage/linkSharing/";
+            var str = randomWord(false, 10);
+            $("#linkText").val(link + str);
+        }
+        else if($("input[name='sharing']:checked").val() === "private"){
+            var link = linkHead + "/EasyCloudStorage/linkSharing/";
+            var str = randomWord(false, 10);
+            $("#linkText").val(link + str);
+            password = randomWord(false, 4);
+            $("#passwordText").val(password);
+        }
+        var  data = {
+            "fileId": fileId,
+            "str" : str,
+            "password": password
+        };
+        $.ajax({
+            type: "post",
+            url : "sharingData",
+            data: data
+        });
+        password = "";
+    })
+    $("#close").click(function () {
+        $("#linkText").val("");
+        $("#passwordText").val("");
+    })
+    
+</script>
 </body>
 </html>
 

@@ -26,7 +26,7 @@ public class DownloadController {
 
 
 
-    @RequestMapping(value = "/download")
+    @RequestMapping(value = "download")
     public ResponseEntity<byte[]> download(@RequestParam(value = "idCollection[]", required = false)Integer[] idCollection, @RequestParam(value = "idCollection2[]", required = false)Integer[] idCollection2, HttpServletRequest request) throws IOException{
         //通过文件id获取路径
         //获取普通文件路径

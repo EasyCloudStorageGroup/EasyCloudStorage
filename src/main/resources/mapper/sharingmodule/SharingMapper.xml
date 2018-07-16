@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easycloudstorage.mapper.sharingmodule.SharingMapper">
+    <insert id="addSharingData" parameterType="Sharing">
+        insert into sharing (str, fileId, password) values (#{str}, #{fileId}, #{password});
+    </insert>
+    <select id="listSharingData" resultType="Sharing">
+        select str, fileId from sharing;
+    </select>
+    <select id="getSharingDataByStr" resultType="Sharing" parameterType="String">
+        select str, fileId, password from sharing where str = #{str}
+    </select>
+</mapper>

@@ -13,8 +13,8 @@
     <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo" id="file-manager-table"  >
         <thead>
         <tr>
-            <th lay-data="{checkbox:true}" style="width: 60px">下载</th>
-            <th lay-data="{field:'type'}"style="width: 100px"></th>
+            <th style="width: 50px;"><button class="layui-btn layui-btn-normal" type="submit" id="download_btn" >下载</button></th>
+            <th lay-data="{field:'type'}"style="width: 10px"></th>
             <th lay-data="{field:'username'"style="width: 350px">名称</th>
             <th lay-data="{field:'type'}"style="width: 150px">类型</th>
             <th lay-data="{field:'joinTime'}"style="width: 150px">最后修改时间</th>
@@ -22,26 +22,38 @@
         </thead>
 
         <tbody>
-        <c:forEach items="${currentNormalFiles}" var="NormalFile">
-            <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
-                <td><input type="checkbox" value="${NormalFile.realPath}" name="check"></td>
+            <tr class="normalFileClass">
+                <td><input type="checkbox" value="${normalFile.fileId}" name="check"></td>
 
                 <td><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>
                 <c:choose>
-                    <c:when test="${NormalFile.type=='image/jpeg'||NormalFile.type=='image/png'||NormalFile.type=='text/plain'||NormalFile.type=='audio/mp3'||NormalFile.type=='video/mp4'}">
-                        <td><a  href="/EasyCloudStorage/homePage?fileId=${NormalFile.fileId}">${NormalFile.name}</a></td>
+                    <c:when test="${normalFile.type=='image/jpeg'||normalFile.type=='image/png'||normalFile.type=='text/plain'||normalFile.type=='audio/mp3'||normalFile.type=='video/mp4'}">
+                        <td><a  href="/EasyCloudStorage/homePage?fileId=${normalFile.fileId}">${normalFile.name}</a></td>
                     </c:when>
                     <c:otherwise>
-                        <td>${NormalFile.name}</td>
+                        <td>${normalFile.name}</td>
                     </c:otherwise>
                 </c:choose>
                 <td>${NormalFile.type}</td>
                 <td>${NormalFile.displayTime}</td>
             </tr>
-        </c:forEach>
         </tbody>
     </table>
 </div>
-
+<script type="text/javascript" src="/EasyCloudStorage/jquery/changeSkin/jquery.js"></script>
+<script>
+    $("#download_btn").click(function () {
+        var idCollection = [];
+        $("input[name = 'check']:checked").each(function (i) {
+            idCollection[i] = $(this).val();
+        });
+        if(!(idCollection.length === 0)) {
+            var data = {
+                "idCollection[]": idCollection
+            };
+            window.location = "http://localhost:8080/EasyCloudStorage/download?" + $.param(data);
+        }
+    })
+</script>
 </body>
 </html>
