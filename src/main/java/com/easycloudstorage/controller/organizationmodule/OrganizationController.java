@@ -1,6 +1,7 @@
 package com.easycloudstorage.controller.organizationmodule;
 
 import com.easycloudstorage.pojo.Directory;
+
 import com.easycloudstorage.pojo.Group;
 import com.easycloudstorage.pojo.Organization;
 import com.easycloudstorage.pojo.User;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.easycloudstorage.service.usermodule.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
@@ -233,6 +235,42 @@ public class OrganizationController {
 
         ModelAndView mv = new ModelAndView("home/organizationPage");
 
+        return mv;
+    }
+    @RequestMapping("modifyOrg")
+    public ModelAndView modifyPage(HttpSession session){
+        int orgId=(Integer) session.getAttribute("orgId");
+        Organization org=organizationService.getByOrgId(orgId);
+        ModelAndView mv = new ModelAndView("organization/orgInfo/orgInfo");
+        mv.addObject("organization",org);
+        List<Group> groups=organizationService.getGroupByOrgId(orgId);
+        for (int i=0;i<groups.size();++i){
+            Group group=groups.get(i);
+            group.setMembers(organizationService.getUsersByGroupId(group.getGroupId()));
+        }
+        mv.addObject("groupList",groups);
+        return mv;
+    }
+
+    @RequestMapping(value = "submitForm",method = RequestMethod.POST)
+    public ModelAndView modifyState(HttpServletRequest request,HttpSession session){
+        //Integer orgId=(Integer)request.getAttribute("orgId");//获取客户端传来的组织id
+        int orgId=(Integer) session.getAttribute("orgId");
+        Organization org=organizationService.getByOrgId(orgId);
+        String name=request.getParameter("newName");
+        String description=(String) request.getParameter("description");
+        List<Group> groups=organizationService.getGroupByOrgId(orgId);
+        for (int i=0;i<groups.size();++i){
+            int groupId=groups.get(i).getGroupId();
+            String groupName=request.getParameter("name"+groupId);
+            String groupDescription=request.getParameter("description"+groupId);
+            organizationService.changeGroupName(groupId,groupName);
+            organizationService.changeGroupDescription(groupId,groupDescription);
+        }
+        organizationService.changeName(orgId,name);
+        organizationService.changeDescription(orgId,description);
+        ModelAndView mv =new ModelAndView("organization/orgInfo/success");
+        mv.addObject("org",org);
         return mv;
     }
 

@@ -114,9 +114,30 @@ public class OrganizationService {
 
     public void removeGpMember(String accountId,int groupId){organizationMapper.removeGpMember(accountId,groupId);}
 
-
     public String getOwnerId(Integer orgId) {
         return organizationMapper.getOwnerId(orgId);
     }
+
+    public void changeName(int orgId,String newName){
+        organizationMapper.changeName(orgId,newName);
+    }
+
+    public void changeDescription(int orgId,String newDes){
+        organizationMapper.changeDescription(orgId,newDes);
+    }
+
+    public void changeGroupName(int groupId,String newName){organizationMapper.changeGroupName(groupId,newName);};
+
+    public void changeGroupDescription(int groupId,String newDescription){
+        organizationMapper.changeGroupDescription(groupId,newDescription);
+    };
+
+    public void deleteOrganization(int orgId){organizationMapper.deleteOrganizaiton(orgId);}
+
+    public List<Group> getGroupByOrgId(int orgId){
+        return organizationMapper.getGroupByOrgId(orgId);
+    }
+
+    public List<User> getUsersByGroupId(int groupId){return organizationMapper.getUsersByGroupId(groupId);}
 
 }

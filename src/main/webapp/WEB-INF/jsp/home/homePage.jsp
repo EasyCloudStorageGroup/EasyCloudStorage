@@ -43,7 +43,7 @@
         top: 70px;
         background-color: white;
         border-radius:10px;
-
+        min-width: 900px;
         opacity: 0.95;
     }
 </style>
@@ -209,7 +209,6 @@
             <th lay-data="{field:'username', width:80}"style="width: 350px">名称</th>
             <th lay-data="{field:'type', width:180}"style="width: 150px">类型</th>
             <th lay-data="{field:'joinTime', width:180}"style="width: 150px">最后修改时间</th>
-
         </tr>
         </thead>
             <%--文件夹不为空的情况下，优先展示其中的子文件夹--%>
@@ -227,8 +226,8 @@
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
             <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
-                <td><input type="checkbox" value="${NormalFile.fileId}" name="check"></td>    <!--下载的多选框-->
-                <td><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/> </td>        <!--文件图片-->
+                <td><input type="checkbox" value="${NormalFile.fileId}" name="check">
+                    <img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px" style="position:relative;left: 20px"/><!--文件图片--></td>    <!--下载的多选框-->
                 <!--该choose决定了文件是否可以接着跳转查看详细信息，目前支持txt，jpg，MP3等格式的预览-->
                 <c:choose>
                     <%-- 以下文件类型能接着跳转查看详细信息--%>

@@ -183,8 +183,7 @@ public class FileController {
         List<Directory> directories= showService.directoryList();
         ShowService showService = new ShowService();
         Directory userRootDir = showService.rootDirectory(user, directories);
-        if(dirId == 0 && userRootDir!=null)//根目录
-            dirId=(userRootDir).getDirId();
+        dirId = ((Directory)session.getAttribute("currentDir")).getDirId();
         if(fileAlreadyExist(dirId, newFileName))
         {
             for(int i=1;i<1000;i++)//1000，最多后缀1000,

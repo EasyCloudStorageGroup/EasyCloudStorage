@@ -123,4 +123,41 @@
     <delete id="removeGpMember" parameterType="String">
         DELETE FROM usersgroups WHERE accountId=#{0} and groupId=#{1};
     </delete>
+
+    <update id="changeName">
+        update organization
+        set name=#{1}
+        where orgId=#{0}
+    </update>
+
+    <update id="changeDescription">
+        update organization
+        set description=#{1}
+        where orgId=#{0}
+    </update>
+
+    <update id="changeGroupName">
+        update _group
+        set name=#{1}
+        where groupId=#{0}
+    </update>
+
+    <update id="changeGroupDescription">
+        update _group
+        set description=#{1}
+        where groupId=#{0}
+    </update>
+
+    <select id="getGroupByOrgId" resultType="Group">
+        select * from _group
+        where orgId=#{0}
+    </select>
+
+    <select id="getUsersByGroupId" resultType="User">
+        select * from user
+        where exists
+        (select * from usersgroups
+        where usersgroups.groupId=#{0} and usersgroups.accountId=user.accountId)
+    </select>
+
 </mapper>

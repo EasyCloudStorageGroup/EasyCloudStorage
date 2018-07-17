@@ -253,11 +253,18 @@
 
 <div class="orgMembersBoard layui-col-md3">
     <div class="layui-col-md12">
+
         <div class="orgMembersBoard-header">
-           <div class="org-name">
+           <a href="modifyOrg">
+               <div class="org-name">
                ${organization.name}
+<<<<<<< HEAD
            </div>
             <h3 align="center"><font color="red">${error2}</font></h3>
+=======
+                </div>
+           </a>
+>>>>>>> 81c5197cdbc7a82c65300f449d0812d2831af17d
            <div>
                <c:if test="${user.accountId == organization.ownerId}">
                    <a href="/EasyCloudStorage/toInvite" class="add-org-member-link" title="邀请成员">

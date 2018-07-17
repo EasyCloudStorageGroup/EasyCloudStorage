@@ -24,7 +24,7 @@
 
     <ul class="layui-nav top-left-navigator">
         <li class="layui-nav-item"><a href="homePage">网盘</a></li>
-        <li class="layui-nav-item layui-this"><a href="orgnizationPage" id="orgnizationButton">组织</a></li>
+        <li class="layui-nav-item layui-this"><a href="organizationPage" id="orgnizationButton">组织</a></li>
     </ul>
 
     <ul class="layui-nav top-right-navigator">

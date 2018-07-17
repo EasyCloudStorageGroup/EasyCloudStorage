@@ -77,12 +77,6 @@
     })
 </script>
 
-<style>
-    #Permission tr {
-        margin-top: 20px;
-    }
-</style>
-
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="authority-set-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -110,7 +104,7 @@
                         <tr>
                             <td width="20%" align="left">用户范围:</td>
                             <td width="80%" align="left">
-                                <table id="table_user" border="0" style="table-layout: fixed" cellspacing="0" cellpadding="0">
+                                <table id="table_user" border="0" style="table-layout: fixed;" cellspacing="0" cellpadding="0">
                                     <tbody>
                                         <tr>
                                             <td class="inputBtn_input"><input style="height:34px;width: 400px" readonly class="input" type="text" id="UserId" name="UserId"></td>
@@ -125,17 +119,17 @@
                         <tr height="5">
                             <td colspan="2"></td>
                         </tr>
-                        <tr>
+                        <tr style="margin-top: 20px">
                             <td valign="top">权限类型：</td>
                             <td>
-                                <form class="layui-form">
+                                <form class="layui-form" id="authority-select-form">
                                     <select id="authority" class="select" lay-verify="">
-                                        <option value="0">可预览</option>
-                                        <option value="1">可预览、下载</option>
-                                        <option value="2">可预览、编辑</option>
-                                        <option value="3">可预览、创建文件夹</option>
-                                        <option value="4">可预览、下载和编辑</option>
-                                        <option value="5">可预览、创建和编辑</option>
+                                        <option value="0" class="select_0">可预览</option>
+                                        <option value="1" class="select_1">可预览、下载</option>
+                                        <option value="2" class="select_2">可预览、编辑</option>
+                                        <option value="3" class="select_3">可预览、创建文件夹</option>
+                                        <option value="4" class="select_4">可预览、下载和编辑</option>
+                                        <option value="5" class="select_5">可预览、创建和编辑</option>
                                     </select>
                                 </form>
                             </td>

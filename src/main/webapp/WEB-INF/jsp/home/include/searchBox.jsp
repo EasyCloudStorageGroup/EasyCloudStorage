@@ -25,8 +25,8 @@
 <style>
     .search-box {
         position: absolute;
-        margin-right:57%;
-        left: 30%;
+        margin-right:45%;
+        left: 35%;
         width: 400px;
     }
 
