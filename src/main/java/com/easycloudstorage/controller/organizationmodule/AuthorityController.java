@@ -40,6 +40,8 @@ public class AuthorityController {
         //数据库中已存在的目录的权限数据
         List<DirAuthority> dirAuthority=new ArrayList<>();
         dirAuthority=authorityService.dirAuthorityList();
+        session.setAttribute("norAuthority",norAuthority);
+        session.setAttribute("dirAuthority",dirAuthority);
 
         //为用户新选择的文件权限构建List<Authority>
         List<NorFileAuthority> newNorAuthority=new ArrayList<>();
@@ -100,8 +102,15 @@ public class AuthorityController {
     }
 
 
- /*  public String authorityShow(HttpSession session,String userId){
+  /*public String authorityShow(HttpSession session,String userId){
        int orgId=(int)session.getAttribute("orgId");
+       List<NorFileAuthority> norFileAuthorityList=authorityService.norList();
+       NorFileAuthority temp;
+       for (int i=0;i<norFileAuthorityList.size();i++){
+           temp=norFileAuthorityList.get(i);
+           temp=authorityService.getNorFileAuthority(temp.getFileId(),temp.getAccountId());
+       }
+
         Map<NormalFile,Integer> fileMap=authorityService.findFileAuthority(userId,orgId,authorityService.norList());
         Map<Directory,Integer> dirMap=authorityService.findDirAuthority(userId,orgId,authorityService.dirAuthorityList());
 

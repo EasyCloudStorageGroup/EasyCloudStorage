@@ -43,7 +43,7 @@
         insert INTO dirauthority(accountId,dirId,orgId,authority) VALUES (#{accountId},#{dirId},#{orgId},#{authority});
     </insert>
 
-    <select id="getNorFileAuthority" resultMap="NorFileAuthorityMap" parameterType="String">
+    <select id="getNorFileAuthority" resultMap="NorFileAuthorityMap">
         select * from norfileauthority fa ,normalFile nf
             where fa.fileId=nf.fileId and fa.fileId=#{fileId} and fa.accountId=#{accountId};
     </select>

@@ -13,4 +13,11 @@ public class NorFileAuthority extends Authority {
         this.fileId = fileId;
     }
 
+    public NormalFile getNormalFile() {
+        return normalFile;
+    }
+
+    public void setNormalFile(NormalFile normalFile) {
+        this.normalFile = normalFile;
+    }
 }

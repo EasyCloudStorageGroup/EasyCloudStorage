@@ -271,6 +271,7 @@ public class OrganizationController {
     }
 
     //删除该组织
+    @RequestMapping("deleteOrg")
     public String deleteOrg(HttpSession session){
         User user=(User)session.getAttribute("user");
         String userId=user.getAccountId();

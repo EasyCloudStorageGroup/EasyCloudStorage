@@ -16,23 +16,43 @@ import java.util.Map;
 @Service
 public class AuthorityService {
     @Autowired
-    private AuthorityMapper authorityMapper;
-    @Autowired
-    private ShowService showService;
+        private AuthorityMapper authorityMapper;
+        @Autowired
+        private ShowService showService;
 
-    public void addNorFileAuthority(NorFileAuthority norFileAuthority) {
-        authorityMapper.addNorFileAuthority(norFileAuthority);
-    }
+        public void addNorFileAuthority(NorFileAuthority norFileAuthority) {
+            authorityMapper.addNorFileAuthority(norFileAuthority);
+        }
 
-    public void addDirAuthority(DirAuthority dirAuthority) {
-        authorityMapper.addDirAuthority(dirAuthority);
+        public void addDirAuthority(DirAuthority dirAuthority) {
+            authorityMapper.addDirAuthority(dirAuthority);
     }
 
     /*权限管理*/
 
-    public List<NorFileAuthority> norList(){return authorityMapper.norAuthority();}
+    public List<NorFileAuthority> norList(){
+        List<NorFileAuthority> result=new ArrayList<NorFileAuthority>();
+        NorFileAuthority temp;
+        for(int i=0;i<authorityMapper.norAuthority().size();i++)
+        {temp=authorityMapper.norAuthority().get(i);
+            Integer fileId=temp.getFileId();
+            NormalFile normalFile=showService.findNormalFileById(fileId,showService.normalFileList());
+            temp.setNormalFile(normalFile);
+            result.add(temp);
+        }
+        return result;}
 
-    public List<DirAuthority> dirAuthorityList(){return authorityMapper.dirAuthority();}
+    public List<DirAuthority> dirAuthorityList(){{
+        List<DirAuthority> result=new ArrayList<DirAuthority>();
+        DirAuthority temp;
+        for(int i=0;i<authorityMapper.dirAuthority().size();i++)
+        {temp=authorityMapper.dirAuthority().get(i);
+            Integer fileId=temp.getDirId();
+            Directory directory=showService.findDirectoryById(fileId,showService.directoryList());
+            temp.setDirectory(directory);
+            result.add(temp);
+        }
+        return result;}}
 
     public void updateNorAuthority(NorFileAuthority norFileAuthority){authorityMapper.updateNorAutuority(norFileAuthority);}
 

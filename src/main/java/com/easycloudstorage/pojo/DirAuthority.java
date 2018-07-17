@@ -14,4 +14,12 @@ public class DirAuthority extends Authority {
     public void setDirId(Integer dirId) {
         this.dirId = dirId;
     }
+
+    public Directory getDirectory() {
+        return directory;
+    }
+
+    public void setDirectory(Directory directory) {
+        this.directory = directory;
+    }
 }
