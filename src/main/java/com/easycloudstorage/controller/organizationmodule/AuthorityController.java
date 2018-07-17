@@ -1,7 +1,6 @@
 package com.easycloudstorage.controller.organizationmodule;
 
-import com.easycloudstorage.pojo.NorFileAuthority;
-import com.easycloudstorage.pojo.DirAuthority;
+import com.easycloudstorage.pojo.*;
 import com.easycloudstorage.service.organizationmodule.AuthorityService;
 import com.easycloudstorage.service.organizationmodule.OrganizationService;
 
@@ -16,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class AuthorityController {
@@ -98,4 +98,19 @@ public class AuthorityController {
 
         return "redirect:orgHomePage";
     }
+
+
+ /*  public String authorityShow(HttpSession session,String userId){
+       int orgId=(int)session.getAttribute("orgId");
+        Map<NormalFile,Integer> fileMap=authorityService.findFileAuthority(userId,orgId,authorityService.norList());
+        Map<Directory,Integer> dirMap=authorityService.findDirAuthority(userId,orgId,authorityService.dirAuthorityList());
+
+
+
+
+
+
+
+
+    }*/
 }

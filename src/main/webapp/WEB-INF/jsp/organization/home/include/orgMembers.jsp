@@ -211,7 +211,7 @@
                 window.location.href = "/EasyCloudStorage/removeGroupMember?memberId="+memberId+"&groupId="+groupId;
             });
             $("#choose-remove-modal .from-org").click(function () {
-                window.location.href = "/EasyCloudStorage/removeGroupMember?memberId="+memberId;
+                window.location.href = "/EasyCloudStorage/removeOrgMember?memberId="+memberId;
             });
 
             $("#choose-remove-modal").modal("show");
@@ -257,6 +257,7 @@
            <div class="org-name">
                ${organization.name}
            </div>
+            <h3 align="center"><font color="red">${error2}</font></h3>
            <div>
                <c:if test="${user.accountId == organization.ownerId}">
                    <a href="/EasyCloudStorage/toInvite" class="add-org-member-link" title="邀请成员">
@@ -295,6 +296,9 @@
                     </c:if>
                 </div>
             </c:forEach>
+
+
+            <c:if test="${not empty organization.groups}">
                 <div class="layui-collapse groups-div">
                     <c:forEach items="${organization.groups}" var="group">
                         <div class="layui-colla-item">
@@ -345,6 +349,7 @@
                         </div>
                     </c:forEach>
                 </div>
+            </c:if>
 
             <c:if test="${user.accountId == organization.ownerId}">
                <div class="add-group-div" data-toggle="modal" data-target=".bs-example-modal-lg">

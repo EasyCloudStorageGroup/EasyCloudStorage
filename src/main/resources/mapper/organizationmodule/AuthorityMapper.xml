@@ -42,4 +42,26 @@
     <insert id="insertDirAuthority" parameterType="DirAuthority">
         insert INTO dirauthority(accountId,dirId,orgId,authority) VALUES (#{accountId},#{dirId},#{orgId},#{authority});
     </insert>
+
+    <select id="getNorFileAuthority" resultMap="NorFileAuthorityMap" parameterType="String">
+        select * from norfileauthority fa ,normalFile nf
+            where fa.fileId=nf.fileId and fa.fileId=#{fileId} and fa.accountId=#{accountId};
+    </select>
+    <resultMap type="NorFileAuthority" id="NorFileAuthorityMap">
+        <id column="fileId" property="fileId"/>
+        <id column="accountId" property="accountId"/>
+        <result column="orgId" property="orgId"/>
+        <result column="authority" property="authority"/>
+        <association property="normalFile" javaType="NormalFile">
+            <id column="fileId" property="fileId"/>
+            <result column="name" property="name"/>
+            <result column="realPath" property="realPath"/>
+            <result column="type" property="type"/>
+            <result column="size" property="size"/>
+            <result column="parentDirId" property="parentDirId"/>
+            <result column="ownerId" property="ownerId"/>
+            <result column="orgId" property="orgId"/>
+            <result column="lastMovedTime" property="lastMovedTime"/>
+        </association>
+    </resultMap>
 </mapper>
