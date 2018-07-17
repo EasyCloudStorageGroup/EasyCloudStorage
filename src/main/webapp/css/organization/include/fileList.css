@@ -1,0 +1,95 @@
+
+.fileListBoard > div {
+    position: relative;
+}
+
+.fileListBoard-header {
+    height: 55px;
+    background-color: white;
+    border-radius:3px;
+    margin-bottom: 10px;
+}
+
+.fileListBoard-content {
+    background-color: white;
+    border-radius:3px;
+    overflow-y: auto;
+}
+
+.fileListBoard-content-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.dir-block, .nor-file-block {
+    position: relative;
+    margin: 20px 20px 0 20px;
+    width: 80px;
+}
+
+.dir-block img, .nor-file-block img{
+    width: 80px;
+    height: 80px;
+}
+
+.dir-name, .nor-file-name {
+    font: 12px/1.5 "Microsoft YaHei", arial, SimSun, 宋体;
+    color: #424e67;
+    text-align: center;
+    width: 80px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.file-select {
+    position: absolute;
+    left: -16px;
+    top: -16px;
+    z-index: 100;
+}
+.file-select .layui-form-checked[lay-skin=primary] i {
+    background-color: #574ab8 !important;
+    border-color: #574ab8 !important;
+}
+
+.file-hover-div {
+    border: 1px solid white;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.file-hover-div:hover {
+    cursor: pointer;
+}
+
+.file-hover, .file-selected {
+    background-color: #f1f5fa;
+    border: 1px solid #90c3fd;
+    border-radius: 5px;
+}
+
+.fileListBoard-header .layui-btn-container {
+    padding-top: 12px;
+    margin-left: 20px;
+}
+
+.fileListBoard-header .layui-btn-container .layui-btn-primary:hover {
+    border-color: #574ab8;
+}
+.fileListBoard-header .layui-btn-container .layui-btn-primary {
+    color: #574ab8;
+}
+
+.fileListBoard-header .layui-btn-container {
+    position: relative;
+}
+
+#authority-set-but {
+    position: absolute;
+    right: 30px;
+}
+
+#file-show-modal .modal-dialog {
+    width: 1000px;
+}

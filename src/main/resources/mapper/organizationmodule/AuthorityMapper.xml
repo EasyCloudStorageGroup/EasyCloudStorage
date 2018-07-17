@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycloudstorage.mapper.organizationmodule.AuthorityMapper">
+    <!--新建文件权限-->
+    <insert id="addNorFileAuthority" parameterType="NorFileAuthority">
+        insert into NorFileAuthority (accountId, fileId, orgId, authority)
+          values(#{accountId}, #{fileId}, #{orgId}, #{authority});
+    </insert>
+    
+    <!--新建文件夹权限-->
+    <insert id="addDirAuthority" parameterType="DirAuthority">
+        insert into DirAuthority (accountId, dirId, orgId, authority)
+          values (#{accountId}, #{dirId}, #{orgId}, #{authority});
+    </insert>
+
+    <!--权限管理-->
+    <select id="norAuthority" resultType="NorFileAuthority">
+        SELECT * FROM norfileauthority;
+    </select>
+
+    <select id="dirAuthority" resultType="DirAuthority">
+        SELECT * FROM dirauthority;
+    </select>
+
+    <update id="updateNorAutuority" parameterType="NorFileAuthority">
+        UPDATE norfileauthority SET accountId=#{accountId},fileId=#{fileId},authority=#{authority}
+        WHERE accountId=#{accountId} AND fileId=#{fileId} AND orgId=#{orgId};
+    </update>
+
+    <update id="updateDirAutuority" parameterType="DirAuthority">
+        UPDATE dirauthority SET accountId=#{accountId},dirId=#{dirId},authority=#{authority}
+        WHERE accountId=#{accountId} AND dirId=#{dirId} AND orgId=#{orgId};
+    </update>
+
+    <insert id="insertNorAuthority" parameterType="NorFileAuthority">
+        insert INTO norfileauthority(accountId,fileId,orgId,authority) VALUES (#{accountId},#{fileId},#{orgId},#{authority});
+    </insert>
+
+    <insert id="insertDirAuthority" parameterType="DirAuthority">
+        insert INTO dirauthority(accountId,dirId,orgId,authority) VALUES (#{accountId},#{dirId},#{orgId},#{authority});
+    </insert>
+</mapper>
