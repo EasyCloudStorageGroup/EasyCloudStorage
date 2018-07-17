@@ -8,6 +8,7 @@ import com.easycloudstorage.service.filemodule.FileService;
 import com.easycloudstorage.service.organizationmodule.OrganizationService;
 import com.easycloudstorage.util.CreateDirForOrg;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -239,18 +240,31 @@ public class OrganizationController {
 
     //接口方法,主要是增加删除等功能，映射还未添加
 
-    //将成员踢出组织,参数含义为第一个为只有组织拥有者能踢人，第二个是被踢的人的id，第三个用来获取当前组织的id
+    //将成员踢出组织,参数含义为第一个是被踢的人的id，第三个用来获取当前组织的id
     @RequestMapping("removeOrgMember")
     public String removeOrgMember(String memberId,HttpSession session) {
         int orgId=(int)session.getAttribute("orgId");
        User user=(User)session.getAttribute("user");
+      Organization org=organizationService.getByOrgId(orgId);
        String userId=user.getAccountId();
+       Group group=null;
+       User temp=null;
        if(userId!=null&&!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){//判断该用户是否为组织的拥有者，如果不是拥有者，直接退出此函数
            return "redirect:orgHomePage" ;
        }
        else {
            if(memberId.equals(user.getAccountId()))
                return "redirect:orgHomePage" ;
+
+           for(int i=0;i<org.getGroups().size();i++) {
+              group=org.getGroups().get(i);
+                 for(int j=0;j<group.getMembers().size();j++){
+                     temp=group.getMembers().get(j);
+                     if(temp!=null&&temp.getAccountId().equals(memberId))
+                        organizationService.removeGpMember(memberId,group.getGroupId());
+                 }
+              }
+
            organizationService.removeMember(memberId,orgId);
            return "redirect:orgHomePage" ;
        }
@@ -260,74 +274,63 @@ public class OrganizationController {
     public String deleteOrg(HttpSession session){
         User user=(User)session.getAttribute("user");
         String userId=user.getAccountId();
+        Organization org=(Organization)session.getAttribute("organization");
+        Group group=null;
         int orgId=(int)session.getAttribute("orgId");
         if(!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){
             return "redirect:orgHomePage";
         }
         else {
+            for(int i=0;i<org.getGroups().size();i++) {
+                group=org.getGroups().get(i);
+               organizationService.deleteGroup(group.getGroupId());
+                }
+                for(int j=0;j<org.getMembers().size();j++){
+                user=org.getMembers().get(j);
+                organizationService.removeMember(user.getAccountId(),orgId);
+                }
+            }
             organizationService.deleteOrg(orgId);
             return "redirect:organizationPage";
         }
-    }
 
     //往分组里添加已经在组织内的成员
-    //这个具体形式还没想好，参数为 memberId为被添加到分组的成员的Id，groupId为被加入的分组
     @RequestMapping("addGroupMember")
     public String addGroupMember(String memberId,int groupId,HttpSession session){
         User user=(User)session.getAttribute("user");
         String userId=user.getAccountId();
         int orgId=(int)session.getAttribute("orgId");
+        Group tem;
+        User temp;
+        Organization org=organizationService.getByOrgId(orgId);
         if(!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){
             return "redirect:orgHomePage";
         }
         else {
+            for(int i=0;i<org.getGroups().size();i++){
+                tem=org.getGroups().get(i);
+                if(tem.getGroupId().equals(groupId))
+                for(int j=0;j<tem.getMembers().size();j++)
+                {
+                 temp=tem.getMembers().get(j);
+                 if(temp.getAccountId().equals(memberId))
+                     return "redirect:orgHomePage";
+                }
+            }
             organizationService.distributeMember(memberId,groupId);
             return  "redirect:orgHomePage";
         }
     }
 
-
     //新建分组，需要填写组名，描述,orgId会自动获取，groupId会自动生成
     @RequestMapping(value = "/addGroup", method = RequestMethod.POST)
     public String addGroup(@RequestParam("name")String name, @RequestParam("description")String description,HttpSession session){
-        ModelAndView mv = new ModelAndView();
-        List<Group> groupList = organizationService.groupList();
-
-        int repeatFlag = 0;
-
-        for(Group group:groupList){
-            if(name.equals(group.getName())){
-                repeatFlag++;
-            }
-        }
-        Group group=null;
-        //避免输入为空
-        if("".equals(name) || "".equals(description)){
-         //   mv.setViewName("checkout/register");
-            String error = "输入为空";
-            mv.addObject("error", error);
-        }
-        else{
-            //用户名重复
-            if(repeatFlag != 0){
-         //       mv.setViewName("organization/create/createPage");
-                String error = "已被注册的组名";
-                mv.addObject("error", error);
-            }
-            //均符合规范向数据库中添加用户
-            else{
-                User user=new User();
-                user=(User)session.getAttribute("user");
-                group= new Group();
+          Group group= new Group();
                 group.setName(name);
                 group.setOrgId((int)session.getAttribute("orgId"));
                 group.setDescription(description);
                 organizationService.addGroup(group);
-           //     mv.setViewName("organization/create/inviteMember");
 
-            }
-            //mv.setViewName("checkout/register");
-        }
         return "redirect:orgHomePage" ;
     }
 
@@ -337,10 +340,19 @@ public class OrganizationController {
     User user=(User)session.getAttribute("user");
     String userId=user.getAccountId();
     int orgId=(int)session.getAttribute("orgId");
+    Organization org=organizationService.getByOrgId(orgId);
+    Group group=new Group();
+        for (Group temp :org.getGroups()) {
+            if(temp.getGroupId().equals(groupId))
+                group=temp;
+        }
     if(!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){
         return "redirect:orgHomePage";
     }
     else {
+        for(User tem:group.getMembers()){
+      organizationService.removeGpMember(tem.getAccountId(),groupId);
+        }
         organizationService.deleteGroup(groupId);
         return "redirect:orgHomePage";
     }

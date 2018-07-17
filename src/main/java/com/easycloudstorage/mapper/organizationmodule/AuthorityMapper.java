@@ -22,4 +22,6 @@ public interface AuthorityMapper {
     void updateDirAutuority(DirAuthority dirAuthority);
 
     void insertDirAuthority(DirAuthority dirAuthority);
+
+    void getNorFileAuthority(int fileId,String accountId);
 }
