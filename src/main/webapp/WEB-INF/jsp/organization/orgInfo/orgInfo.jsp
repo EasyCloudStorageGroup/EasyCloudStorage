@@ -23,9 +23,7 @@
 
 <div style="overflow-y:auto;overflow-x:hidden; border-style: dashed;border-color: #c1e2b3;position:absolute;left: 20%; top: 15%; width:60%;height:90%;background-color:#ffffff">
     <a href="/EasyCloudStorage/enterOrganization?orgId=${organization.orgId}"><button class="layui-btn">返回</button></a>
-    <a href="/EasyCloudStorage/deleteOrg">
-        <button class="layui-btn layui-btn-danger" style="float: right;">解散组织</button>
-    </a>
+    <a href="/EasyCloudStorage/deleteOrg"><button class="layui-btn layui-btn-danger" id="dismiss" style="float: right;">解散组织</button></a>
     <div class="layui-tab" >
         <ul class="layui-tab-title">
             <li class="layui-this">组织信息</li>
@@ -126,6 +124,17 @@
 
 
 <script>
+
+    // $('#dismiss').click(function(){
+    //     $.ajax({
+    //         type: "Post"
+    //         , url: "dismiss"
+    //         ,success: function (data, success) {
+    //             alert(data);
+    //         }
+    //     });
+    // });
+
 
     layui.use(['form', 'layedit', 'laydate'], function(){
         var form = layui.form
