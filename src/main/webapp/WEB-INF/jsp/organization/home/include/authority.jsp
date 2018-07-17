@@ -122,14 +122,14 @@
                         <tr style="margin-top: 20px">
                             <td valign="top">权限类型：</td>
                             <td>
-                                <form class="layui-form">
+                                <form class="layui-form" id="authority-select-form">
                                     <select id="authority" class="select" lay-verify="">
-                                        <option value="0">可预览</option>
-                                        <option value="1">可预览、下载</option>
-                                        <option value="2">可预览、编辑</option>
-                                        <option value="3">可预览、创建文件夹</option>
-                                        <option value="4">可预览、下载和编辑</option>
-                                        <option value="5">可预览、创建和编辑</option>
+                                        <option value="0" class="select_0">可预览</option>
+                                        <option value="1" class="select_1">可预览、下载</option>
+                                        <option value="2" class="select_2">可预览、编辑</option>
+                                        <option value="3" class="select_3">可预览、创建文件夹</option>
+                                        <option value="4" class="select_4">可预览、下载和编辑</option>
+                                        <option value="5" class="select_5">可预览、创建和编辑</option>
                                     </select>
                                 </form>
                             </td>

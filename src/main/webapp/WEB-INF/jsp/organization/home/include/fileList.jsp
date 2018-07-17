@@ -142,6 +142,72 @@
             layui.use('element', function(){
                 var element = layui.element;
             });
+        });
+
+        /*权限设置点击操作*/
+        $("#authority-set-but").click(function () {
+             layui.use('form', function() {
+                 var form = layui.form;
+
+                 $(".selected-files-name-div").empty();
+                 $("#authority").remove();
+
+                 var selectedFiles = $("input[name = 'check']:checked, input[name = 'check2']:checked");
+                 var selectedNorFileNum = $("input[name = 'check']:checked").length;
+                 var selectedDirNum = $("input[name = 'check2']:checked").length;
+
+                 selectedFiles.each(function () {
+                     var nameBadge = $("<span class='layui-badge layui-bg-gray' style='margin-right: 5px'>"+$(this).attr("fileName")+"</span>")
+                     $(".selected-files-name-div").append(nameBadge);
+                 });
+
+                 var authority = $("<select id=\"authority\" class=\"select\" lay-verify=\"\">\n" +
+                     "                                        <option value=\"0\" class=\"select_0\">可预览</option>\n" +
+                     "                                        <option value=\"1\" class=\"select_1\">可预览、下载</option>\n" +
+                     "                                        <option value=\"2\" class=\"select_2\">可预览、编辑</option>\n" +
+                     "                                        <option value=\"3\" class=\"select_3\">可预览、创建文件夹</option>\n" +
+                     "                                        <option value=\"4\" class=\"select_4\">可预览、下载和编辑</option>\n" +
+                     "                                        <option value=\"5\" class=\"select_5\">可预览、创建和编辑</option>\n" +
+                     "                                    </select>");
+
+                 if(selectedNorFileNum >= 1 && selectedDirNum == 0) {
+                     authority = $("<select id=\"authority\" class=\"select\" lay-verify=\"\">\n" +
+                         "                                        <option value=\"0\" class=\"select_0\">可预览</option>\n" +
+                         "                                        <option value=\"1\" class=\"select_1\">可预览、下载</option>\n" +
+                         "                                        <option value=\"2\" class=\"select_2\">可预览、编辑</option>\n" +
+                         "                                        <option value=\"3\" class=\"select_3\" disabled>可预览、创建文件夹</option>\n" +
+                         "                                        <option value=\"4\" class=\"select_4\">可预览、下载和编辑</option>\n" +
+                         "                                        <option value=\"5\" class=\"select_5\" disabled>可预览、创建和编辑</option>\n" +
+                         "                                    </select>");
+                 }
+                 else if(selectedDirNum >= 1 && selectedNorFileNum == 0) {
+                     authority = $("<select id=\"authority\" class=\"select\" lay-verify=\"\">\n" +
+                         "                                        <option value=\"0\" class=\"select_0\">可预览</option>\n" +
+                         "                                        <option value=\"1\" class=\"select_1\" disabled>可预览、下载</option>\n" +
+                         "                                        <option value=\"2\" class=\"select_2\">可预览、编辑</option>\n" +
+                         "                                        <option value=\"3\" class=\"select_3\">可预览、创建文件夹</option>\n" +
+                         "                                        <option value=\"4\" class=\"select_4\" disabled>可预览、下载和编辑</option>\n" +
+                         "                                        <option value=\"5\" class=\"select_5\">可预览、创建和编辑</option>\n" +
+                         "                                    </select>");
+                 }
+                 else {
+                     authority = $("<select id=\"authority\" class=\"select\" lay-verify=\"\">\n" +
+                         "                                        <option value=\"0\" class=\"select_0\">可预览</option>\n" +
+                         "                                        <option value=\"1\" class=\"select_1\" disabled>可预览、下载</option>\n" +
+                         "                                        <option value=\"2\" class=\"select_2\">可预览、编辑</option>\n" +
+                         "                                        <option value=\"3\" class=\"select_3\" disabled>可预览、创建文件夹</option>\n" +
+                         "                                        <option value=\"4\" class=\"select_4\" disabled>可预览、下载和编辑</option>\n" +
+                         "                                        <option value=\"5\" class=\"select_5\" disabled>可预览、创建和编辑</option>\n" +
+                         "                                    </select>");
+                 }
+
+                 $("#authority-select-form").prepend(authority);
+                 form.render();
+
+                 $("#authority-set-modal").modal("show");
+
+                 clearStorage();
+             })
         })
     });
 </script>
@@ -176,7 +242,7 @@
                 </div>
 
                 <c:if test="${organization.ownerId == user.accountId}">
-                    <button class="layui-btn layui-btn-primary layui-btn-sm" id="authority-set-but" onclick="authoritySetButClick(); clearStorage()">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" id="authority-set-but">
                         权限设置
                     </button>
                 </c:if>

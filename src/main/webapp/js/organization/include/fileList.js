@@ -146,16 +146,3 @@ function renameFile()
         });
     });
 }
-
-
-/*权限管理点击事件*/
-function authoritySetButClick() {
-    $(".selected-files-name-div").empty();
-    var selectedFiles = $("input[name = 'check']:checked, input[name = 'check2']:checked");
-    selectedFiles.each(function () {
-        var nameBadge = $("<span class='layui-badge layui-bg-gray' style='margin-right: 5px'>"+$(this).attr("fileName")+"</span>")
-        $(".selected-files-name-div").append(nameBadge);
-    });
-
-    $("#authority-set-modal").modal("show");
-}
