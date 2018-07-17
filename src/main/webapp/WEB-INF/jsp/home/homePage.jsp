@@ -33,6 +33,7 @@
         $(".imgShow").css("background", "${sessionScope.user.getBgUrl()}");
         $(".imgShow").css("background-size","264px 180px");
         $("#passwordText").hide();
+        $("#blank").hide();
     })
 </script>
 
@@ -357,7 +358,44 @@ border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
 </script>
 <%--文件分享模块--%>
 <link href="/EasyCloudStorage/bootstrap/css/bootstrap.min.css">
+<link href="/EasyCloudStorage/css/modalDialog.css">
 <script src="/EasyCloudStorage/bootstrap/js/bootstrap.min.js"></script>
+<style>
+    .radioBtn-Group{
+        display: flex;
+        justify-content: center;
+    }
+
+    .text-Group{
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn-group{
+        display: flex;
+        justify-content: center;
+    }
+
+    #createLink{
+        margin-right: 10px;
+    }
+
+    #copyLink{
+        margin-left: 10px;
+    }
+
+    .pr{
+        margin-right: 10px;
+    }
+
+    .pu{
+        margin-left: 10px;
+    }
+
+    #blank{
+        width: 15px;
+    }
+</style>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -366,27 +404,27 @@ border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
                 <h4 class="modal-title" id="myModalLabel">文件分享</h4>
             </div>
             <div class="modal-body">
-                <div>
-                    <label><input name="sharing" type="radio" value="private" id="private">加密</label>
-                    <label><input name="sharing" type="radio" value="public" id="public">公开</label>
+                <div class="radioBtn-Group">
+                    <label class="pr"><input name="sharing" type="radio" value="private" id="private">加密</label>
+                    <label class="pu"><input name="sharing" type="radio" value="public" id="public">公开</label>
                 </div>
-                <div>
-                    <label><input type="text" class="form-control" id="linkText"></label>
-                    <label><input type="text" class="form-control" id="passwordText" placeholder="请输入加密密钥"></label>
+                <div class="text-Group">
+                    <label class="lt"><input type="text" class="form-control" id="linkText"></label>
+                    <label id="blank"></label>
+                    <label class="pt"><input type="text" class="form-control" id="passwordText" placeholder="加密密钥"></label>
                 </div>
                 <div class="btn-group">
                     <button type="button" class="layui-btn layui-btn-normal" id="createLink">生成链接</button>
                     <button id="copyLink" type="button" class="layui-btn layui-btn-normal" onclick="copyText()">复制链接</button>
-                    <div>
-            </div>
-            <div class="modal-footer">
+                </div>
+                <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" id="close">关闭</button>
-            </div>
-        </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 <script>
     var fileId = 0;
     var linkHead = "http://localhost:8080";
@@ -416,9 +454,11 @@ border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
     }
     $("#private").click(function () {
         $("#passwordText").show();
+        $("#blank").show();
     })
     $("#public").click(function () {
         $("#passwordText").hide();
+        $("#blank").hide();
     })
     $("#createLink").click(function () {
         if($("input[name='sharing']:checked").val() === "public"){

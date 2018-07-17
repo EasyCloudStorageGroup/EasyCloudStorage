@@ -141,14 +141,13 @@
         </div>
         <div class="imgShow"></div>
     </div>
-    <div class="bottom"><button class="quit layui-btn">收起</button></div>
+    <div class="bottom"><button class="quit layui-btn" id="quit">收起</button></div>
 </div>
 
 <script type="text/javascript">
     var i = 0;
     $("#changeSkin").click(function(){
         $(".head").animate({height:"288px"},500);
-
     });
     $(".quit").click(function () {
         $(".head").animate({height:"0px"},500)
