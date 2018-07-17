@@ -291,13 +291,6 @@ public class OrganizationController {
         ModelAndView mv = new ModelAndView();
         List<Group> groupList = organizationService.groupList();
 
-        int repeatFlag = 0;
-
-        for(Group group:groupList){
-            if(name.equals(group.getName())){
-                repeatFlag++;
-            }
-        }
         Group group=null;
         //避免输入为空
         if("".equals(name) || "".equals(description)){
@@ -306,26 +299,15 @@ public class OrganizationController {
             mv.addObject("error", error);
         }
         else{
-            //用户名重复
-            if(repeatFlag != 0){
-         //       mv.setViewName("organization/create/createPage");
-                String error = "已被注册的组名";
-                mv.addObject("error", error);
-            }
-            //均符合规范向数据库中添加用户
-            else{
-                User user=new User();
-                user=(User)session.getAttribute("user");
-                group= new Group();
-                group.setName(name);
-                group.setOrgId((int)session.getAttribute("orgId"));
-                group.setDescription(description);
-                organizationService.addGroup(group);
-           //     mv.setViewName("organization/create/inviteMember");
-
-            }
-            //mv.setViewName("checkout/register");
+            User user=new User();
+            user=(User)session.getAttribute("user");
+            group= new Group();
+            group.setName(name);
+            group.setOrgId((int)session.getAttribute("orgId"));
+            group.setDescription(description);
+            organizationService.addGroup(group);
         }
+
         return "redirect:orgHomePage" ;
     }
 

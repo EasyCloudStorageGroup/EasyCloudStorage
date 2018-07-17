@@ -78,10 +78,11 @@
 </script>
 
 <style>
-    #Permission {
-
+    #Permission tr {
+        margin-top: 20px;
     }
 </style>
+
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="authority-set-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -121,24 +122,24 @@
                                 </table>
                             </td>
                         </tr>
-                    <tr height="5">
-                        <td colspan="2"></td>
-                    </tr>
-                    <tr>
-                        <td valign="top">权限类型：</td>
-                        <td>
-                            <form class="layui-form">
-                                <select id="authority" class="select" lay-verify="">
-                                    <option value="0">可预览</option>
-                                    <option value="1">可预览、下载</option>
-                                    <option value="2">可预览、编辑</option>
-                                    <option value="3">可预览、创建文件夹</option>
-                                    <option value="4">可预览、下载和编辑</option>
-                                    <option value="5">可预览、创建和编辑</option>
-                                </select>
-                            </form>
-                        </td>
-                    </tr>
+                        <tr height="5">
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td valign="top">权限类型：</td>
+                            <td>
+                                <form class="layui-form">
+                                    <select id="authority" class="select" lay-verify="">
+                                        <option value="0">可预览</option>
+                                        <option value="1">可预览、下载</option>
+                                        <option value="2">可预览、编辑</option>
+                                        <option value="3">可预览、创建文件夹</option>
+                                        <option value="4">可预览、下载和编辑</option>
+                                        <option value="5">可预览、创建和编辑</option>
+                                    </select>
+                                </form>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
