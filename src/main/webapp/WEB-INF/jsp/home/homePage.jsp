@@ -227,23 +227,23 @@
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
             <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
-                <td><input type="checkbox" value="${NormalFile.fileId}" name="check">
-                    <img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px" style="position:relative;left: 20px"/><!--文件图片--></td>    <!--下载的多选框-->
+                <td style="width: 10%"><input type="checkbox" value="${NormalFile.fileId}" name="check">  <!--下载的多选框-->
+                <td style="width: 10%"><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/></td><!--文件图片-->
                 <!--该choose决定了文件是否可以接着跳转查看详细信息，目前支持txt，jpg，MP3等格式的预览-->
                 <c:choose>
                     <%-- 以下文件类型能接着跳转查看详细信息--%>
 
                     <c:when test="${NormalFile.type=='image/jpeg'||NormalFile.type=='image/png'||NormalFile.type=='text/plain'||NormalFile.type=='audio/mp3'||NormalFile.type=='video/mp4'}">
-                <td><a  href="/EasyCloudStorage/homePage?fileId=${NormalFile.fileId}">${NormalFile.name}</a></td>
+                <td style="width: 40%"><a  href="/EasyCloudStorage/homePage?fileId=${NormalFile.fileId}">${NormalFile.name}</a></td>
                     </c:when>
                     <%-- 其他文件只能看到文件名，无法点击--%>
 
                     <c:otherwise>
-                        <td>${NormalFile.name}</td>
+                        <td style="width: 40%">${NormalFile.name}</td>
                     </c:otherwise>
                 </c:choose>
-                <td>${NormalFile.type}</td>     <!--文件类型-->
-                <td>${NormalFile.displayTime}</td>     <!--文件最后改动时间-->
+                <td style="width: 20%">${NormalFile.type}</td>     <!--文件类型-->
+                <td style="width: 20%">${NormalFile.displayTime}</td>     <!--文件最后改动时间-->
                 <td><button type="submit" onclick="getFileId(this.value)" class="layui-btn layui-btn-normal" data-toggle="modal" data-target="#myModal" value="${NormalFile.fileId}">分享</button></td>
             </tr>
         </c:forEach>
