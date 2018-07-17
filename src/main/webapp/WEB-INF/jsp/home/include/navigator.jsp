@@ -148,6 +148,7 @@
     var i = 0;
     $("#changeSkin").click(function(){
         $(".head").animate({height:"288px"},500);
+
     });
     $(".quit").click(function () {
         $(".head").animate({height:"0px"},500)
@@ -159,11 +160,17 @@
     });
     $(".imgList img").click(function () {
         var url = 'url(/EasyCloudStorage/img/changeSkin/'+ (i+1) +'.jpg)';
+        $("body").css("background", url);
         var data = {
             "bgUrl":  url,
-            "accountId": "${sessionScope.user.getAccountId()}"
+            "accountId": "${sessionScope.user.getAccountId()}",
         };
-        window.location = "getBgUrl?" + $.param(data);
+        //window.location = "getBgUrl?" + $.param(data);
+        $.ajax({
+            type: "post",
+            url: "getBgUrl",
+            data: data
+        });
     });
 
 </script>

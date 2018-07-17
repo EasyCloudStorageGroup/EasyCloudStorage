@@ -158,11 +158,12 @@ public class UserController  {
     }
 
     @RequestMapping("/getBgUrl")
-    public String getBgUrl(@RequestParam("bgUrl") String bgUrl, @RequestParam("accountId") String accountId, HttpSession session){
+    public ModelAndView getBgUrl(@RequestParam("bgUrl") String bgUrl, @RequestParam("accountId") String accountId,HttpSession session){
+        ModelAndView mv = new ModelAndView();
         User theUser = userService.getUserByAccountId(accountId);
         theUser.setBgUrl(bgUrl);
         userService.updateBgUrl(theUser);
         session.setAttribute("user", theUser);
-        return "redirect:homePage";
+        return null;
     }
 }
