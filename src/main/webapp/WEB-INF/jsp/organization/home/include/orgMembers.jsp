@@ -251,29 +251,25 @@
 </script>
 
 
+
 <div class="orgMembersBoard layui-col-md3">
     <div class="layui-col-md12">
 
         <div class="orgMembersBoard-header">
-           <a href="modifyOrg">
-               <div class="org-name">
-               ${organization.name}
-<<<<<<< HEAD
-           </div>
-            <h3 align="center"><font color="red">${error2}</font></h3>
-=======
+            <a href="modifyOrg">
+                <div class="org-name">
+                    ${organization.name}
                 </div>
-           </a>
->>>>>>> 81c5197cdbc7a82c65300f449d0812d2831af17d
-           <div>
-               <c:if test="${user.accountId == organization.ownerId}">
-                   <a href="/EasyCloudStorage/toInvite" class="add-org-member-link" title="邀请成员">
-                       <i class="layui-icon">&#xe61f;</i>
-                   </a>
-               </c:if>
-           </div>
+            </a>
+            <div>
+                <c:if test="${user.accountId == organization.ownerId}">
+                    <a href="/EasyCloudStorage/toInvite" class="add-org-member-link" title="邀请成员">
+                        <i class="layui-icon">&#xe61f;</i>
+                    </a>
+                </c:if>
+            </div>
         </div>
-       <div class="org-members">
+        <div class="org-members">
             <c:forEach items="${organization.unGroupedMembers}" var="member">
                 <div class="un-grouped-member-div">
                     <div>
@@ -303,69 +299,66 @@
                     </c:if>
                 </div>
             </c:forEach>
+            <div class="layui-collapse groups-div">
+                <c:forEach items="${organization.groups}" var="group">
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">
+                                ${group.name}
+                            <c:if test="${user.accountId == organization.ownerId}">
+                                <a class="add-group-member-link" title="添加组成员" groupId="${group.groupId}">
+                                    <i class="layui-icon">&#xe61f;</i>
+                                </a>
 
-
-            <c:if test="${not empty organization.groups}">
-                <div class="layui-collapse groups-div">
-                    <c:forEach items="${organization.groups}" var="group">
-                        <div class="layui-colla-item">
-                            <h2 class="layui-colla-title">
-                                    ${group.name}
-                                <c:if test="${user.accountId == organization.ownerId}">
-                                    <a class="add-group-member-link" title="添加组成员" groupId="${group.groupId}">
-                                        <i class="layui-icon">&#xe61f;</i>
-                                    </a>
-
-                                    <a class="remove-group-link" title="解散该组" groupId="${group.groupId}" groupName="${group.name}">
-                                        <i class="layui-icon">&#x1006;</i>
-                                    </a>
-                                </c:if>
-                            </h2>
-                            <div class="layui-colla-content layui-show">
-                                <c:forEach items="${group.members}" var="member" varStatus="status">
-                                    <div class="grouped-member-div">
-                                        <div>
-                                            <c:if test="${member.defaultAvatar==1}">
-                                                <c:if test="${member.sex=='male'}">
-                                                    <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-male.png">
-                                                </c:if>
-                                                <c:if test="${member.sex=='female'}">
-                                                    <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-female.png">
-                                                </c:if>
+                                <a class="remove-group-link" title="解散该组" groupId="${group.groupId}" groupName="${group.name}">
+                                    <i class="layui-icon">&#x1006;</i>
+                                </a>
+                            </c:if>
+                        </h2>
+                        <div class="layui-colla-content layui-show">
+                            <c:forEach items="${group.members}" var="member" varStatus="status">
+                                <div class="grouped-member-div">
+                                    <div>
+                                        <c:if test="${member.defaultAvatar==1}">
+                                            <c:if test="${member.sex=='male'}">
+                                                <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-male.png">
                                             </c:if>
-                                            <c:if test="${member.defaultAvatar==0}">
-                                                <img class="avatar" src="/EasyCloudStorage/img/avatar/${member.accountId}.jpg">
+                                            <c:if test="${member.sex=='female'}">
+                                                <img class="avatar" src="/EasyCloudStorage/img/avatar/default-avatar-female.png">
                                             </c:if>
-                                                ${member.userName}
-                                            <c:if test="${organization.ownerId == member.accountId}">
-                                                (创建者)
-                                            </c:if>
-                                            <c:if test="${member.accountId == user.accountId}">
-                                                (我)
-                                            </c:if>
-                                        </div>
-
-                                        <c:if test="${user.accountId == organization.ownerId}">
-                                            <a class="grouped-member-ops-link" title="移出操作" memberId="${member.accountId}" groupId="${group.groupId}">
-                                                <i class="layui-icon">&#x1006;</i>
-                                            </a>
+                                        </c:if>
+                                        <c:if test="${member.defaultAvatar==0}">
+                                            <img class="avatar" src="/EasyCloudStorage/img/avatar/${member.accountId}.jpg">
+                                        </c:if>
+                                            ${member.userName}
+                                        <c:if test="${organization.ownerId == member.accountId}">
+                                            (创建者)
+                                        </c:if>
+                                        <c:if test="${member.accountId == user.accountId}">
+                                            (我)
                                         </c:if>
                                     </div>
-                                </c:forEach>
-                            </div>
+
+                                    <c:if test="${user.accountId == organization.ownerId}">
+                                        <a class="grouped-member-ops-link" title="移出操作" memberId="${member.accountId}" groupId="${group.groupId}">
+                                            <i class="layui-icon">&#x1006;</i>
+                                        </a>
+                                    </c:if>
+                                </div>
+                            </c:forEach>
                         </div>
-                    </c:forEach>
-                </div>
-            </c:if>
+                    </div>
+                </c:forEach>
+            </div>
 
             <c:if test="${user.accountId == organization.ownerId}">
-               <div class="add-group-div" data-toggle="modal" data-target=".bs-example-modal-lg">
-                   <i class="layui-icon" style="font-size: 20px">&#xe654;</i> 新建分组
-               </div>
+                <div class="add-group-div" data-toggle="modal" data-target=".bs-example-modal-lg">
+                    <i class="layui-icon" style="font-size: 20px">&#xe654;</i> 新建分组
+                </div>
             </c:if>
         </div>
     </div>
 </div>
+
 
 <c:if test="${user.accountId == organization.ownerId}">
 <!-- 新建分组 -->

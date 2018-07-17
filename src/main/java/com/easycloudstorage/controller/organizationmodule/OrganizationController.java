@@ -313,24 +313,30 @@ public class OrganizationController {
     public String deleteOrg(HttpSession session){
         User user=(User)session.getAttribute("user");
         String userId=user.getAccountId();
-        Organization org=(Organization)session.getAttribute("organization");
+OrganizationController oc=new OrganizationController();
         Group group=null;
         int orgId=(int)session.getAttribute("orgId");
+        Organization org=organizationService.getByOrgId(orgId);
         if(!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){
             return "redirect:orgHomePage";
         }
         else {
+            if(org.getGroups()!=null)
             for(int i=0;i<org.getGroups().size();i++) {
                 group=org.getGroups().get(i);
-               organizationService.deleteGroup(group.getGroupId());
+                for(User tem:group.getMembers()){
+                    organizationService.removeGpMember(tem.getAccountId(),group.getGroupId());
                 }
-                for(int j=0;j<org.getMembers().size();j++){
+                organizationService.deleteGroup(group.getGroupId());
+                }
+                if(org.getMembers()!=null)
+            for(int j=0;j<org.getMembers().size();j++){
                 user=org.getMembers().get(j);
                 organizationService.removeMember(user.getAccountId(),orgId);
                 }
-            }
             organizationService.deleteOrg(orgId);
             return "redirect:organizationPage";
+            }
         }
 
     //往分组里添加已经在组织内的成员
@@ -389,7 +395,7 @@ public class OrganizationController {
     }
     else {
         for(User tem:group.getMembers()){
-      organizationService.removeGpMember(tem.getAccountId(),groupId);
+        organizationService.removeGpMember(tem.getAccountId(),groupId);
         }
         organizationService.deleteGroup(groupId);
         return "redirect:orgHomePage";
