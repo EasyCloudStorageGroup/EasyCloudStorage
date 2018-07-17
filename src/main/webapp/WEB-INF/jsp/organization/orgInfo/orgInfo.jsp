@@ -21,8 +21,9 @@
 
 <%--将参数传给组织id传给服务器--%>
 
-<div style="position:absolute;left: 25%; top: 15%; width:50%;height:90%;background-color:#ffffff">
+<div style="overflow-y:auto;overflow-x:hidden; border-style: dashed;border-color: #c1e2b3;position:absolute;left: 20%; top: 15%; width:60%;height:90%;background-color:#ffffff">
     <a href="/EasyCloudStorage/enterOrganization?orgId=${organization.orgId}"><button class="layui-btn">返回</button></a>
+    <button class="layui-btn layui-btn-danger" style="float: right;">解散组织</button>
     <div class="layui-tab" >
         <ul class="layui-tab-title">
             <li class="layui-this">组织信息</li>
@@ -31,24 +32,41 @@
 
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
-                <dl style="text-align: center;font-size: large">
-                    <dd><strong>名字：</strong> ${organization.name}</dd><br>
-                    <dd><strong>描述：</strong> ${organization.description}</dd><br>
-                    <dt>分组信息：</dt>
+                <fieldset class="layui-elem-field">
+                    <legend>组名</legend>
+                    <div class="layui-field-box">
+                        ${organization.name}
+                    </div>
+                </fieldset>
+                <br>
+                <fieldset class="layui-elem-field">
+                    <legend>组织描述</legend>
+                    <div class="layui-field-box">
+                        ${organization.description}
+                    </div>
+                </fieldset>
+                <br>
                     <c:choose>
                         <c:when test="${empty groupList}">
-                            <dd>当前无任何分组</dd>
+                            <fieldset class="layui-elem-field layui-field-title">
+                                <legend>当前无任何分组</legend>
+                            </fieldset>
                         </c:when>
                         <c:otherwise>
                             <c:forEach items="${groupList}" var="group">
-                                <dt>${group.name}:</dt>
-                                <dd>描述：${group.description}</dd>
-                                <dd>成员数：${group.members.size()}</dd>
+                                <fieldset class="layui-elem-field">
+                                    <legend>${group.name}</legend>
+                                    <div class="layui-field-box">
+                                        <P>
+                                            描述：${group.description}<br>
+                                            成员数：${group.members.size()}
+                                        </P>
+                                    </div>
+                                </fieldset>
                                 <br>
                             </c:forEach>
                         </c:otherwise>
                     </c:choose>
-                </dl>
             </div>
             <div class="layui-tab-item">
 
@@ -66,9 +84,28 @@
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">新描述</label>
                     <div class="layui-input-block">
-                        <textarea name="description" class="layui-textarea" placeholder="请输入名字">${organization.description}</textarea>
+                        <textarea name="description" class="layui-textarea" placeholder="请输入描述">${organization.description}</textarea>
                     </div>
                 </div>
+
+                    <c:forEach items="${groupList}" var="group">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">组名</label>
+                            <div class="layui-input-block">
+                                <input name="name${group.groupId}" class="layui-input" type="text" placeholder="请输入名字" autocomplete="off" lay-verify="orgName"
+                                       value="${group.name}">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">描述</label>
+                            <div class="layui-input-block">
+                                <textarea name="description${group.groupId}" class="layui-textarea" placeholder="请输入描述">${group.description}</textarea>
+                            </div>
+                        </div>
+                        <br>
+                    </c:forEach>
+
 
                 <div class="layui-form-item">
                     <div class="layui-input-block">
@@ -97,8 +134,16 @@
         //自定义验证规则
         form.verify({
             title: function(value){
-                if(value.length < 5){
-                    return '标题至少得5个字符啊';
+                if(value.length < 1){
+                    return '名字不得为空';
+                }
+                if(value.length > 10){
+                    return '名字不得大于十个字符';
+                }
+            }
+            ,orgName:function (value) {
+                if(value.length < 1){
+                    return '组名不能为空';
                 }
             }
         });

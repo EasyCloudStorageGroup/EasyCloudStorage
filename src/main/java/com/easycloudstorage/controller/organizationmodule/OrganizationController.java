@@ -258,6 +258,14 @@ public class OrganizationController {
         Organization org=organizationService.getByOrgId(orgId);
         String name=request.getParameter("newName");
         String description=(String) request.getParameter("description");
+        List<Group> groups=organizationService.getGroupByOrgId(orgId);
+        for (int i=0;i<groups.size();++i){
+            int groupId=groups.get(i).getGroupId();
+            String groupName=request.getParameter("name"+groupId);
+            String groupDescription=request.getParameter("description"+groupId);
+            organizationService.changeGroupName(groupId,groupName);
+            organizationService.changeGroupDescription(groupId,groupDescription);
+        }
         organizationService.changeName(orgId,name);
         organizationService.changeDescription(orgId,description);
         ModelAndView mv =new ModelAndView("organization/orgInfo/success");

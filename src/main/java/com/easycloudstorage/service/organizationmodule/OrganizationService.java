@@ -126,9 +126,18 @@ public class OrganizationService {
         organizationMapper.changeDescription(orgId,newDes);
     }
 
+    public void changeGroupName(int groupId,String newName){organizationMapper.changeGroupName(groupId,newName);};
+
+    public void changeGroupDescription(int groupId,String newDescription){
+        organizationMapper.changeGroupDescription(groupId,newDescription);
+    };
+
+    public void deleteOrganization(int orgId){organizationMapper.deleteOrganizaiton(orgId);}
+
     public List<Group> getGroupByOrgId(int orgId){
         return organizationMapper.getGroupByOrgId(orgId);
     }
 
     public List<User> getUsersByGroupId(int groupId){return organizationMapper.getUsersByGroupId(groupId);}
+
 }
