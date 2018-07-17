@@ -77,6 +77,11 @@
     })
 </script>
 
+<style>
+    #Permission {
+
+    }
+</style>
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="authority-set-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -122,18 +127,16 @@
                     <tr>
                         <td valign="top">权限类型：</td>
                         <td>
-                            <div style="height: 120px; overflow:auto; border:1px solid #e2e2e2">
-                                <form class="layui-form">
-                                    <select id="authority" class="select" lay-verify="">
-                                        <option value="0">可预览</option>
-                                        <option value="1">可预览、下载</option>
-                                        <option value="2">可预览、编辑</option>
-                                        <option value="3">可预览、创建文件夹</option>
-                                        <option value="4">可预览、下载和编辑</option>
-                                        <option value="5">可预览、创建和编辑</option>
-                                    </select>
-                                </form>
-                            </div>
+                            <form class="layui-form">
+                                <select id="authority" class="select" lay-verify="">
+                                    <option value="0">可预览</option>
+                                    <option value="1">可预览、下载</option>
+                                    <option value="2">可预览、编辑</option>
+                                    <option value="3">可预览、创建文件夹</option>
+                                    <option value="4">可预览、下载和编辑</option>
+                                    <option value="5">可预览、创建和编辑</option>
+                                </select>
+                            </form>
                         </td>
                     </tr>
                     </tbody>

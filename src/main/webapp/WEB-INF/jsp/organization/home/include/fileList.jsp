@@ -176,7 +176,7 @@
                 </div>
 
                 <c:if test="${organization.ownerId == user.accountId}">
-                    <button class="layui-btn layui-btn-primary layui-btn-sm" id="authority-set-but" onclick="authoritySetButClick()">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" id="authority-set-but" onclick="authoritySetButClick(); clearStorage()">
                         权限设置
                     </button>
                 </c:if>
