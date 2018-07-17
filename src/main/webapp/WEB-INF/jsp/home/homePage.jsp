@@ -29,8 +29,8 @@
             $(".file-manager-board").css("width", boardWidth+"px");
             $(".file-manager-board").css("height", boardHeight+"px");
         });
-        $("body").css("background", "${sessionScope.user.getBgUrl()}")
-        $(".imgShow").css("background", "${sessionScope.user.getBgUrl()}")
+        $("body").css("background", "${sessionScope.user.getBgUrl()}");
+        $(".imgShow").css("background", "${sessionScope.user.getBgUrl()}");
         $(".imgShow").css("background-size","264px 180px");
         $("#passwordText").hide();
     })
