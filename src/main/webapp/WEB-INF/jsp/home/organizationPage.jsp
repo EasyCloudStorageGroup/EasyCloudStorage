@@ -73,7 +73,7 @@
     <c:choose>
         <c:when test="${empty orgList}">
 
-            <div class="none-notice-board" ><img src="/EasyCloudStorage/img/home/smile.PNG" width="400px" height="400px"/>
+            <div class="none-notice-board" ><img src="/EasyCloudStorage/img/home/smile.png" width="400px" height="400px"/>
                 <h2>您还没有加入任何组织哦</h2></div>
         </c:when>
         <c:otherwise>
