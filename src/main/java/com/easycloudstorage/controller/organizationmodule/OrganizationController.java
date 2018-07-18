@@ -357,16 +357,17 @@ public class OrganizationController {
             for(int i=0;i<org.getGroups().size();i++){
                 tem=org.getGroups().get(i);
                 if(tem.getGroupId().equals(groupId))
-                    break; }
-                    for(int i=0;i<members.length;i++) {
-                        memberId=members[i];
-                        for (int j = 0; j < tem.getMembers().size(); j++) {
-                            temp = tem.getMembers().get(j);
-                            if (temp.getAccountId().equals(memberId))
-                                return "redirect:orgHomePage";
-                        }
-                        organizationService.distributeMember(memberId,groupId);
-                    }
+                    break;
+            }
+            for(int i=0;i<members.length;i++) {
+                memberId=members[i];
+                for (int j = 0; j < tem.getMembers().size(); j++) {
+                    temp = tem.getMembers().get(j);
+                    if (temp.getAccountId().equals(memberId))
+                        return "redirect:orgHomePage";
+                }
+                organizationService.distributeMember(memberId,groupId);
+            }
             return  "redirect:orgHomePage";
         }
     }
@@ -419,5 +420,26 @@ public class OrganizationController {
             organizationService.removeGpMember(memberId,groupId);
             return "redirect:orgHomePage";
         }
+    }
+
+    //退出组织
+    @RequestMapping("dropoutOrg")
+    public String dropoutOrg(HttpSession session) {
+        int orgId=(int)session.getAttribute("orgId");
+        User user=(User)session.getAttribute("user");
+        Organization org=organizationService.getByOrgId(orgId);
+        String userId=user.getAccountId();
+        Group group=null;
+        User temp=null;
+        for(int i=0;i<org.getGroups().size();i++) {
+            group=org.getGroups().get(i);
+            for(int j=0;j<group.getMembers().size();j++){
+                temp=group.getMembers().get(j);
+                if(temp!=null&&temp.getAccountId().equals(userId))
+                    organizationService.removeGpMember(userId,group.getGroupId());
+            }
+        }
+            organizationService.removeMember(userId,orgId);
+            return "redirect:orgHomePage" ;
     }
 }
