@@ -129,8 +129,8 @@
     .table-show-board{
         position:relative;
         top:10px;
-        overflow: auto;
-        height: 800px;
+        overflow-y: auto;
+        height: 90%;
         opacity: 0.95;
     }
 
