@@ -231,18 +231,28 @@
             $("#add-group-member-modal").modal("show");
             $("#add-group-member-modal .make-sure-but").click(function () {
                 var userArray=[];
-                $(".ungroup").each(function () {
+                $("#add-group-member-modal .ungroup").each(function () {
                     if($(this).is(':checked') == true) {
                         userArray.push($(this).parent().parent().attr("accountId"));
                     }
                 })
-                $(".userName").each(function () {
+
+                $("#add-group-member-modal .userName").each(function () {
+                    var test12 = $(this);
                     if($(this).is(':checked') == true) {
                         userArray.push($(this).parent().parent().attr("accountId"));
                     }
                 });
 
-                window.location.href="addGroupMember?memberId="+userArray[0]+"&groupId="+$(this).attr("groupId");
+                var href = "addGroupMember?";
+                for(var i = 0; i < userArray.length; i++) {
+                    if(i != 0)
+                        href = href + "&";
+                    href = href + "members=" + userArray[i];
+                }
+                href = href + "&groupId="+$(this).attr("groupId");
+
+                window.location.href=href;
             })
         })
         
