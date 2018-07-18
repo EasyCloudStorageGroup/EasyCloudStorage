@@ -313,7 +313,6 @@ public class OrganizationController {
     public String deleteOrg(HttpSession session){
         User user=(User)session.getAttribute("user");
         String userId=user.getAccountId();
-OrganizationController oc=new OrganizationController();
         Group group=null;
         int orgId=(int)session.getAttribute("orgId");
         Organization org=organizationService.getByOrgId(orgId);
@@ -329,8 +328,8 @@ OrganizationController oc=new OrganizationController();
                 }
                 organizationService.deleteGroup(group.getGroupId());
                 }
-                if(org.getMembers()!=null)
-            for(int j=0;j<org.getMembers().size();j++){
+            if(org.getMembers()!=null)
+                 for(int j=0;j<org.getMembers().size();j++){
                 user=org.getMembers().get(j);
                 organizationService.removeMember(user.getAccountId(),orgId);
                 }
@@ -341,12 +340,15 @@ OrganizationController oc=new OrganizationController();
 
     //往分组里添加已经在组织内的成员
     @RequestMapping("addGroupMember")
-    public String addGroupMember(String memberId,int groupId,HttpSession session){
+    public String addGroupMember(String[] members,int groupId,HttpSession session){
+        String memberId=new String();
+        if(members.length==1)
+             memberId=members[0];
         User user=(User)session.getAttribute("user");
         String userId=user.getAccountId();
         int orgId=(int)session.getAttribute("orgId");
-        Group tem;
-        User temp;
+        Group tem=null;
+        User temp=null;
         Organization org=organizationService.getByOrgId(orgId);
         if(!userId.equals(organizationService.getByOrgId(orgId).getOwnerId())){
             return "redirect:orgHomePage";
@@ -355,14 +357,16 @@ OrganizationController oc=new OrganizationController();
             for(int i=0;i<org.getGroups().size();i++){
                 tem=org.getGroups().get(i);
                 if(tem.getGroupId().equals(groupId))
-                for(int j=0;j<tem.getMembers().size();j++)
-                {
-                 temp=tem.getMembers().get(j);
-                 if(temp.getAccountId().equals(memberId))
-                     return "redirect:orgHomePage";
-                }
-            }
-            organizationService.distributeMember(memberId,groupId);
+                    break; }
+                    for(int i=0;i<members.length;i++) {
+                        memberId=members[i];
+                        for (int j = 0; j < tem.getMembers().size(); j++) {
+                            temp = tem.getMembers().get(j);
+                            if (temp.getAccountId().equals(memberId))
+                                return "redirect:orgHomePage";
+                        }
+                        organizationService.distributeMember(memberId,groupId);
+                    }
             return  "redirect:orgHomePage";
         }
     }
