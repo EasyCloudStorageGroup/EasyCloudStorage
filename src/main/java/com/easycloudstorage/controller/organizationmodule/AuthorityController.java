@@ -100,26 +100,13 @@ public class AuthorityController {
 
         return "redirect:orgHomePage";
     }
-
-
-  /*public String authorityShow(HttpSession session,String userId){
-       int orgId=(int)session.getAttribute("orgId");
-       List<NorFileAuthority> norFileAuthorityList=authorityService.norList();
-       NorFileAuthority temp;
-       for (int i=0;i<norFileAuthorityList.size();i++){
-           temp=norFileAuthorityList.get(i);
-           temp=authorityService.getNorFileAuthority(temp.getFileId(),temp.getAccountId());
-       }
-
-        Map<NormalFile,Integer> fileMap=authorityService.findFileAuthority(userId,orgId,authorityService.norList());
-        Map<Directory,Integer> dirMap=authorityService.findDirAuthority(userId,orgId,authorityService.dirAuthorityList());
-
-
-
-
-
-
-
-
-    }*/
+    @RequestMapping("authorityShow")
+    public String authorityShow(HttpSession session,String userId){
+      int orgId=(int)session.getAttribute("orgId");
+      List<NorFileAuthority> norFileAuthorityList=authorityService.findFileAuthority(userId,orgId,authorityService.norList());
+      List<DirAuthority> dirAuthorityList=authorityService.findDirAuthority(userId,orgId,authorityService.dirAuthorityList());
+      session.setAttribute("norFileAuthorityList",norFileAuthorityList);
+      session.setAttribute("dirAuthorityList",dirAuthorityList);
+      return "redirect:orgHomePage";
+    }
 }

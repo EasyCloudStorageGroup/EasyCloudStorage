@@ -62,29 +62,25 @@ public class AuthorityService {
 
     public void insertDirAuthority(DirAuthority dirAuthority){authorityMapper.insertDirAuthority(dirAuthority);}
 
-    public  Map<NormalFile, Integer> findFileAuthority(String accountId,int orgId,List<NorFileAuthority> norList){
-        Map<NormalFile, Integer> map = new HashMap<NormalFile, Integer>();
+    public List<NorFileAuthority> findFileAuthority(String accountId,int orgId,List<NorFileAuthority> norList){
+        List<NorFileAuthority> norFileAuthorityList=new ArrayList<NorFileAuthority>();
         NorFileAuthority temp;
-        NormalFile file=new NormalFile();
         for(int i=0;i<norList.size();i++) {
             temp = norList.get(i);
             if(temp!=null&&temp.getAccountId().equals(accountId)&&temp.getOrgId().equals(orgId))
-                file=showService.findNormalFileById(temp.getFileId(),showService.normalFileList());
-               map.put(file,temp.getAuthority());
+            norFileAuthorityList.add(temp);
         }
-        return map;
+        return norFileAuthorityList;
     }
 
-    public Map<Directory, Integer> findDirAuthority(String accountId,int orgId, List<DirAuthority> dirList){
-        Map<Directory, Integer> map = new HashMap<Directory, Integer>();
+    public List<DirAuthority> findDirAuthority(String accountId,int orgId,List<DirAuthority> dirAuthorityList){
+        List<DirAuthority> result=new ArrayList<DirAuthority>();
         DirAuthority temp;
-        Directory dir=new Directory();
-        for(int i=0;i<dirList.size();i++) {
-            temp = dirList.get(i);
+        for(int i=0;i<dirAuthorityList.size();i++) {
+            temp = dirAuthorityList.get(i);
             if(temp!=null&&temp.getAccountId().equals(accountId)&&temp.getOrgId().equals(orgId))
-                dir=showService.findDirectoryById(temp.getDirId(),showService.directoryList());
-            map.put(dir,temp.getAuthority());
+                result.add(temp);
         }
-        return map;
+        return result;
     }
 }
