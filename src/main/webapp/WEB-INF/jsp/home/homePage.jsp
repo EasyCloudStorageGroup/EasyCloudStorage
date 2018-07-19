@@ -198,9 +198,10 @@
 
     <c:otherwise>
 <div class="table-show-board">
+    <form class="layui-form">
+        <input type="checkbox" name="all" onclick="selectAll(this)" lay-filter="selectAll" title="全选">
     <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo" id="file-manager-table">
         <thead>
-        <br/><tr><input type="checkbox" height="30px" onclick="selectAll(this)"><label>全选</label></tr>
         <tr>
             <th >
                 <button class="layui-btn layui-btn-normal" type="submit" id="download_btn" >下载</button>
@@ -216,7 +217,7 @@
         <tbody>
         <c:forEach items="${currentDirectories}" var="Directory">
             <tr href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}" class="dirClass" id="${Directory.dirId}" sortType="Directory">
-                <td style="width: 10%"><input type="checkbox" value="${Directory.dirId}" name="check2"></td>   <%--多选框 --%>
+                <td style="width: 10%"><input type="checkbox" value="${Directory.dirId}" name="check2" lay-skin="primary"></td>   <%--多选框 --%>
                 <td style="width: 10%"><img src="/EasyCloudStorage/img/home/folder.png" width="30px" height="30px"/> </td>   <%-- 文件夹图片--%>
                 <td style="width: 40%"><a  href="/EasyCloudStorage/homePage?dirId=${Directory.dirId}"style="width: 350px">${Directory.name}</a></td> <%-- 文件名，以及跳转的点击接口--%>
                 <td style="width: 20%">-</td>           <%-- 文件夹类型，由于不存在所以写为"-"--%>
@@ -227,7 +228,7 @@
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
             <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
-                <td style="width: 10%"><input type="checkbox" value="${NormalFile.fileId}" name="check">  <!--下载的多选框-->
+                <td style="width: 10%"><input type="checkbox" value="${NormalFile.fileId}" name="check" lay-skin="primary">  <!--下载的多选框-->
                 <td style="width: 10%"><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/></td><!--文件图片-->
                 <!--该choose决定了文件是否可以接着跳转查看详细信息，目前支持txt，jpg，MP3等格式的预览-->
                 <c:choose>
@@ -250,6 +251,7 @@
 
         </tbody>
     </table>
+    </form>
 
 </div>
     </c:otherwise>
@@ -338,19 +340,6 @@ border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
     })
 </script>
 
-<script><%--用于选择所有文件--%>
-    function selectAll(input) {
-        var result = false;
-        if(input.checked==true)
-            result=true;
-        $("input[name='check']").each(function () {
-            this.checked=result;
-        })
-        $("input[name='check2']").each(function () {
-            this.checked=result;
-        })
-    }
-</script>
 <%--王浩宇添加--%>
 <script src="/EasyCloudStorage/layui/lay/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
@@ -490,6 +479,25 @@ border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
         $("#passwordText").val("");
     })
     
+</script>
+<script>//选择框和全选事件处理
+    layui.use('form', function(){
+        var form = layui.form;
+        form.on('checkbox(selectAll)',function () {
+            var result = false;
+            if(this.checked==true)
+                result=true;
+            $("input[name='check']").each(function () {
+                this.checked=result;
+                form.render('checkbox');
+            })
+            $("input[name='check2']").each(function () {
+                this.checked=result;
+                form.render('checkbox');
+            })
+        })
+    });
+
 </script>
 </body>
 </html>

@@ -24,6 +24,7 @@ function menuEvent(event){
     clientMenu.objName=this.children[2].innerText;
     clientMenu.objClass=this.className;
     this.children[0].children[0].checked= true
+    layui.form.render('checkbox')
 
     return false;
 }
@@ -132,6 +133,7 @@ function openDeleteFileMenu()
                 }
             })//window.location.href=encodeURI(encodeURI("deleteFilePage?fileId="+nodeCollection[i].id+"&dirId="+dirId));
         }
+        window.location.reload(true)
         layer.msg("删除成功",{time:5000});
     });
     });
