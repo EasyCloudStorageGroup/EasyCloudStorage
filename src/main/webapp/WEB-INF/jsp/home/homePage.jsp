@@ -200,6 +200,7 @@
 <div class="table-show-board">
     <form class="layui-form">
         <input type="checkbox" name="all" onclick="selectAll(this)" lay-filter="selectAll" title="全选">
+    </form>
     <table class="layui-table" lay-skin="line" lay-filter="parse-table-demo" id="file-manager-table">
         <thead>
         <tr>
@@ -228,7 +229,7 @@
 
         <c:forEach items="${currentNormalFiles}" var="NormalFile">
             <tr class="normalFileClass" id="${NormalFile.fileId}" sortType="${NormalFile.sortType}">
-                <td style="width: 10%"><input type="checkbox" value="${NormalFile.fileId}" name="check" lay-skin="primary">  <!--下载的多选框-->
+                <td style="width: 10%"><form class="layui-form"><input type="checkbox" value="${NormalFile.fileId}" name="check" lay-skin="primary"></form>  <!--下载的多选框-->
                 <td style="width: 10%"><img src="/EasyCloudStorage/img/home/file.png" width="30px" height="30px"/></td><!--文件图片-->
                 <!--该choose决定了文件是否可以接着跳转查看详细信息，目前支持txt，jpg，MP3等格式的预览-->
                 <c:choose>
@@ -251,7 +252,6 @@
 
         </tbody>
     </table>
-    </form>
 
 </div>
     </c:otherwise>
