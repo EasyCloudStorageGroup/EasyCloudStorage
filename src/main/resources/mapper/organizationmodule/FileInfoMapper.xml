@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easycloudstorage.mapper.organizationmodule.FileInfoMapper">
+    <!--选择normalFile对象-->
+    <select id="getNormalFile" parameterType="int" resultType="NormalFile">
+        SELECT * FROM normalfile WHERE fileId=#{0};
+    </select>
+
+    <!--选择文件的权限-->
+    <select id="getNorAuthority" resultType="NorFileAuthority">
+        SELECT * FROM norfileauthority WHERE fileId=#{0} AND accountId=#{1};
+    </select>
+
+    <!--选择directory对象-->
+    <select id="getDirectory" parameterType="int" resultType="Directory">
+        SELECT * FROM directory WHERE dirId=#{0};
+    </select>
+
+    <!--选择文件夹的权限-->
+    <select id="getDirAuthority" resultType="DirAuthority">
+        SELECT * FROM dirauthority WHERE dirId=#{0} AND accountId=#{1};
+    </select>
+
+</mapper>
