@@ -23,13 +23,32 @@
 
 <div style="overflow-y:auto;overflow-x:hidden; border-style: dashed;border-color: #c1e2b3;position:absolute;left: 20%; top: 15%; width:60%;height:90%;background-color:#ffffff">
     <a href="/EasyCloudStorage/enterOrganization?orgId=${organization.orgId}"><button class="layui-btn">返回</button></a>
-    <a href="/EasyCloudStorage/deleteOrg">
-        <button class="layui-btn layui-btn-danger" style="float: right;">解散组织</button>
-    </a>
+    <c:choose>
+
+        <c:when test="${isOwner.booleanValue()}">
+    <a href="/EasyCloudStorage/deleteOrg" id="redirect"><button class="layui-btn layui-btn-danger"  style="float: right;">解散组织</button></a>
+        </c:when>
+
+        <c:otherwise>
+        <a href="/EasyCloudStorage/dropoutOrg" id="redirect"><button class="layui-btn layui-btn-danger"  style="float: right;">退出组织</button></a>
+        </c:otherwise>
+
+    </c:choose>
+
+
     <div class="layui-tab" >
         <ul class="layui-tab-title">
             <li class="layui-this">组织信息</li>
-            <li>修改信息</li>
+
+            <c:choose>
+
+                <c:when test="${isOwner.booleanValue()}">
+                    <li id="modify">修改信息</li>
+                </c:when>
+
+            </c:choose>
+
+            <%--<li id="modify">修改信息</li>--%>
         </ul>
 
         <div class="layui-tab-content">
@@ -111,7 +130,7 @@
 
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn" lay-filter="demo1" lay-submit="" >立即提交</button>
+                        <button id="submit" class="layui-btn" lay-filter="demo1" lay-submit="" >立即提交</button>
                         <button class="layui-btn layui-btn-primary" type="reset">重置</button>
                     </div>
                 </div>
@@ -126,6 +145,10 @@
 
 
 <script>
+
+    if (!${isOwner.booleanValue()}){
+        document.getElementById("modify").style.visibility="hidden"
+    }
 
     layui.use(['form', 'layedit', 'laydate'], function(){
         var form = layui.form

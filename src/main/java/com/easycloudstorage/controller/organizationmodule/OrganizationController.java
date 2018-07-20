@@ -20,6 +20,7 @@ import com.easycloudstorage.service.usermodule.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -239,7 +240,9 @@ public class OrganizationController {
     }
     @RequestMapping("modifyOrg")
     public ModelAndView modifyPage(HttpSession session){
+        System.out.println("called ");
         int orgId=(Integer) session.getAttribute("orgId");
+        User user=(User)session.getAttribute("user");
         Organization org=organizationService.getByOrgId(orgId);
         ModelAndView mv = new ModelAndView("organization/orgInfo/orgInfo");
         mv.addObject("organization",org);
@@ -249,6 +252,7 @@ public class OrganizationController {
             group.setMembers(organizationService.getUsersByGroupId(group.getGroupId()));
         }
         mv.addObject("groupList",groups);
+        mv.addObject("isOwner",new Boolean(organizationService.checkOwner((user.getAccountId()),orgId)));
         return mv;
     }
 
@@ -337,6 +341,7 @@ public class OrganizationController {
             return "redirect:organizationPage";
             }
         }
+
 
     //往分组里添加已经在组织内的成员
     @RequestMapping("addGroupMember")
@@ -440,6 +445,6 @@ public class OrganizationController {
             }
         }
             organizationService.removeMember(userId,orgId);
-            return "redirect:orgHomePage" ;
+            return "redirect:organizationPage" ;
     }
 }

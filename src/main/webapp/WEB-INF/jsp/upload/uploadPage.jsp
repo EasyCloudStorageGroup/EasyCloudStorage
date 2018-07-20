@@ -5,8 +5,11 @@
 <div class="layui-upload">
 
     <div>
-    <input type="file" multiple class="" id="fileUpload" style="position:relative; margin: 10px;float: left"  onchange="fileSelected()"/>
-    <button type="button" class="layui-btn" id="startUpload" style="position:relative; margin: 10px;float: left">开始上传</button>
+    <%--<input type="file" multiple class="" id="fileUpload" style="position:relative; margin: 10px;float: left"  onchange="fileSelected()"/>--%>
+        <button class="layui-btn" style="position:relative; margin: 7px;" onclick="selectFile()">
+            <i class="layui-icon">&#xe608;</i> 上传
+        </button>
+        <input type="file" multiple class="" id="fileUpload" style="display: none"  onchange="fileSelected()"/>
     </div>
 
     <div class="layui-upload-list">
@@ -24,6 +27,9 @@
 </div>
 
 <script>
+    function selectFile(){
+        $("#fileUpload").trigger("click");
+    }
     var id=0;
     var items=new Array()
     var date=new Array()
@@ -78,19 +84,26 @@
                 var o = document.createElement('input');
                 o.type = 'button';
                 o.value = '删除';
+                o.className='layui-btn layui-btn-danger'
                 o.addEventListener('click',function (ev) {
                     var a= parseInt(this.parentNode.parentNode.childNodes[2].id)
                     var index=items[a].index
+                    if(items[a].isOn)
+                    items[a].XHR.abort();
+                    items[a].isOn=false
                     table.deleteRow(index)
                     for (var i=0;i<items.length;++i){
                         if (items[i].index>index)
                             --(items[i].index)
                     }
-                    items[a].XHR.abort()
+
                 })
                 cell4.appendChild(o)
                 cell3.id=a.toString()
 
+            }
+            for (var i=1;i<table.rows.length;++i) {
+                uploadFile(i)
             }
         }
     }
@@ -139,8 +152,10 @@
         };
 
         xhr.upload.addEventListener("load", function (ev) {
+
             document.getElementById(index.toString()).innerHTML = "传输完成";
             items[index].isOn=false
+            tryReload()
         }, false);
 
         xhr.upload.addEventListener("error", function (ev) {
@@ -152,6 +167,13 @@
 
         xhr.send(fd);
 
+    }
+    function tryReload() {
+        var ifReload=true
+        for (var i=0;i<items.length;++i){
+            ifReload=ifReload&(!items[i].isOn)
+        }
+        if (ifReload) parent.location.reload()
     }
 
 </script>

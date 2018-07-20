@@ -132,7 +132,10 @@ public class OrganizationService {
         organizationMapper.changeGroupDescription(groupId,newDescription);
     };
 
-    public void deleteOrganization(int orgId){organizationMapper.deleteOrganizaiton(orgId);}
+    public boolean checkOwner(String userId,int orgId){
+        String ownerId=organizationMapper.getOwnerId(orgId);
+        return ownerId.equals(userId);
+    }
 
     public List<Group> getGroupByOrgId(int orgId){
         return organizationMapper.getGroupByOrgId(orgId);
