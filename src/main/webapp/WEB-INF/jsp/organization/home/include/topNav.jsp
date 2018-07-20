@@ -154,7 +154,7 @@
         </div>
         <div class="imgShow"></div>
     </div>
-    <div class="bottom"><button class="quit layui-btn">收起</button></div>
+    <div class="bottom"><button class="quit layui-btn" id="quit">收起</button></div>
 </div>
 
 <script type="text/javascript">
@@ -171,6 +171,18 @@
         $(".imgShow").css("background-size","264px 180px");
     });
     $(".imgList img").click(function () {
-        $("body").css("background", 'url(/EasyCloudStorage/img/changeSkin/'+ (i+1) +'.jpg)');
+        var url = 'url(/EasyCloudStorage/img/changeSkin/'+ (i+1) +'.jpg)';
+        $("body").css("background", url);
+        var data = {
+            "bgUrl":  url,
+            "accountId": "${sessionScope.user.getAccountId()}",
+        };
+        //window.location = "getBgUrl?" + $.param(data);
+        $.ajax({
+            type: "post",
+            url: "getBgUrl",
+            data: data
+        });
     });
+
 </script>

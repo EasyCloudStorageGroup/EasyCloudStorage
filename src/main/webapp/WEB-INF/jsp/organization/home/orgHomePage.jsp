@@ -18,6 +18,12 @@
 
 <%@ include file="include/topNav.jsp"%>
 
+<script>
+    $(function () {
+        $("body").css("background-image", "${sessionScope.user.getBgUrl()}");
+    });
+</script>
+
 <div class="mainBoard layui-row layui-col-space15">
     <%@ include file="include/orgMembers.jsp"%>
     <%@ include file="include/fileList.jsp"%>
