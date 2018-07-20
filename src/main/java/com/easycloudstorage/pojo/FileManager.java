@@ -53,16 +53,16 @@ public class FileManager {
         String postFix;
         switch (count){
             case 0:
-                postFix="KB";
+                postFix="B";
                 break;
             case 1:
-                postFix="MB";
+                postFix="KB";
                 break;
             case 2:
-                postFix="GB";
+                postFix="MB";
                 break;
             case 3:
-                postFix="TB";
+                postFix="G";
                 break;
             default:
                 postFix="";
