@@ -168,12 +168,16 @@
         xhr.send(fd);
 
     }
+
     function tryReload() {
         var ifReload=true
         for (var i=0;i<items.length;++i){
             ifReload=ifReload&(!items[i].isOn)
         }
-        if (ifReload) parent.location.reload()
+        if (ifReload) {
+            setTimeout(function () { parent.location.reload() },500)
+            // parent.location.reload()
+        }
     }
 
 </script>
