@@ -30,7 +30,7 @@
         </c:when>
 
         <c:otherwise>
-        <a href="/EasyCloudStorage/exitOrg" id="redirect"><button class="layui-btn layui-btn-danger"  style="float: right;">退出组织</button></a>
+        <a href="/EasyCloudStorage/dropoutOrg" id="redirect"><button class="layui-btn layui-btn-danger"  style="float: right;">退出组织</button></a>
         </c:otherwise>
 
     </c:choose>

@@ -445,6 +445,6 @@ public class OrganizationController {
             }
         }
             organizationService.removeMember(userId,orgId);
-            return "redirect:orgHomePage" ;
+            return "redirect:organizationPage" ;
     }
 }

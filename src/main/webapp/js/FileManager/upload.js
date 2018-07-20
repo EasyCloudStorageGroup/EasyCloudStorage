@@ -22,6 +22,7 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
                 ,cancel: function(index, layero){
 
 
+                    self.
                     layer.confirm('确定要关闭此窗口吗，关闭后上传会被中断', {icon: 3, title:'提示'}, function(i){
                         //do something
                         layer.close(index)
