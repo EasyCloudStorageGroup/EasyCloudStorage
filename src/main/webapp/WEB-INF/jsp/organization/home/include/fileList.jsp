@@ -209,6 +209,18 @@
                  clearStorage();
              })
         })
+        $("#file-detail-but").click(function () {
+            var selectedNorFile = $("input[name = 'check']:checked");
+            var selectedDir = $("input[name = 'check2']:checked");
+
+            if(selectedNorFile.length == 0) {
+                window.location.href = "/EasyCloudStorage/fileInfo?fileId="+selectedDir.val()+"&type=directory";
+            }
+            else {
+                window.location.href = "/EasyCloudStorage/fileInfo?fileId="+selectedNorFile.val()+"&type=normalFile";
+            }
+        });
+
     });
 </script>
 <script src="/EasyCloudStorage/js/FileManager/upload.js"></script>
@@ -241,7 +253,11 @@
                     </button>
                 </div>
 
-                <c:if test="${organization.ownerId == user.accountId}">
+                    <button class="layui-btn layui-btn-primary layui-btn-sm" id="file-detail-but">
+                    查看文件详情
+                    </button>
+
+                    <c:if test="${organization.ownerId == user.accountId}">
                     <button class="layui-btn layui-btn-primary layui-btn-sm" id="authority-set-but">
                         权限设置
                     </button>
