@@ -204,7 +204,7 @@
         <thead>
         <tr>
             <th >
-                <button class="layui-btn layui-btn-normal" type="submit" id="download_btn" >下载</button>
+                <button class="layui-btn layui-btn-normal" id="download_btn" >下载</button>
             </th>
 
             <th lay-data="{field:'type', width:80}"style="width: 100px"></th>
@@ -389,7 +389,7 @@ border-top-right-radius:2em;" src="/EasyCloudStorage/img/home/music2.png">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <%--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>--%>
                 <h4 class="modal-title" id="myModalLabel">文件分享</h4>
             </div>
             <div class="modal-body">

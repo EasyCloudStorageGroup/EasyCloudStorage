@@ -51,22 +51,39 @@
             </c:if>
 
             <c:if test="${fileAuthority.authority==0}">
-                <span>我的权限:&nbsp;&nbsp;<span>可预览</span></span>
+                <span>我的权限:&nbsp;&nbsp;<span class="layui-badge layui-bg-cyan" style="font-size: 14px">可预览</span></span>
             </c:if>
             <c:if test="${fileAuthority.authority==1}">
-                <span>我的权限:&nbsp;&nbsp;<span>可预览、下载</span></span>
+                <span>我的权限:&nbsp;&nbsp;
+                    <span class="layui-badge layui-bg-cyan" style="font-size: 14px; margin-right: 3px">可预览</span>
+                    <span class="layui-badge layui-bg-cyan" style="font-size: 14px">可下载</span>
+                </span>
             </c:if>
             <c:if test="${fileAuthority.authority==2}">
-                <span>我的权限:&nbsp;&nbsp;<span>可预览、编辑</span></span>
+                <span>我的权限:&nbsp;&nbsp;
+                    <span class="layui-badge layui-bg-cyan" style="font-size: 14px; margin-right: 3px">可预览</span>
+                    <span class="layui-badge layui-bg-cyan" style="font-size: 14px">可编辑</span>
+                </span>
             </c:if>
             <c:if test="${fileAuthority.authority==3}">
-                <span>我的权限:&nbsp;&nbsp;<span>可预览、创建文件夹</span></span>
+                <span>我的权限:&nbsp;&nbsp;
+                    <span class="layui-badge layui-bg-cyan" style="font-size: 14px; margin-right: 3px">可预览</span>
+                    <span class="layui-badge layui-bg-cyan" style="font-size: 14px">可创建文件夹</span>
+                </span>
             </c:if>
             <c:if test="${fileAuthority.authority==4}">
-                <span>我的权限:&nbsp;&nbsp;<span>可预览、下载和编辑</span></span>
+                <span>我的权限:&nbsp;&nbsp;
+                    <span class="layui-badge layui-bg-cyan" style="font-size: 14px; margin-right: 3px">可预览</span>
+                    <span class="layui-badge layui-bg-cyan" style="font-size: 14px; margin-right: 3px">可下载</span>
+                    <span class="layui-badge layui-bg-cyan" style="font-size: 14px">可编辑</span>
+                </span>
             </c:if>
             <c:if test="${fileAuthority.authority==5}">
-                <span>我的权限:&nbsp;&nbsp;<span>可预览、创建和编辑</span></span>
+                <span>我的权限:&nbsp;&nbsp;
+                    <span class="layui-badge layui-bg-cyan" style="font-size: 14px; margin-right: 3px">可预览</span>
+                    <span class="layui-badge layui-bg-cyan" style="font-size: 14px; margin-right: 3px">可创建文件夹</span>
+                    <span class="layui-badge layui-bg-cyan" style="font-size: 14px">可编辑</span>
+                </span>
             </c:if>
 
         </div>
