@@ -113,25 +113,27 @@ function openDeleteFileMenu()
             });
             for(var i=0;i<dirCollection.length;i++)
             {
-                $.ajax({
-                    type: "get",
-                    async: true,
-                    url: encodeURI(encodeURI("deleteDirectoryPage?fileId="+dirCollection[i].id+"&dirId="+dirId)),
-                    success:function () {
-                        window.location.reload(true)
-                    }
-                })//window.location.href=encodeURI(encodeURI("deleteDirectoryPage?fileId="+nodeCollection[i].id+"&dirId="+dirId));
+                if(dirCollection[i]!= undefined)
+                    $.ajax({
+                        type: "get",
+                        async: true,
+                        url: encodeURI(encodeURI("deleteDirectoryPage?fileId="+dirCollection[i].id+"&dirId="+dirId)),
+                        success:function () {
+                            window.location.reload(true)
+                        }
+                    })//window.location.href=encodeURI(encodeURI("deleteDirectoryPage?fileId="+nodeCollection[i].id+"&dirId="+dirId));
             }
         for(var i=0;i<fileCollection.length;i++)
         {
-            $.ajax({
-                type: "get",
-                async: true,
-                url: encodeURI(encodeURI("deleteFilePage?fileId="+fileCollection[i].id+"&dirId="+dirId)),
-                success:function () {
-                    window.location.reload(true)
-                }
-            })//window.location.href=encodeURI(encodeURI("deleteFilePage?fileId="+nodeCollection[i].id+"&dirId="+dirId));
+            if(fileCollection[i]!= undefined)
+                $.ajax({
+                    type: "get",
+                    async: true,
+                    url: encodeURI(encodeURI("deleteFilePage?fileId="+fileCollection[i].id+"&dirId="+dirId)),
+                    success:function () {
+                        window.location.reload(true)
+                    }
+                })//window.location.href=encodeURI(encodeURI("deleteFilePage?fileId="+nodeCollection[i].id+"&dirId="+dirId));
         }
         window.location.reload(true)
         layer.msg("删除成功",{time:5000});
