@@ -23,7 +23,7 @@ function menuEvent(event){
     clientMenu.id=this.id;
     clientMenu.objName=this.children[2].innerText;
     clientMenu.objClass=this.className;
-    this.children[0].children[0].checked= true
+    this.children[0].children[0][0].checked= true
     layui.form.render('checkbox')
 
     return false;
@@ -105,11 +105,11 @@ function openDeleteFileMenu()
     },function () {
             $("input[name = 'check']").each(function (i) {
                 if(this.checked==true)
-                    fileCollection[i] = this.parentElement.parentElement;
+                    fileCollection[i] = this.parentElement.parentElement.parentElement;
             });
             $("input[name = 'check2']").each(function (i) {
                 if(this.checked==true)
-                    dirCollection[i] = this.parentElement.parentElement;
+                    dirCollection[i] = this.parentElement.parentElement.parentElement;
             });
             for(var i=0;i<dirCollection.length;i++)
             {
@@ -135,6 +135,7 @@ function openDeleteFileMenu()
                     }
                 })//window.location.href=encodeURI(encodeURI("deleteFilePage?fileId="+nodeCollection[i].id+"&dirId="+dirId));
         }
+        window.location.reload(true)
         window.location.reload(true)
         layer.msg("删除成功",{time:5000});
     });
@@ -168,11 +169,11 @@ function openMoveFileMenu()
                         layer.close(index)
                         $("input[name = 'check']").each(function (i) {
                             if(this.checked==true)
-                                fileCollection[i] = this.parentElement.parentElement;
+                                fileCollection[i] = this.parentElement.parentElement.parentElement;
                         });
                         $("input[name = 'check2']").each(function (i) {
                             if(this.checked==true)
-                                dirCollection[i] = this.parentElement.parentElement;
+                                dirCollection[i] = this.parentElement.parentElement.parentElement;
                         });
                         for(var i=0;i<fileCollection.length;i++)
                         {
