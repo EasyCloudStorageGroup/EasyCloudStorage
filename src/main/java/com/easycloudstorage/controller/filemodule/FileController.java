@@ -74,7 +74,7 @@ public class FileController {
                 .replaceAll("%23","#").replaceAll("%26","&")
                 .replaceAll("%2B","+");
         List<Directory> allDirectories = showService.directoryList();
-        int parentDirId = showService.findParentDir(oldFileId, allDirectories).getDirId();
+        int parentDirId = ((Directory)session.getAttribute("currentDir")).getDirId();
         NormalFile normalFile=fileService.selectNormalFile(oldFileId);
         if(!normalFile.getName().equals(newFileName) && fileAlreadyExist(parentDirId, newFileName))
         {
